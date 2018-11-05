@@ -40,7 +40,7 @@ public class CameraBehaviour : MonoBehaviour {
         {
             float distanceOfFingersLastFrame = Vector2.Distance(Input.GetTouch(0).position - Input.GetTouch(0).deltaPosition, Input.GetTouch(1).position - Input.GetTouch(1).deltaPosition);
             float distanceOfFingersThisFrame = Vector2.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);
-            if(zoom * 1 + ((float)distanceOfFingersThisFrame - (float)distanceOfFingersLastFrame) / 1000f < 1f && zoom * 1 + ((float)distanceOfFingersThisFrame - (float)distanceOfFingersLastFrame) / 1000f > 0.25f)
+            if(zoom * 1 + ((float)distanceOfFingersThisFrame - (float)distanceOfFingersLastFrame) / 1000f < 2.0f && zoom * 1 + ((float)distanceOfFingersThisFrame - (float)distanceOfFingersLastFrame) / 1000f > 0.5f)
             {
                 zoom *= 1 + ((float)distanceOfFingersThisFrame - (float)distanceOfFingersLastFrame) / 1000f;
             }
