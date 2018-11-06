@@ -7,7 +7,7 @@ public class Field
 
     Pawn[] pawns = new Pawn[12];
     string resourceName;
-    int chipNumber;
+    public int chipNumber;
 
     public Field(string _resourceName, int _chipNumber)
     {

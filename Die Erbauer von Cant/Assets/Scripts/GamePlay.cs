@@ -5,7 +5,7 @@ using UnityEngine;
 public class GamePlay : MonoBehaviour
 {
     
-    Dictionary<string, Player> players = new Dictionary<string, Player>();
+    public Dictionary<string, Player> players = new Dictionary<string, Player>();
     GameBoard board1 = new GameBoard();
 
     // Use this for initialization

@@ -8,6 +8,7 @@ public class DiceGenerator : MonoBehaviour
 
     public Sprite[] diceSprites = new Sprite[6];
     
+    public int rolledNumber;
 
     /// <summary>
     /// Roll The Dice!
@@ -30,8 +31,8 @@ public class DiceGenerator : MonoBehaviour
 
         Debug.Log("You rolled a " + result);
 
-        //or if ready spread the ressources
-        ResourceManager.SpreadResources();
+        rolledNumber = result;
+        
     }
 
     //Get rolled Number

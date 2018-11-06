@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameBoard
 {
 
-    Field[] tiles;
+    public Field[] tiles;
 
 
 	// Use this for initialization
@@ -17,4 +17,15 @@ public class GameBoard
 	void Update () {
 		
 	}
+
+    public void SpreadResources(int rolledNumber)
+    {
+        for (int i = 0; i < tiles.Length; i++)
+        {
+            if (rolledNumber == tiles[i].chipNumber)
+            {
+                
+            }
+        }
+    }
 }
