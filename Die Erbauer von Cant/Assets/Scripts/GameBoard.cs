@@ -28,4 +28,8 @@ public class GameBoard
             }
         }
     }
+    public void GetAllPositions(Pawn buildedPawn)
+    {
+
+    }
 }

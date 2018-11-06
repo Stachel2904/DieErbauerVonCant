@@ -4,11 +4,23 @@ using UnityEngine;
 
 public class GamePlay : MonoBehaviour
 {
-    
-    public Dictionary<string, Player> players = new Dictionary<string, Player>();
-    GameBoard board1 = new GameBoard();
+    //Singleton
+    private GamePlay main;
+    public GamePlay Main
+    {
+        get
+        {
+            if(main == null)
+            {
+                main = new GamePlay();
+            }
+            return main;
+        }
+    }
 
-    // Use this for initialization
+    private Dictionary<string, Player> players = new Dictionary<string, Player>();
+    private GameBoard board1 = new GameBoard();
+    
     void Start ()
     {
         Player player1 = new Player("Player1", "White");
@@ -21,10 +33,18 @@ public class GamePlay : MonoBehaviour
         players.Add("yellow", player3);
         players.Add("red", player4);
 	}
-	
-	// Update is called once per frame
-	void Update ()
+
+    void PrintAllPossiblePositions(Pawn buildedPawn)
     {
-		
-	}
+        //Ressourcen überprüfen
+
+        //Alle möglichen Positionen ausgeben
+
+        //Ressourcenmanagement/Rohstoffe abziehen etc.
+    }
+
+    void buildPawn(Place destination, Pawn buildedPawn)
+    {
+
+    }
 }
