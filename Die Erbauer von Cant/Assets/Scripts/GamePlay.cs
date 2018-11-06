@@ -5,8 +5,8 @@ using UnityEngine;
 public class GamePlay : MonoBehaviour
 {
     //Singleton
-    private GamePlay main;
-    public GamePlay Main
+    private static GamePlay main;
+    public static GamePlay Main
     {
         get
         {
@@ -18,7 +18,7 @@ public class GamePlay : MonoBehaviour
         }
     }
 
-    private Dictionary<string, Player> players = new Dictionary<string, Player>();
+    public Dictionary<string, Player> players = new Dictionary<string, Player>();
     private GameBoard board1 = new GameBoard();
     
     void Start ()

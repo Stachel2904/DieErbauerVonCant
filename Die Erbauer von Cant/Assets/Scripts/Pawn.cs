@@ -5,8 +5,8 @@ using UnityEngine;
 public class Pawn
 {
 
-    string designation;
-    string color;
+    public string designation;
+    public string color;
 
 
     public Pawn(string _designation, string _color)

@@ -24,7 +24,18 @@ public class GameBoard
         {
             if (rolledNumber == tiles[i].chipNumber)
             {
-                
+                foreach (var element in tiles[i].pawns)
+                {
+                    if (element.designation == "village")
+                    {
+                        GamePlay.Main.players[element.color].inventory.AddItem(tiles[i].resourceName, 1);
+                    }
+                    if (element.designation == "city")
+                    {
+                        GamePlay.Main.players[element.color].inventory.AddItem(tiles[i].resourceName, 2);
+                    }
+                    
+                }
             }
         }
     }
