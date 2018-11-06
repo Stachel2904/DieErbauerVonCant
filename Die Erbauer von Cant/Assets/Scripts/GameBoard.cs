@@ -7,14 +7,8 @@ public class GameBoard
 
     Field[] tiles;
 
+    public void GetAllPositions(Pawn buildedPawn)
+    {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    }
 }
