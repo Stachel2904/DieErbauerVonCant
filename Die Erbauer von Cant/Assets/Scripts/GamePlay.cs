@@ -30,22 +30,24 @@ public class GamePlay : MonoBehaviour
     public int currentPlayer;
     private GameBoard board1 = new GameBoard();
 
+    // Trading Variables
+    public bool dealAccepted = false;
+    
 
     void Start()
     {
         players = new Player[]
         {
-            new Player("Player1", "White"),
-            new Player("Player2", "blue"),
-            new Player("Player3", "yellow"),
-            new Player("Player4", "red")
+            new Player(1, "Player1", "White"),
+            new Player(2, "Player2", "blue"),
+            new Player(3, "Player3", "yellow"),
+            new Player(4, "Player4", "red")
         };
         currentPlayer = 0;
 	}
 
     public void NextPlayer()
     {
-
         if (currentPlayer == 3)
         {
             currentPlayer = 0;
@@ -54,7 +56,6 @@ public class GamePlay : MonoBehaviour
         {
             currentPlayer++;
         }
-        
     }
 
     public Player GetCurrentPlayer()
@@ -62,6 +63,7 @@ public class GamePlay : MonoBehaviour
         
         return players[currentPlayer];
     }
+
 
 
     void PrintAllPossiblePositions(Pawn buildedPawn)
@@ -76,6 +78,116 @@ public class GamePlay : MonoBehaviour
     void buildPawn(Place destination, Pawn buildedPawn)
     {
 
+    }
+
+
+    // TRADING //
+    /// <summary>
+    /// Call this if the Player wants to trade 4 : 1 with the System, beforehand you need to check if enough ressources are available
+    /// </summary>
+    /// <param name="givenRessource"> The string of the 4 Ressource the player wants to trade in </param>
+    /// <param name="wantedRessource"> The string of the 1 Ressource the player wants to get </param>
+    public void tradeSystem4to1(string givenRessource, string wantedRessource)
+    {
+        
+
+        foreach (KeyValuePair<string, int> item in main.GetCurrentPlayer().inventory.inven)
+        {
+            if (item.Key == givenRessource)
+            {
+                 main.GetCurrentPlayer().inventory.RemoveItem(givenRessource, 4);
+            }
+
+            if (item.Key == wantedRessource)
+            {
+                main.GetCurrentPlayer().inventory.AddItem(wantedRessource, 1);
+            }
+           
+        }
+        
+    }
+
+
+    /// <summary>
+    /// Make a trade offer with another player
+    /// </summary>
+    /// <param name="tradeOffer"> Contains the struct of the Tradeoffer that has been proposed </param>
+    public void Trytrade(Trade tradeOffer)
+    {
+        
+
+        // if deal was Accepted
+        if (dealAccepted)
+        {
+            Trading(tradeOffer);
+            dealAccepted = false;
+        }
+    }
+
+    /// <summary>
+    /// Removes and adds items of the trading Players
+    /// </summary>
+    /// <param name="tradeOffer"> Contains the struct of the Tradeoffer that has been proposed </param>
+    public void Trading(Trade tradeOffer)
+    {
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (players[i].name == tradeOffer.giver)
+            {
+                for (int j = 0; j < tradeOffer.givenRessources.Length; j++)
+                {
+                    Main.GetCurrentPlayer().inventory.RemoveItem(tradeOffer.givenRessources[i], 1);
+                }
+                for (int j = 0; j < tradeOffer.givenRessources.Length; j++)
+                {
+                    Main.GetCurrentPlayer().inventory.AddItem(tradeOffer.askedRessources[i], 1);
+                }
+            }
+
+            if (players[i].name == tradeOffer.taker)
+            {
+                Player taker;
+
+                switch (players[i].name)
+                {
+                    case "player1":
+                        {
+                            taker = main.players[0];
+                        } break;
+                    case "player2":
+                        {
+                            taker = main.players[1];
+                        } break;
+                    case "player3":
+                        {
+                            taker = main.players[2];
+                        } break;
+                    case "player4":
+                        {
+                            taker = main.players[3];
+                        }
+                        break;
+
+                    default:
+                        taker = null;
+                        break;
+                }
+                if (taker != null)
+                {
+                    
+                    for (int j = 0; j < tradeOffer.givenRessources.Length; j++)
+                    {
+                        taker.inventory.RemoveItem(tradeOffer.askedRessources[i], 1);
+                    }
+                    for (int j = 0; j < tradeOffer.givenRessources.Length; j++)
+                    {
+                        taker.inventory.AddItem(tradeOffer.givenRessources[i], 1);
+                    }
+                }
+                
+
+            }
+        }
     }
 
     public void GameWon(string color)

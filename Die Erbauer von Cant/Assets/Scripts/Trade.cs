@@ -6,6 +6,15 @@ public struct Trade
 {
     public string giver;
     public string taker;
-    string[] givenRessources;
-    string[] askedRessources;
+    public string[] givenRessources;
+    public string[] askedRessources;
+
+    public Trade(string _giver, string _taker, string[] _givenRessources, string[] _askedRessources)
+    {
+        giver = _giver;
+        taker = _taker;
+        givenRessources = _givenRessources;
+        askedRessources = _askedRessources;
+    }
 }
+
