@@ -18,7 +18,7 @@ public class GamePlay : MonoBehaviour
         }
     }
 
-    private Dictionary<string, Player> players = new Dictionary<string, Player>();
+    public Dictionary<string, Player> players = new Dictionary<string, Player>();
     private GameBoard board1 = new GameBoard();
     
     void Start ()

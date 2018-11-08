@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player
 {
-    Inventory inventory = new Inventory();
+    public Inventory inventory = new Inventory();
     string name;
     string color;
 
