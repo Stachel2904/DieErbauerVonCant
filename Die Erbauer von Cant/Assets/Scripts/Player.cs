@@ -7,11 +7,14 @@ public class Player
     public Inventory inventory = new Inventory();
     string name;
     string color;
+    int clientID;
 
-    public Player(string _name, string _color)
+    public Player(int _clientID, string _name, string _color)
     {
-        name = _name;
+        clientID = _clientID;
+        //name = _name;
         color = _color;
+
     }
 	
 	
