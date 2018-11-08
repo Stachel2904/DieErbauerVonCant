@@ -5,8 +5,8 @@ using UnityEngine;
 public class GamePlay : MonoBehaviour
 {
     //Singleton
-    private GamePlay main;
-    public GamePlay Main
+    private static GamePlay main;
+    public static GamePlay Main
     {
         get
         {
