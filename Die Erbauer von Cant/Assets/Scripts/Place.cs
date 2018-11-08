@@ -5,6 +5,6 @@ using UnityEngine;
 public class Place{
 
     public Field[] usedFields;
-    public int[] posAtField;
+    public Vector3[] posAtField;
     public Pawn currentPawn;
 }

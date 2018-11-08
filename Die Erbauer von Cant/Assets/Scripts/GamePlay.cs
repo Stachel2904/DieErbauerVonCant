@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Players
+{
+    WHITE,
+    BLUE,
+    YELLOW,
+    RED
+}
+
 public class GamePlay : MonoBehaviour
 {
     //Singleton
@@ -18,21 +26,43 @@ public class GamePlay : MonoBehaviour
         }
     }
 
-    public Dictionary<string, Player> players = new Dictionary<string, Player>();
+    public Player[] players;
+    public int currentPlayer;
     private GameBoard board1 = new GameBoard();
-    
-    void Start ()
-    {
-        Player player1 = new Player("Player1", "White");
-        Player player2 = new Player("Player2", "blue");
-        Player player3 = new Player("Player3", "yellow");
-        Player player4 = new Player("Player4", "red");
 
-        players.Add("white", player1);
-        players.Add("blue", player2);
-        players.Add("yellow", player3);
-        players.Add("red", player4);
+
+    void Start()
+    {
+        players = new Player[]
+        {
+            new Player("Player1", "White"),
+            new Player("Player2", "blue"),
+            new Player("Player3", "yellow"),
+            new Player("Player4", "red")
+        };
+        currentPlayer = 0;
 	}
+
+    public void NextPlayer()
+    {
+
+        if (currentPlayer == 3)
+        {
+            currentPlayer = 0;
+        }
+        else
+        {
+            currentPlayer++;
+        }
+        
+    }
+
+    public Player GetCurrentPlayer()
+    {
+        
+        return players[currentPlayer];
+    }
+
 
     void PrintAllPossiblePositions(Pawn buildedPawn)
     {
@@ -46,5 +76,10 @@ public class GamePlay : MonoBehaviour
     void buildPawn(Place destination, Pawn buildedPawn)
     {
 
+    }
+
+    public void GameWon(string color)
+    {
+        print("Player" + color + "won");
     }
 }

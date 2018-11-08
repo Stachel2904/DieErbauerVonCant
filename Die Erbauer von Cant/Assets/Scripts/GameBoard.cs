@@ -5,11 +5,11 @@ using UnityEngine;
 public class GameBoard
 {
 
-    public Field[] tiles;
+    
+    public Field[] allBuildFields = new Field[16];
 
-
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -20,19 +20,19 @@ public class GameBoard
 
     public void SpreadResources(int rolledNumber)
     {
-        for (int i = 0; i < tiles.Length; i++)
+        for (int i = 0; i < allBuildFields.Length; i++)
         {
-            if (rolledNumber == tiles[i].chipNumber)
+            if (rolledNumber == allBuildFields[i].chipNumber)
             {
-                foreach (var element in tiles[i].pawns)
+                foreach (var element in allBuildFields[i].pawns)
                 {
-                    if (element.designation == "village")
+                    if (element.type == "village")
                     {
-                        GamePlay.Main.players[element.color].inventory.AddItem(tiles[i].resourceName, 1);
+                        GamePlay.Main.GetCurrentPlayer().inventory.AddItem(allBuildFields[i].resourceName, 1);
                     }
-                    if (element.designation == "city")
+                    if (element.type == "Town")
                     {
-                        GamePlay.Main.players[element.color].inventory.AddItem(tiles[i].resourceName, 2);
+                        GamePlay.Main.GetCurrentPlayer().inventory.AddItem(allBuildFields[i].resourceName, 2);
                     }
                     
                 }
@@ -41,6 +41,6 @@ public class GameBoard
     }
     public void GetAllPositions(Pawn buildedPawn)
     {
-
+        
     }
 }

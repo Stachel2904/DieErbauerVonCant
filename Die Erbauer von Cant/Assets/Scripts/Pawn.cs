@@ -5,13 +5,13 @@ using UnityEngine;
 public class Pawn
 {
 
-    public string designation;
+    public string type;
     public string color;
 
 
-    public Pawn(string _designation, string _color)
+    public Pawn(string _type, string _color)
     {
-        designation = _designation;
+        type = _type;
         color = _color;
     }
 
