@@ -5,14 +5,14 @@ using UnityEngine;
 public class Player
 {
     public Inventory inventory = new Inventory();
-    string name;
+    public string name;
     string color;
     int clientID;
     private int victoryPoints = 0;
     public Player(int _clientID, string _name, string _color)
     {
         clientID = _clientID;
-        //name = _name;
+        name = _name;
         color = _color;
 
     }

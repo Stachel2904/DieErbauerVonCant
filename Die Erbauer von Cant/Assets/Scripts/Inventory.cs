@@ -9,7 +9,7 @@ public class Inventory : MonoBehaviour {
     /// <summary>
     /// This Dictionary contains every usable Item the Character can have
     /// </summary>
-    Dictionary<string, int> inven = new Dictionary<string, int>();
+    public Dictionary<string, int> inven = new Dictionary<string, int>();
 
     private void Start()
     {
@@ -42,12 +42,12 @@ public class Inventory : MonoBehaviour {
         
 
     }
-
+    
     // Update is called once per frame
     void Update ()
     {
-		
 
+        
 
 	}
 }
