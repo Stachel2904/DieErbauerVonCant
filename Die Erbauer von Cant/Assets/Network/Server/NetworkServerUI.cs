@@ -13,11 +13,13 @@ public class NetworkServerUI : MonoBehaviour {
         if (serverPort != -1) {
             Debug.Log("Server successfully created on port: " + serverPort);
             GetComponent<NetworkServerMessageHandler>().InitRecivingMessages();
+            GetComponent<NetworkServerDiscovery>().StartServerDiscovery(serverPort);
         }
 	}
     public void KillServer() {
         NetworkServer.Shutdown();
         Debug.Log("Server successfully killed... :(");
+        GetComponent<NetworkServerDiscovery>().StopServerDiscovery();
     }
     //Init
     private int InitServer() {
