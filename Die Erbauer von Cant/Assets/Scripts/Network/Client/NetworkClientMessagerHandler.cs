@@ -15,10 +15,13 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
     private void OnConnect(NetworkMessage _message_) {
         Debug.Log("Client is connected: " + client.isConnected);
         Debug.Log("Server: " + client.serverIp);
+        GameObject.Find("Window").transform.Find("Addresses").gameObject.SetActive(false);
+        GameObject.Find("Window").transform.Find("DiceRoll").gameObject.SetActive(true);
     }
     private void OnDisconnect(NetworkMessage _message_) {
         Debug.Log("Client is connected: " + client.isConnected);
         Debug.Log("Client is disconnected!");
+        GameObject.Find("Window").transform.Find("Addresses").gameObject.SetActive(true);
     }
     //Send to Server
     public void SendToServer(string _message_) {
