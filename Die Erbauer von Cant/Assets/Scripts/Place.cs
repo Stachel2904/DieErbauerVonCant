@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Place{
+public class Place : MonoBehaviour{
 
     public Field[] usedFields;
-    public Vector3[] posAtField;
-    public Pawn currentPawn;
+    public int[] posAtField;
+
+    private void OnMouseDown()
+    {
+        GamePlay.Main.buildPawn(this);
+    }
 }

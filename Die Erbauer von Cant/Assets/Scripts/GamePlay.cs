@@ -26,9 +26,10 @@ public class GamePlay : MonoBehaviour
         }
     }
 
+    public Pawn buildedPawn;
     public Player[] players;
     public int currentPlayer;
-    private GameBoard board1 = new GameBoard();
+    private GameBoard mainBoard = new GameBoard();
 
     // Trading Variables
     public bool dealAccepted = false;
@@ -64,22 +65,51 @@ public class GamePlay : MonoBehaviour
         return players[currentPlayer];
     }
 
-
-
-    void PrintAllPossiblePositions(Pawn buildedPawn)
+    public void TryBuild(Pawn tryBuildedPawn)
     {
+        //set buildedPawn back to null
+        if (tryBuildedPawn == null)
+        {
+            buildedPawn = null;
+            return;
+        }
+
         //Ressourcen überprüfen
+        if (!GetCurrentPlayer().inventory.CheckInventory(tryBuildedPawn.type))
+        {
+            Debug.Log("You have not enough Ressources...");
+            return;
+        }
+
+        buildedPawn = tryBuildedPawn;
 
         //Alle möglichen Positionen ausgeben
+        mainBoard.GetAllPositions(buildedPawn);     
+    }
+
+    public void buildPawn(Place destination)
+    {
+        if(buildedPawn == null)
+        {
+            Debug.Log("Which pawn do you want to build?");
+            return;
+        }
 
         //Ressourcenmanagement/Rohstoffe abziehen etc.
+        GetCurrentPlayer().inventory.RemoveItem(buildedPawn.type);
+
+        //An die richtige Position setzen und die angrenzenden Tiles updaten
+        for (int i = 0; i < mainBoard.tiles.Length; i++)
+        {
+            for (int j = 0; j < destination.usedFields.Length; j++)
+            {
+                if (mainBoard.tiles[i].Equals(destination.usedFields[j]))
+                {
+                    mainBoard.tiles[i].pawns[destination.posAtField[j]] = buildedPawn;
+                }
+            }
+        }
     }
-
-    void buildPawn(Place destination, Pawn buildedPawn)
-    {
-
-    }
-
 
     // TRADING //
     /// <summary>

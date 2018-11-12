@@ -23,31 +23,98 @@ public class Inventory : MonoBehaviour {
         inven.Add("Town", 4);
     }
 
-    public void AddItem(string name, int count)
+    public void AddItem(string name, int count = 1)
     {
         inven[name] += count;
     }
 
-    public bool RemoveItem(string name, int count)
+    /// <summary>
+    /// Removes Ressources from Inventory. If you remove a Pawn, the Ressources will be automatically removed.
+    /// </summary>
+    /// <param name="name">Ressource or Pawn</param>
+    /// <param name="count">How much should be removed ?</param>
+    /// <returns></returns>
+    public void RemoveItem(string name, int count = 1)
     {
-        if (inven[name] >= count)
+        if(!CheckInventory(name, count))
         {
-            inven[name] -= count;
-            return true;
+            Debug.LogError("Not enough Ressources! You should use CheckInventory() first!!");
+            return;
+        }
+
+        if (name == "Street")
+        {
+            RemoveItem("Wood", count);
+            RemoveItem("Brick", count);
+        }
+        else if (name == "Village")
+        {
+            RemoveItem("Wood", count);
+            RemoveItem("Brick", count);
+            RemoveItem("Wool", count);
+            RemoveItem("Wheat", count);
+        }
+        else if (name == "Town")
+        {
+            RemoveItem("Ore", 3 * count);
+            RemoveItem("Wheat", 2 * count);
+            AddItem("Village");
+        }
+
+        inven[name] -= count;
+    }
+
+    /// <summary>
+    /// check, if the Inventory has at least the amount of a specific type
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="amount"></param>
+    /// <returns>returns false, if there's not enough in the inventory</returns>
+    public bool CheckInventory(string type, int amount = 1)
+    {   
+        if(inven[type] >= amount)
+        {
+            if (type == "Street")
+            {
+                if (CheckInventory("Wood", amount) && CheckInventory("Brick", amount))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (type == "Village")
+            {
+                if (CheckInventory("Wood", amount) && CheckInventory("Brick", amount) && CheckInventory("Wool", amount) && CheckInventory("Wheat", amount))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (type == "Town")
+            {
+                if (CheckInventory("Ore", 3 * amount) && CheckInventory("Wheat", 2 * amount))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return true;
+            }
         }
         else
         {
             return false;
         }
-        
-
     }
-    
-    // Update is called once per frame
-    void Update ()
-    {
-
-        
-
-	}
 }

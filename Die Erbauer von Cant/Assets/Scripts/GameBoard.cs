@@ -4,43 +4,33 @@ using UnityEngine;
 
 public class GameBoard
 {
-
+    public Field[] tiles = new Field[16];
     
-    public Field[] allBuildFields = new Field[16];
-
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     public void SpreadResources(int rolledNumber)
     {
-        for (int i = 0; i < allBuildFields.Length; i++)
+        for (int i = 0; i < tiles.Length; i++)
         {
-            if (rolledNumber == allBuildFields[i].chipNumber)
+            if (rolledNumber == tiles[i].chipNumber)
             {
-                foreach (var element in allBuildFields[i].pawns)
+                foreach (var element in tiles[i].pawns)
                 {
                     if (element.type == "village")
                     {
-                        GamePlay.Main.GetCurrentPlayer().inventory.AddItem(allBuildFields[i].resourceName, 1);
+                        GamePlay.Main.GetCurrentPlayer().inventory.AddItem(tiles[i].resourceName, 1);
                     }
                     if (element.type == "Town")
                     {
-                        GamePlay.Main.GetCurrentPlayer().inventory.AddItem(allBuildFields[i].resourceName, 2);
+                        GamePlay.Main.GetCurrentPlayer().inventory.AddItem(tiles[i].resourceName, 2);
                     }
                     
                 }
             }
         }
     }
-    public void GetAllPositions(Pawn buildedPawn)
+
+    public Place[] GetAllPositions(Pawn buildedPawn)
     {
-        
+        //TODO: check here all of the possible positions
+        return null;
     }
 }
