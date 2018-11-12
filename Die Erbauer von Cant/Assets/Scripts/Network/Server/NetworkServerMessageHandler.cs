@@ -32,7 +32,7 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         RectTransform output = Instantiate(GameObject.Find("Window").transform.GetChild(0).gameObject, GameObject.Find("Window").transform).GetComponent<RectTransform>();
         output.GetChild(0).GetComponent<Text>().text = _message_.conn.connectionId.ToString();
         output.Translate(Vector2.down * 30);
-
+        
         blockedSlots++;
         //Creating Player here
     }
@@ -59,6 +59,13 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         StringMessage msg = new StringMessage();
         msg.value = _message_.ReadMessage<StringMessage>().value;
         Debug.Log("[Message:] " + msg.value);
+
+        switch (msg.value)
+        {
+            case "Roll Dice":
+                DiceGenerator.Main.DiceRoll();
+                break;
+        }
     }
     //Send to Client
     public void ServerSendToClient(int _ClientID_, string _NetMsg_) {

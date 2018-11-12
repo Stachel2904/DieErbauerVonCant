@@ -40,5 +40,7 @@ public class NetworkClientUI : MonoBehaviour {
     //Connect
     public void ConnectToServer(string _ipAddress_, int _port_) {
         client.Connect(_ipAddress_, _port_);
+        GameObject.Find("Window").transform.Find("Addresses").gameObject.SetActive(false);
+        GameObject.Find("Window").transform.Find("DiceRoll").gameObject.SetActive(true);
     }
 }
