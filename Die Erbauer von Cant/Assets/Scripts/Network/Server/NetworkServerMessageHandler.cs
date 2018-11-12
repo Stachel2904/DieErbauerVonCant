@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Networking;
 using UnityEngine.Networking.NetworkSystem;
 
@@ -25,12 +26,29 @@ public class NetworkServerMessageHandler : MonoBehaviour {
     }
     //Connect from Client
     private void ServerOnClientConnect(NetworkMessage _message_) {
+
         Debug.Log("[Client ID: " + _message_.conn.connectionId + "] Client connected!");
+
+        RectTransform output = Instantiate(GameObject.Find("Window").transform.GetChild(0).gameObject, GameObject.Find("Window").transform).GetComponent<RectTransform>();
+        output.GetChild(0).GetComponent<Text>().text = _message_.conn.connectionId.ToString();
+        output.Translate(Vector2.down * 30);
+
         blockedSlots++;
         //Creating Player here
     }
     private void ServerOnClientDisconnect(NetworkMessage _message_) {
         Debug.Log("[Client ID: " + _message_.conn.connectionId + "] Client disconnected!");
+
+        GameObject tmp = null;
+        for (int i = 1; i < GameObject.Find("Window").transform.childCount; i++)
+        {
+            if(int.Parse(GameObject.Find("Window").transform.GetChild(i).GetChild(0).gameObject.GetComponent<Text>().text) == _message_.conn.connectionId)
+            {
+                tmp = GameObject.Find("Window").transform.GetChild(i).gameObject;
+            }
+        }
+
+        Destroy(tmp);
         blockedSlots--;
         //Destroying Player here
     }

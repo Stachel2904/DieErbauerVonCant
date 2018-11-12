@@ -8,6 +8,11 @@ public class NetworkServerUI : MonoBehaviour {
     int defaultPort = 5555;
     public int serverPort = -1;
 	
+    private void Start()
+    {
+        StartServer();
+    }
+
 	public void StartServer(){
         serverPort = InitServer();
         if (serverPort != -1) {

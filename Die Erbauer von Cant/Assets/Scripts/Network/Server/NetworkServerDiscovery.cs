@@ -5,7 +5,7 @@ public class NetworkServerDiscovery : NetworkDiscovery {
     private string serverName = "DEvC-Server";
 
     public void StartServerDiscovery(int _port_) {
-        StopBroadcast();
+        //StopBroadcast();
         broadcastData = serverName + "|" + _port_.ToString(); //ToDo. Selbstupdatender Braodcaster + Belegte Slots
         Initialize();
         StartAsServer();
