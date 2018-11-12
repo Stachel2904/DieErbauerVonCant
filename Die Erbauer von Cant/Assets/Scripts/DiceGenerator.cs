@@ -9,7 +9,7 @@ public class DiceGenerator : MonoBehaviour
     public Sprite[] diceSprites = new Sprite[6];
     
     public int rolledNumber;
-
+    
     /// <summary>
     /// Roll The Dice!
     /// </summary>
