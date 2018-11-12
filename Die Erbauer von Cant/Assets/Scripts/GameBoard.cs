@@ -30,7 +30,43 @@ public class GameBoard
 
     public Place[] GetAllPositions(Pawn buildedPawn)
     {
-        //TODO: check here all of the possible positions
-        return null;
+        List<Place> possiblePositions = new List<Place>();
+
+        for (int i = 0; i < tiles.Length; i++)
+        {
+            for (int j = 0; j < tiles[i].pawns.Length; j++)
+			{
+                Pawn cachedPawn = tiles[i].pawns[j];
+
+                //this position 
+                if(cachedPawn != null)
+                {
+                    if(cachedPawn.type == "Village" && cachedPawn.color == buildedPawn.color)
+                    {
+                        Place newPlace = new Place();
+
+                        if(j == 1)
+                        {
+                            newPlace.usedFields = new Field[]{};
+                        }
+
+                    }
+                    continue;
+                }
+
+                if(buildedPawn.type == "Town")
+                {
+
+                }
+
+                if(buildedPawn.type == "Street")
+                {
+
+                }
+
+			}
+        }
+
+        return possiblePositions.ToArray();
     }
 }

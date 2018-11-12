@@ -35,7 +35,7 @@ public class Inventory : MonoBehaviour {
     /// <param name="count">How much should be removed ?</param>
     /// <returns></returns>
     public void RemoveItem(string name, int count = 1)
-    {
+    {   
         if(!CheckInventory(name, count))
         {
             Debug.LogError("Not enough Ressources! You should use CheckInventory() first!!");

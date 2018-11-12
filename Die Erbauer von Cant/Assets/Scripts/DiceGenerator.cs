@@ -1,15 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class DiceGenerator : MonoBehaviour
+public class DiceGenerator
 {
-    //public Image[] diceOutputImage;
-    public Text[] diceOutputImage;
+    private static DiceGenerator main;
+    public static DiceGenerator Main
+    {
+        get
+        {
+            if (main == null)
+            {
+                main = new DiceGenerator();
+            }
+            return main;
+        }
+    }
 
-    public Sprite[] diceSprites = new Sprite[6];
-    
-    public int rolledNumber;
-    
     /// <summary>
     /// Roll The Dice!
     /// </summary>
@@ -23,16 +29,16 @@ public class DiceGenerator : MonoBehaviour
         for (int i = 0; i < 2; i++)
         {
             int number = GetNumber();
-
-            Print(number, i);
-
+            
             result += number;
         }
 
-        Debug.Log("You rolled a " + result);
+        Print(result);        
+    }
 
-        rolledNumber = result;
-        
+    private void Print(int number)
+    {
+        GameObject.Find("Window").transform.Find("Dice").Find("Image").Find("Text").gameObject.GetComponent<Text>().text = number.ToString();
     }
 
     //Get rolled Number
@@ -43,16 +49,5 @@ public class DiceGenerator : MonoBehaviour
         rolledNumber = Random.Range(1, 6);
 
         return rolledNumber;
-    }
-
-    //Print rolled Number
-    private void Print(int output, int diceNumber)
-    {
-
-        diceOutputImage[diceNumber].text = output.ToString();
-
-        //if textures are ready:
-        //
-        //diceOutputImage.sprite = diceSprites[output - 1];
     }
 }
