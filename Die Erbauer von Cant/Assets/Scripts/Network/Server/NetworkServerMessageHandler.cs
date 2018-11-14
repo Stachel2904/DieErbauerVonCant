@@ -10,13 +10,13 @@ public class NetworkServerMessageHandler : MonoBehaviour {
     public int blockedSlots = 0;
 
     private void Update() {
-        if(init == true) {
-            if(blockedSlots == slots) {
-                NetworkServer.dontListen = true;
-            }else if(blockedSlots < slots && NetworkServer.dontListen == true) {
-                NetworkServer.dontListen = false;
-            }
-        }
+        //if(init == true) {
+        //    if(blockedSlots == slots) {
+        //        NetworkServer.dontListen = true;
+        //    }else if(blockedSlots < slots && NetworkServer.dontListen == true) {
+        //        NetworkServer.dontListen = false;
+        //    }
+        //}
     }
     public void InitRecivingMessages() {
         NetworkServer.RegisterHandler(888, ServerReciveMessage);
