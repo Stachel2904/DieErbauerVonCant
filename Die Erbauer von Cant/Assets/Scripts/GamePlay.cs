@@ -6,7 +6,7 @@ public enum Players
 {
     WHITE,
     BLUE,
-    YELLOW,
+    ORANGE,
     RED
 }
 
