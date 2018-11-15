@@ -61,19 +61,19 @@ public class NetworkServerGUI : MonoBehaviour {
                 switch (_clientID_) {
                     case 1:
                         player1.GetComponent<Text>().text = "Player";
-                        player1.GetComponent<Image>().color = Color.white;
+                        player1.GetComponent<Image>().color = Color.gray;
                         break;
                     case 2:
                         player2.GetComponent<Text>().text = "Player";
-                        player2.GetComponent<Image>().color = Color.white;
+                        player2.GetComponent<Image>().color = Color.gray;
                         break;
                     case 3:
                         player3.GetComponent<Text>().text = "Player";
-                        player3.GetComponent<Image>().color = Color.white;
+                        player3.GetComponent<Image>().color = Color.gray;
                         break;
                     case 4:
                         player4.GetComponent<Text>().text = "Player";
-                        player4.GetComponent<Image>().color = Color.white;
+                        player4.GetComponent<Image>().color = Color.gray;
                         break;
                 }
                 break;

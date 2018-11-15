@@ -8,11 +8,10 @@ public class NetworkServerUI : MonoBehaviour {
     int defaultPort = 5555;
     public int serverPort = -1;
     int maxPlayer = 4;
-	
-    private void Start(){
-        StartServer(); 
-    }
 
+    private void Start(){
+        StartServer();
+    }
 	public void StartServer(){ 
         serverPort = InitServer();
         if (serverPort != -1) {
@@ -36,7 +35,7 @@ public class NetworkServerUI : MonoBehaviour {
             Debug.Log("Server created with default port: " + defaultPort);
         }
         else {
-            Debug.Log("Failed to create with default port");
+            Debug.Log("Failed to create Server with default port");
             for(int tempPort = minPort; tempPort <= maxPort; tempPort++) {
                 if(tempPort != defaultPort) {
                     if (NetworkServer.Listen(tempPort)) {
@@ -44,7 +43,7 @@ public class NetworkServerUI : MonoBehaviour {
                         break;
                     }
                     if(tempPort == maxPort) {
-                        Debug.LogError("Failed to create Server, no port between 5555 and 5565 found!");
+                        Debug.LogError("Failed to create Server, no free port between 5555 and 5565 found!");
                     }
                 }
             }
