@@ -29,27 +29,15 @@ public class NetworkServerMessageHandler : MonoBehaviour {
     private void ServerOnClientConnect(NetworkMessage _message_) {
 
         Debug.Log("[Client ID: " + _message_.conn.connectionId + "] Client connected!");
-
-        RectTransform output = Instantiate(GameObject.Find("Window").transform.GetChild(0).gameObject, GameObject.Find("Window").transform).GetComponent<RectTransform>();
-        output.GetChild(0).GetComponent<Text>().text = _message_.conn.connectionId.ToString();
-        output.Translate(Vector2.down * 30);
-        
+        GetComponent<NetworkServerUI>().AddConnectedPlayer(_message_.conn.connectionId);
+        GetComponent<NetworkServerGUI>().AddConnectedPlayerAvatar(_message_.conn.connectionId);
         //blockedSlots++;
         //Create Player here
     }
     private void ServerOnClientDisconnect(NetworkMessage _message_) {
         Debug.Log("[Client ID: " + _message_.conn.connectionId + "] Client disconnected!");
-
-        GameObject tmp = null;
-        for (int i = 1; i < GameObject.Find("Window").transform.childCount; i++)
-        {
-            if(int.Parse(GameObject.Find("Window").transform.GetChild(i).GetChild(0).gameObject.GetComponent<Text>().text) == _message_.conn.connectionId)
-            {
-                tmp = GameObject.Find("Window").transform.GetChild(i).gameObject;
-            }
-        }
-
-        Destroy(tmp);
+        GetComponent<NetworkServerUI>().RemoveConnectedPlayer(_message_.conn.connectionId);
+        GetComponent<NetworkServerGUI>().RemoveConnectedPlayerAvatar(_message_.conn.connectionId);
         //blockedSlots--;
         //Destroying Player here
     }

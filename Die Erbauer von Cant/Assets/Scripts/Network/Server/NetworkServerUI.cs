@@ -7,13 +7,13 @@ public class NetworkServerUI : MonoBehaviour {
     int maxPort = 5565;
     int defaultPort = 5555;
     public int serverPort = -1;
+    int maxPlayer = 4;
 	
-    private void Start()
-    {
-        StartServer();
+    private void Start(){
+        StartServer(); 
     }
 
-	public void StartServer(){
+	public void StartServer(){ 
         serverPort = InitServer();
         if (serverPort != -1) {
             Debug.Log("Server successfully created on port: " + serverPort);
@@ -50,5 +50,23 @@ public class NetworkServerUI : MonoBehaviour {
             }
         }
         return t_serverPort;
+    }
+    //Handle
+    public void AddConnectedPlayer(int _clientID_) {
+        for (int i = 0; i < maxPlayer; i++) {
+            if (GamePlay.Main.players[i].clientID == -1) { //ToDo: Player muss vor ClientConnect verbunden sein!
+                GamePlay.Main.players[i].clientID = _clientID_;
+                GamePlay.Main.players[i].name = _clientID_.ToString(); //ToDo: Später Namen einfügen
+                break;
+            }
+        }
+    }
+    public void RemoveConnectedPlayer(int _clientID_) {
+        for (int i = 0; i < maxPlayer; i++) {
+            if (GamePlay.Main.players[i].clientID == _clientID_) {
+                GamePlay.Main.players[i].clientID = -1;
+                break;
+            }
+        }
     }
 }
