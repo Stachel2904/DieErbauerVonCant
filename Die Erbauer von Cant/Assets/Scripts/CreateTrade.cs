@@ -7,6 +7,47 @@ public class CreateTrade : MonoBehaviour {
 
     public Trade createdTrade = new Trade();
 
+    [SerializeField]
+    GameObject text1;
+
+    [SerializeField]
+    GameObject text2;
+
+    [SerializeField]
+    GameObject text3;
+
+    [SerializeField]
+    GameObject text4;
+
+    [SerializeField]
+    GameObject text5;
+
+    [SerializeField]
+    GameObject text6;
+
+    [SerializeField]
+    GameObject text7;
+
+    [SerializeField]
+    GameObject text8;
+
+    [SerializeField]
+    GameObject text9;
+
+    [SerializeField]
+    GameObject text10;
+
+    Text givenBrickText;
+    Text givenWheatText;
+    Text givenOreText;
+    Text givenWoodText;
+    Text givenWoolText;
+
+    Text askedBrickText;
+    Text askedWheatText;
+    Text askedOreText;
+    Text askedWoodText;
+    Text askedWoolText;
 
     int givenBrick = 0;
     int givenWheat = 0;
@@ -20,21 +61,50 @@ public class CreateTrade : MonoBehaviour {
     int askedWood = 0;
     int askedWool = 0;
 
+    public void Start()
+    {
+        givenBrickText = text1.GetComponent<Text>();
+        //givenWheatText = text2.GetComponent<Text>();
+        //givenOreText = text3.GetComponent<Text>();
+        //givenWoodText = text4.GetComponent<Text>();
+        //givenWoolText = text5.GetComponent<Text>();
+
+        //askedBrickText = text6.GetComponent<Text>();
+        //askedWheatText = text7.GetComponent<Text>();
+        //askedOreText = text8.GetComponent<Text>();
+        //askedWoodText = text9.GetComponent<Text>();
+        //askedWoolText = text10.GetComponent<Text>();
+
+    }
+    private void Update()
+    {
+        givenBrickText.text = givenBrick.ToString();
+        //givenWheatText.text = givenWheat.ToString();
+        //givenOreText.text = givenOre.ToString();
+        //givenWoodText.text = givenWood.ToString();
+        //givenWoolText.text = givenWool.ToString();
+
+        //askedBrickText.text = askedBrick.ToString();
+        //askedWheatText.text = askedWheat.ToString();
+        //askedOreText.text = askedOre.ToString();
+        //askedWoodText.text = askedWood.ToString();
+        //askedWoolText.text = askedWool.ToString();
+    }
 
     public void createAskedPlayer(string name)
     {
         createdTrade.taker = name;
     }
+
     public void inkrementGivenRessource(string name)
     {
+        Debug.Log(name);
         switch (name)
         {
             case "Brick":
-                {
-                    createdTrade.givenRessources[givenBrick] = name;
-                    givenBrick++;
-                    
-                }
+                Debug.Log(name);
+                createdTrade.givenRessources[givenBrick] = name;
+                givenBrick++;
                 break;
             case "Wheat":
                 {
@@ -63,6 +133,8 @@ public class CreateTrade : MonoBehaviour {
             default:
                 break;
         }
+
+        
     }
 
     public void dekrementGivenRessource(string name)
