@@ -6,7 +6,7 @@ public enum Players
 {
     WHITE,
     BLUE,
-    YELLOW,
+    ORANGE,
     RED
 }
 
@@ -41,7 +41,7 @@ public class GamePlay : MonoBehaviour
         {
             new Player(1, "Player1", "White"),
             new Player(2, "Player2", "blue"),
-            new Player(3, "Player3", "yellow"),
+            new Player(3, "Player3", "orange"),
             new Player(4, "Player4", "red")
         };
         currentPlayer = 0;
