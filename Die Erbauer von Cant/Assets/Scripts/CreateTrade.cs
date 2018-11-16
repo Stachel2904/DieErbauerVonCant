@@ -65,6 +65,8 @@ public class CreateTrade : MonoBehaviour {
         askedWoodText = text9.GetComponent<Text>();
         askedWoolText = text10.GetComponent<Text>();
 
+        createdTrade.giver = GamePlay.Main.GetCurrentPlayer().name;
+
     }
     private void Update()
     {
@@ -86,6 +88,7 @@ public class CreateTrade : MonoBehaviour {
         createdTrade.taker = name;
     }
 
+
     public void inkrementGivenRessource(string name)
     {
         createdTrade.AddGivenRessource(name);
@@ -106,6 +109,11 @@ public class CreateTrade : MonoBehaviour {
     public void dekrementAskedRessource(string name)
     {
         createdTrade.RemoveAskedRessource(name);
+    }
+
+    public void FinishPlayerTrade()
+    {
+        GamePlay.Main.Trading(createdTrade);
     }
 
     public void ResetTrade()
