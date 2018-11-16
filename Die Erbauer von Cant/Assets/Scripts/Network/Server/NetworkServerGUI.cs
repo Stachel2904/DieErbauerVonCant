@@ -31,20 +31,23 @@ public class NetworkServerGUI : MonoBehaviour {
                 }
                 switch (_clientID_) {
                     case 1:
-                        Debug.Log(player1);
                         player1.transform.Find("Playername").GetComponent<Text>().text = GamePlay.Main.players[i].name;
+                        GamePlay.Main.players[i].avatar = "Player1";
                         player1.GetComponent<Image>().color = ctemp;
                         break;
                     case 2:
                         player2.transform.Find("Playername").GetComponent<Text>().text = GamePlay.Main.players[i].name;
+                        GamePlay.Main.players[i].avatar = "Player2";
                         player2.GetComponent<Image>().color = ctemp;
                         break;
                     case 3:
                         player3.transform.Find("Playername").GetComponent<Text>().text = GamePlay.Main.players[i].name;
+                        GamePlay.Main.players[i].avatar = "Player3";
                         player3.GetComponent<Image>().color = ctemp;
                         break;
                     case 4:
                         player4.transform.Find("Playername").GetComponent<Text>().text = GamePlay.Main.players[i].name;
+                        GamePlay.Main.players[i].avatar = "Player4";
                         player4.GetComponent<Image>().color = ctemp;
                         break;
                 }
@@ -59,22 +62,26 @@ public class NetworkServerGUI : MonoBehaviour {
     public void RemoveConnectedPlayerAvatar(int _clientID_) {
         for (int i = 0; i < 4; i++) {
             if (GamePlay.Main.players[i].clientID == _clientID_) {
-                switch (_clientID_) {
-                    case 1:
-                        player1.GetComponent<Text>().text = "Player";
+                switch (GamePlay.Main.players[i].avatar) {
+                    case "Player1":
+                        player1.transform.Find("Playername").GetComponent<Text>().text = "Player";
                         player1.GetComponent<Image>().color = Color.gray;
+                        GamePlay.Main.players[i].avatar = "DEFAULT";
                         break;
-                    case 2:
-                        player2.GetComponent<Text>().text = "Player";
+                    case "Player2":
+                        player2.transform.Find("Playername").GetComponent<Text>().text = "Player";
                         player2.GetComponent<Image>().color = Color.gray;
+                        GamePlay.Main.players[i].avatar = "DEFAULT";
                         break;
-                    case 3:
-                        player3.GetComponent<Text>().text = "Player";
+                    case "Player3":
+                        player3.transform.Find("Playername").GetComponent<Text>().text = "Player";
                         player3.GetComponent<Image>().color = Color.gray;
+                        GamePlay.Main.players[i].avatar = "DEFAULT";
                         break;
-                    case 4:
-                        player4.GetComponent<Text>().text = "Player";
+                    case "Player4":
+                        player4.transform.Find("Playername").GetComponent<Text>().text = "Player";
                         player4.GetComponent<Image>().color = Color.gray;
+                        GamePlay.Main.players[i].avatar = "DEFAULT";
                         break;
                 }
                 break;

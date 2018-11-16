@@ -36,8 +36,8 @@ public class NetworkServerMessageHandler : MonoBehaviour {
     }
     private void ServerOnClientDisconnect(NetworkMessage _message_) {
         Debug.Log("[Client ID: " + _message_.conn.connectionId + "] Client disconnected!");
-        GetComponent<NetworkServerUI>().RemoveConnectedPlayer(_message_.conn.connectionId);
         GetComponent<NetworkServerGUI>().RemoveConnectedPlayerAvatar(_message_.conn.connectionId);
+        GetComponent<NetworkServerUI>().RemoveConnectedPlayer(_message_.conn.connectionId);
         //blockedSlots--;
         //Destroying Player here
     }

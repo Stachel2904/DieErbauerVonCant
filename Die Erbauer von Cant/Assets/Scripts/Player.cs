@@ -9,6 +9,7 @@ public class Player
     public string name;
     public string color;
     public int clientID = -1;
+    public string avatar = "DEFAULT";
     private int victoryPoints = 0;
 
     public Player(string _name, string _color)
