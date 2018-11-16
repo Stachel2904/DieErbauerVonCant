@@ -9,7 +9,9 @@ public class Player
     public string name;
     public string color;
     public int clientID = -1;
-    private int victoryPoints = 0;
+    public string avatar = "DEFAULT";
+    public int victoryPoints = 0;
+    public int hand = 0;
 
     public Player(string _name, string _color)
     {
@@ -22,7 +24,7 @@ public class Player
 	public void AddVictoryPoints()
     {
         victoryPoints++;
-
+        GameObject.Find("NetworkServerManager").GetComponent<NetworkServerGUI>().UpdateVictoryPoints(color);
         if (victoryPoints == 10)
         {
             GamePlay.Main.GameWon(color);
