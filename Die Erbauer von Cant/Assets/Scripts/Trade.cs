@@ -20,8 +20,6 @@ public class Trade
                 {
                     if (GamePlay.Main.GetCurrentPlayer().inventory.inven[addedRessource] > givenRessources[0])
                         givenRessources[0]++;
-                    
-                    
                 }
                 break;
             case "Wheat":
