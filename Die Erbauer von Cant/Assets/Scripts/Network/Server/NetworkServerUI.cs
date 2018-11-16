@@ -53,7 +53,8 @@ public class NetworkServerUI : MonoBehaviour {
     //Handle
     public void AddConnectedPlayer(int _clientID_) {
         for (int i = 0; i < maxPlayer; i++) {
-            if (GamePlay.Main.players[i].clientID == -1) { //ToDo: Player muss vor ClientConnect verbunden sein!
+            Debug.Log(GamePlay.Main);
+            if (GamePlay.Main.players[i].clientID == -1) { //ToDo: Player muss vor ClientConnect erstellt sein!
                 GamePlay.Main.players[i].clientID = _clientID_;
                 GamePlay.Main.players[i].name = _clientID_.ToString(); //ToDo: Später Namen einfügen
                 break;

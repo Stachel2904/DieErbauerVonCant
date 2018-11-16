@@ -31,19 +31,20 @@ public class NetworkServerGUI : MonoBehaviour {
                 }
                 switch (_clientID_) {
                     case 1:
-                        player1.GetComponent<Text>().text = GamePlay.Main.players[i].name;
+                        Debug.Log(player1);
+                        player1.transform.Find("Playername").GetComponent<Text>().text = GamePlay.Main.players[i].name;
                         player1.GetComponent<Image>().color = ctemp;
                         break;
                     case 2:
-                        player2.GetComponent<Text>().text = GamePlay.Main.players[i].name;
+                        player2.transform.Find("Playername").GetComponent<Text>().text = GamePlay.Main.players[i].name;
                         player2.GetComponent<Image>().color = ctemp;
                         break;
                     case 3:
-                        player3.GetComponent<Text>().text = GamePlay.Main.players[i].name;
+                        player3.transform.Find("Playername").GetComponent<Text>().text = GamePlay.Main.players[i].name;
                         player3.GetComponent<Image>().color = ctemp;
                         break;
                     case 4:
-                        player4.GetComponent<Text>().text = GamePlay.Main.players[i].name;
+                        player4.transform.Find("Playername").GetComponent<Text>().text = GamePlay.Main.players[i].name;
                         player4.GetComponent<Image>().color = ctemp;
                         break;
                 }

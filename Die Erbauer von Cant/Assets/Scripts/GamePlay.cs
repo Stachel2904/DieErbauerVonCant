@@ -20,7 +20,8 @@ public class GamePlay : MonoBehaviour
         {
             if(main == null)
             {
-                main = new GamePlay();
+                main = GameObject.Find("GamePlayTest").GetComponent<GamePlay>();
+                //main = new GamePlay();
             }
             return main;
         }
@@ -39,9 +40,9 @@ public class GamePlay : MonoBehaviour
     {
         players = new Player[]
         {
-            new Player("Player1", "white"),
+            new Player("Player1", "yellow"),
             new Player("Player2", "blue"),
-            new Player("Player3", "yellow"),
+            new Player("Player3", "white"),
             new Player("Player4", "red")
         };
         currentPlayer = 0;
