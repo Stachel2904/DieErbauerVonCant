@@ -10,6 +10,7 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         client = _client_;
         client.RegisterHandler(888, ReciveMessageFromServer);
         client.RegisterHandler(889, ReciveTradeMessage);
+        client.RegisterHandler(890, ReciveAcceptMessage);
         client.RegisterHandler(MsgType.Connect, OnConnect);
         client.RegisterHandler(MsgType.Disconnect, OnDisconnect);
     }
@@ -25,11 +26,11 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         GameObject.Find("Window").transform.Find("Addresses").gameObject.SetActive(true);
     }
     //Send to Server
-    public void SendToServer(string _message_) {
+    public void SendToServer(string _command_) {
         if (client.isConnected) {
-            StringMessage msg = new StringMessage();
-            msg.value = _message_;
-            bool success = client.Send(888, msg);
+            NetMessage netMSG = new NetMessage();
+            netMSG.command = _command_;
+            bool success = client.Send(888, netMSG);
             if (!success) {
                 Debug.LogError("Failed to send message!");
             }
@@ -51,15 +52,46 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
             Debug.LogError("Client is not connected! Failed to send trademessage!");
         }
     }
+    public void SendAcceptToServer(string _AcceptType_, bool _isAccepted_) {
+        if (client.isConnected) {
+            AcceptMessage acceptMSG = new AcceptMessage();
+            acceptMSG.acceptType = _AcceptType_;
+            acceptMSG.isAccepted = _isAccepted_;
+            bool success = client.Send(890, acceptMSG);
+            if (!success) {
+                Debug.LogError("Failed to send acceptmessage!");
+            }
+        }
+    }
     //Recive from Server
     private void ReciveMessageFromServer(NetworkMessage _message_) {
         Debug.Log("RECIVED A MESSAGE!");
-        StringMessage msg = new StringMessage();
-        msg.value = _message_.ReadMessage<StringMessage>().value;
+        NetMessage netMSG = new NetMessage();
+        switch (_message_.ReadMessage<NetMessage>().command) {
+            case "Go":
+
+                break;
+            default:
+                break;
+        }
     }
     private void ReciveTradeMessage(NetworkMessage _message_) {
         Debug.Log("RECIVED A TRADEMESSAGE!");
         TradeMessage tradeMSG = new TradeMessage();
         tradeMSG.trade = _message_.ReadMessage<TradeMessage>().trade;
+    }
+    private void ReciveAcceptMessage(NetworkMessage _message_) {
+        Debug.Log("RECIVED A ACCEPTMESSAGE!");
+        AcceptMessage acceptMSG = new AcceptMessage();
+        acceptMSG.isAccepted = _message_.ReadMessage<AcceptMessage>().isAccepted;
+        switch (_message_.ReadMessage<AcceptMessage>().acceptType) {
+            case "Trade":
+                //Tradeaccept stuff
+                break;
+            case "Ready":
+            //Readyaccept stuff
+            default:
+                break;
+        }
     }
 }

@@ -33,10 +33,7 @@ public class NetworkClientUI : MonoBehaviour {
         newAddress.transform.Find("Port").gameObject.GetComponent<Text>().text = cachedPort.ToString();
         newAddress.Translate(Vector2.down * 20);
         newAddress.gameObject.AddComponent<Button>().onClick.AddListener(delegate { ConnectToServer(cachedIpAddress, cachedPort); });
-
-
     }
-
     //Connect
     public void ConnectToServer(string _ipAddress_, int _port_) {
         client.Connect(_ipAddress_, _port_);

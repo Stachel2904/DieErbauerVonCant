@@ -3,14 +3,21 @@ using UnityEngine.UI;
 
 public class NetworkServerGUI : MonoBehaviour {
 
-    public Image player1;
-    public Image player2;
-    public Image player3;
-    public Image player4;
+    [SerializeField]
+    Image player1;
+    [SerializeField]
+    Image player2;
+    [SerializeField]
+    Image player3;
+    [SerializeField]
+    Image player4;
     Color ctemp;
 
     private void Start() {
-        //ToDo: Avatare aufploppen lassen (Hier also deaktivieren bei Start)
+        player1.gameObject.SetActive(false);
+        player2.gameObject.SetActive(false);
+        player3.gameObject.SetActive(false);
+        player4.gameObject.SetActive(false);
     }
     public void AddConnectedPlayerAvatar(int _clientID_) {
         for (int i = 0; i < 4; i++) {
@@ -120,7 +127,12 @@ public class NetworkServerGUI : MonoBehaviour {
             }
         }
     }
+
+    //
+    //
+    //
     private void AddAvatar(int _player_, Image _playerAvatar_) {
+        _playerAvatar_.gameObject.SetActive(true);
         _playerAvatar_.transform.Find("Playername").GetComponent<Text>().text = GamePlay.Main.players[_player_].name;
         GamePlay.Main.players[_player_].avatar = "Player1";
         _playerAvatar_.GetComponent<Image>().color = ctemp;
@@ -133,5 +145,6 @@ public class NetworkServerGUI : MonoBehaviour {
         _playerAvatar_.transform.Find("Victorypoints").GetComponent<Text>().text = "0";
         GamePlay.Main.players[_player_].hand = 0;
         _playerAvatar_.transform.Find("Hand").GetComponent<Text>().text = "0";
+        _playerAvatar_.gameObject.SetActive(false);
     }
 }

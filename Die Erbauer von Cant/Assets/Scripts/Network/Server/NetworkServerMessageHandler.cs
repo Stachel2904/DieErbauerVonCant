@@ -21,6 +21,7 @@ public class NetworkServerMessageHandler : MonoBehaviour {
     public void InitRecivingMessages() {
         NetworkServer.RegisterHandler(888, ServerReciveMessage);
         NetworkServer.RegisterHandler(889, ReciveTradeMessage);
+        NetworkServer.RegisterHandler(890, ReciveAcceptMessage);
         NetworkServer.RegisterHandler(MsgType.Connect, ServerOnClientConnect);
         NetworkServer.RegisterHandler(MsgType.Disconnect, ServerOnClientDisconnect);
         //init = true;
@@ -45,13 +46,17 @@ public class NetworkServerMessageHandler : MonoBehaviour {
     private void ServerReciveMessage(NetworkMessage _message_) {
         int clientID = _message_.conn.connectionId;
         Debug.Log("RECIVED A MESSAGE FROM CLIENT WITH THE ID: " + clientID);
-        StringMessage msg = new StringMessage();
-        msg.value = _message_.ReadMessage<StringMessage>().value;
-        Debug.Log("[Message:] " + msg.value);
-
-        switch (msg.value){
+        NetMessage netMSG = new NetMessage();
+        switch (_message_.ReadMessage<NetMessage>().command){
             case "Roll Dice":
                 DiceGenerator.Main.DiceRoll();
+                break;
+            case "Next Player":
+                //NextPlayerStuff
+                //SendToClient(ID, "Go");
+                break;
+            default:
+                Debug.LogError("Can not read message from Client: " + _message_.conn.connectionId);
                 break;
         }
     }
@@ -62,16 +67,42 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         tradeMSG.trade = _message_.ReadMessage<TradeMessage>().trade;
         //Tradestuff here
     }
+    //Recive AcceptMessage
+    private void ReciveAcceptMessage(NetworkMessage _message_) {
+        Debug.Log("RECIVED A ACCEPTMESSAGE!");
+        AcceptMessage acceptMSG = new AcceptMessage();
+        acceptMSG.isAccepted = _message_.ReadMessage<AcceptMessage>().isAccepted;
+        switch (_message_.ReadMessage<AcceptMessage>().acceptType) {
+            case "Trade":
+                //Tradeaccept stuff
+                break;
+            case "Go":
+                //NextPlayerStuff
+                break;
+            case "Ready":
+                //Readyaccept stuff
+            default:
+                break;
+        }
+    }
     //Send to Client
-    public void ServerSendToClient(int _ClientID_, string _NetMsg_) {
-        StringMessage msg = new StringMessage();
-        msg.value = _NetMsg_;
-        NetworkServer.SendToClient(_ClientID_, 888, msg);
+    public void SendToClient(int _ClientID_, string _command_) {
+        NetMessage netMSG = new NetMessage();
+        netMSG.command = _command_;
+        //netMSG.value = _value_;
+        NetworkServer.SendToClient(_ClientID_, 888, netMSG);
     }
     //Send trade to Client
     public void SendTradeToClient(int _ClientID_, Trade _trade_) {
         TradeMessage tradeMSG = new TradeMessage();
         tradeMSG.trade = _trade_;
         NetworkServer.SendToClient(_ClientID_, 889, tradeMSG);
+    }
+    //Send Accept To Server
+    public void SendAcceptToClient(int _ClientID_, string _AcceptType_, bool _isAccepted_) {
+        AcceptMessage acceptMSG = new AcceptMessage();
+        acceptMSG.acceptType = _AcceptType_;
+        acceptMSG.isAccepted = _isAccepted_;
+        NetworkServer.SendToClient(_ClientID_, 890, acceptMSG);
     }
 }
