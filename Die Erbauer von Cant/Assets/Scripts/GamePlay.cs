@@ -20,7 +20,7 @@ public class GamePlay : MonoBehaviour
         {
             if(main == null)
             {
-                main = new GamePlay();
+                main = GameObject.Find("GamePlay").GetComponent<GamePlay>();
             }
             return main;
         }
@@ -45,6 +45,8 @@ public class GamePlay : MonoBehaviour
             new Player("Player4", "red")
         };
         currentPlayer = 0;
+        // Delete this // Debugging stuff
+        Main.GetCurrentPlayer().inventory.AddItem("Brick", 5);
 	}
 
     public void NextPlayer()
@@ -61,7 +63,6 @@ public class GamePlay : MonoBehaviour
 
     public Player GetCurrentPlayer()
     {
-        
         return players[currentPlayer];
     }
 
@@ -166,14 +167,14 @@ public class GamePlay : MonoBehaviour
             {
                 for (int j = 0; j < tradeOffer.givenRessources.Length; j++)
                 {
-                    Main.GetCurrentPlayer().inventory.RemoveItem(tradeOffer.givenRessources[i], 1);
+                    //Main.GetCurrentPlayer().inventory.RemoveItem(tradeOffer.givenRessources[i], 1);
                 }
                 for (int j = 0; j < tradeOffer.givenRessources.Length; j++)
                 {
-                    Main.GetCurrentPlayer().inventory.AddItem(tradeOffer.askedRessources[i], 1);
+                    //Main.GetCurrentPlayer().inventory.AddItem(tradeOffer.askedRessources[i], 1);
                 }
-            }
-
+            } 
+             
             if (players[i].name == tradeOffer.taker)
             {
                 Player taker;
@@ -207,11 +208,11 @@ public class GamePlay : MonoBehaviour
                     
                     for (int j = 0; j < tradeOffer.givenRessources.Length; j++)
                     {
-                        taker.inventory.RemoveItem(tradeOffer.askedRessources[i], 1);
+                        //taker.inventory.RemoveItem(tradeOffer.askedRessources[i], 1);
                     }
                     for (int j = 0; j < tradeOffer.givenRessources.Length; j++)
                     {
-                        taker.inventory.AddItem(tradeOffer.givenRessources[i], 1);
+                        //taker.inventory.AddItem(tradeOffer.givenRessources[i], 1);
                     }
                 }
                 

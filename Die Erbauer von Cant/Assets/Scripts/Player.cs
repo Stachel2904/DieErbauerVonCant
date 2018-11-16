@@ -19,7 +19,7 @@ public class Player
 	/// <summary>
     /// inkrement Victory Point by 1, if the player has 10 points, call the Win Function
     /// </summary>
-	public void GetVictoryPoints()
+	public void AddVictoryPoints()
     {
         victoryPoints++;
 

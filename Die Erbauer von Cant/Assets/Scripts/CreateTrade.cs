@@ -49,46 +49,36 @@ public class CreateTrade : MonoBehaviour {
     Text askedWoodText;
     Text askedWoolText;
 
-    int givenBrick = 0;
-    int givenWheat = 0;
-    int givenOre = 0;
-    int givenWood = 0;
-    int givenWool = 0;
-
-    int askedBrick = 0;
-    int askedWheat = 0;
-    int askedOre = 0;
-    int askedWood = 0;
-    int askedWool = 0;
+    string temp4to1Ressource;
 
     public void Start()
     {
         givenBrickText = text1.GetComponent<Text>();
-        //givenWheatText = text2.GetComponent<Text>();
-        //givenOreText = text3.GetComponent<Text>();
-        //givenWoodText = text4.GetComponent<Text>();
-        //givenWoolText = text5.GetComponent<Text>();
+        givenWheatText = text2.GetComponent<Text>();
+        givenOreText = text3.GetComponent<Text>();
+        givenWoodText = text4.GetComponent<Text>();
+        givenWoolText = text5.GetComponent<Text>();
 
-        //askedBrickText = text6.GetComponent<Text>();
-        //askedWheatText = text7.GetComponent<Text>();
-        //askedOreText = text8.GetComponent<Text>();
-        //askedWoodText = text9.GetComponent<Text>();
-        //askedWoolText = text10.GetComponent<Text>();
+        askedBrickText = text6.GetComponent<Text>();
+        askedWheatText = text7.GetComponent<Text>();
+        askedOreText = text8.GetComponent<Text>();
+        askedWoodText = text9.GetComponent<Text>();
+        askedWoolText = text10.GetComponent<Text>();
 
     }
     private void Update()
     {
-        givenBrickText.text = givenBrick.ToString();
-        //givenWheatText.text = givenWheat.ToString();
-        //givenOreText.text = givenOre.ToString();
-        //givenWoodText.text = givenWood.ToString();
-        //givenWoolText.text = givenWool.ToString();
+        givenBrickText.text = createdTrade.givenRessources[0].ToString();
+        givenWheatText.text = createdTrade.givenRessources[1].ToString();
+        givenOreText.text = createdTrade.givenRessources[2].ToString();
+        givenWoodText.text = createdTrade.givenRessources[3].ToString();
+        givenWoolText.text = createdTrade.givenRessources[4].ToString();
 
-        //askedBrickText.text = askedBrick.ToString();
-        //askedWheatText.text = askedWheat.ToString();
-        //askedOreText.text = askedOre.ToString();
-        //askedWoodText.text = askedWood.ToString();
-        //askedWoolText.text = askedWool.ToString();
+        askedBrickText.text = createdTrade.askedRessources[0].ToString();
+        askedWheatText.text = createdTrade.askedRessources[1].ToString();
+        askedOreText.text = createdTrade.askedRessources[2].ToString();
+        askedWoodText.text = createdTrade.askedRessources[3].ToString();
+        askedWoolText.text = createdTrade.askedRessources[4].ToString();
     }
 
     public void createAskedPlayer(string name)
@@ -98,161 +88,99 @@ public class CreateTrade : MonoBehaviour {
 
     public void inkrementGivenRessource(string name)
     {
-        Debug.Log(name);
-        switch (name)
-        {
-            case "Brick":
-                Debug.Log(name);
-                createdTrade.givenRessources[givenBrick] = name;
-                givenBrick++;
-                break;
-            case "Wheat":
-                {
-                    createdTrade.givenRessources[givenWheat] = name;
-                    givenWheat++;
-                }
-                break;
-            case "Ore":
-                {
-                    createdTrade.givenRessources[givenOre] = name;
-                    givenOre++;
-                }
-                break;
-            case "Wood":
-                {
-                    createdTrade.givenRessources[givenWood] = name;
-                    givenWood++;
-                }
-                break;
-            case "Wool":
-                {
-                    createdTrade.givenRessources[givenWool] = name;
-                    givenWool++;
-                }
-                break;
-            default:
-                break;
-        }
-
-        
+        createdTrade.AddGivenRessource(name);
     }
 
     public void dekrementGivenRessource(string name)
     {
-        switch (name)
-        {
-            case "Brick":
-                {
-                    createdTrade.givenRessources[givenBrick] = null;
-                    givenBrick--;
-                }
-                break;
-            case "Wheat":
-                {
-                    createdTrade.givenRessources[givenWheat] = null;
-                    givenWheat--;
-                }
-                break;
-            case "Ore":
-                {
-                    createdTrade.givenRessources[givenOre] = null;
-                    givenOre--;
-                }
-                break;
-            case "Wood":
-                {
-                    createdTrade.givenRessources[givenWood] = null;
-                    givenWood--;
-                }
-                break;
-            case "Wool":
-                {
-                    createdTrade.givenRessources[givenWool] = null;
-                    givenWool--;
-                }
-                break;
-            default:
-                break;
-        }
+        createdTrade.RemoveGivenRessource(name);
     }
 
 
 
     public void inkrementAskedRessource(string name)
     {
-        switch (name)
-        {
-            case "Brick":
-                {
-                    createdTrade.givenRessources[askedBrick] = name;
-                    askedBrick++;
-                }
-                break;
-            case "Wheat":
-                {
-                    createdTrade.givenRessources[askedWheat] = name;
-                    askedWheat++;
-                }
-                break;
-            case "Ore":
-                {
-                    createdTrade.givenRessources[askedOre] = name;
-                    askedOre++;
-                }
-                break;
-            case "Wood":
-                {
-                    createdTrade.givenRessources[askedWood] = name;
-                    askedWood++;
-                }
-                break;
-            case "Wool":
-                {
-                    createdTrade.givenRessources[askedWool] = name;
-                    askedWool++;
-                }
-                break;
-            default:
-                break;
-        }
+        createdTrade.AddAskedRessource(name);
     }
 
     public void dekrementAskedRessource(string name)
     {
-        switch (name)
+        createdTrade.RemoveAskedRessource(name);
+    }
+
+    public void ResetTrade()
+    {
+        createdTrade.givenRessources[0] = 0;
+        createdTrade.givenRessources[1] = 0;
+        createdTrade.givenRessources[2] = 0;
+        createdTrade.givenRessources[3] = 0;
+        createdTrade.givenRessources[4] = 0;
+
+        createdTrade.askedRessources[0] = 0;
+        createdTrade.askedRessources[1] = 0;
+        createdTrade.askedRessources[2] = 0;
+        createdTrade.askedRessources[3] = 0;
+        createdTrade.askedRessources[4] = 0;
+    }
+
+    // Trade 4 : 1
+
+    public void check4to1Inventory()
+    {
+        if (GamePlay.Main.GetCurrentPlayer().inventory.inven["Brick"] > 3)
         {
-            case "Brick":
-                {
-                    createdTrade.givenRessources[askedBrick] = null;
-                    askedBrick--;
-                }
-                break;
-            case "Wheat":
-                {
-                    createdTrade.givenRessources[askedBrick] = null;
-                    askedBrick--;
-                }
-                break;
-            case "Ore":
-                {
-                    createdTrade.givenRessources[askedOre] = null;
-                    askedOre--;
-                }
-                break;
-            case "Wood":
-                {
-                    createdTrade.givenRessources[askedWood] = null;
-                    askedWood--;
-                }
-                break;
-            case "Wool":
-                {
-                    createdTrade.givenRessources[askedWool] = null;
-                    askedWool--;
-                }
-                break;
-            default:
-                break;
+            GameObject.Find("SystemTradeWindow1").transform.Find("Brick").gameObject.SetActive(true);
         }
+        if (GamePlay.Main.GetCurrentPlayer().inventory.inven["Brick"] <= 3)
+        {
+            GameObject.Find("SystemTradeWindow1").transform.Find("Brick").gameObject.SetActive(false);
+        }
+
+        if (GamePlay.Main.GetCurrentPlayer().inventory.inven["Wheat"] > 3)
+        {
+            GameObject.Find("SystemTradeWindow1").transform.Find("Wheat").gameObject.SetActive(true);
+        }
+        if (GamePlay.Main.GetCurrentPlayer().inventory.inven["Wheat"] <= 3)
+        {
+            GameObject.Find("SystemTradeWindow1").transform.Find("Wheat").gameObject.SetActive(false);
+        }
+
+        if (GamePlay.Main.GetCurrentPlayer().inventory.inven["Ore"] > 3)
+        {
+            GameObject.Find("SystemTradeWindow1").transform.Find("Ore").gameObject.SetActive(true);
+        }
+        if (GamePlay.Main.GetCurrentPlayer().inventory.inven["Ore"] <= 3)
+        {
+            GameObject.Find("SystemTradeWindow1").transform.Find("Ore").gameObject.SetActive(false);
+        }
+
+        if (GamePlay.Main.GetCurrentPlayer().inventory.inven["Wood"] > 3)
+        {
+            GameObject.Find("SystemTradeWindow1").transform.Find("Wood").gameObject.SetActive(true);
+        }
+        if (GamePlay.Main.GetCurrentPlayer().inventory.inven["Wood"] <= 3)
+        {
+            GameObject.Find("SystemTradeWindow1").transform.Find("Wood").gameObject.SetActive(false);
+        }
+
+        if (GamePlay.Main.GetCurrentPlayer().inventory.inven["Wool"] > 3)
+        {
+            GameObject.Find("SystemTradeWindow1").transform.Find("Wool").gameObject.SetActive(true);
+        }
+        if (GamePlay.Main.GetCurrentPlayer().inventory.inven["Wool"] <= 3)
+        {
+            GameObject.Find("SystemTradeWindow1").transform.Find("Wool").gameObject.SetActive(false);
+        }
+    }
+
+    public void tradeInRessource4to1(string name)
+    {
+        temp4to1Ressource = name;
+    }
+
+    public void finish4to1Trade(string ressource)
+    {
+        GamePlay.Main.GetCurrentPlayer().inventory.AddItem(ressource);
+        GamePlay.Main.GetCurrentPlayer().inventory.RemoveItem(temp4to1Ressource, 4);
     }
 }
