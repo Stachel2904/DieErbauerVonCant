@@ -20,7 +20,7 @@ public class GamePlay : MonoBehaviour
         {
             if(main == null)
             {
-                main = GameObject.Find("GamePlayTest").GetComponent<GamePlay>();
+                main = GameObject.Find("GamePlay").GetComponent<GamePlay>();
                 //main = new GamePlay();
             }
             return main;
