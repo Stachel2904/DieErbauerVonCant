@@ -68,7 +68,7 @@ public class NetworkServerUI : MonoBehaviour {
             }
         }
     }
-    public void UpdateClientInventoryGUI(int _ClientID_, string _Type_, int _Amount_) { //Nach Add im Inventar für Type = Name des Rohstoffs und für Amount das Inventar für diesen Typ auslesen
+    public void UpdateClientInventoryGUI(int _ClientID_, string _Type_, int _Amount_) { //Nach Add !!!!! im Inventar für Type = Name des Rohstoffs und für Amount = Anzahl das Inventar für diesen Typ (Rohstoff) auslesen. Dies ist keine Addfunktion. 
         string temp = _Type_ + "|" + _Amount_.ToString();
         GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(_ClientID_, temp);
     }
