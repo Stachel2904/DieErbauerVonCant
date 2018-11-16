@@ -52,8 +52,8 @@ public class NetworkServerMessageHandler : MonoBehaviour {
                 DiceGenerator.Main.DiceRoll();
                 break;
             case "Next Player":
-                //NextPlayerStuff
-                //SendToClient(ID, "Go");
+                //NextPlayerStuffHere
+                SendToClient(GamePlay.Main.GetCurrentPlayer().clientID, "Go");
                 break;
             default:
                 Debug.LogError("Can not read message from Client: " + _message_.conn.connectionId);
@@ -104,5 +104,10 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         acceptMSG.acceptType = _AcceptType_;
         acceptMSG.isAccepted = _isAccepted_;
         NetworkServer.SendToClient(_ClientID_, 890, acceptMSG);
+    }
+    public void SendInventoryToClient(int _ClientID_, string _message_) {
+        NetMessage netMSG = new NetMessage();
+        netMSG.command = _message_;
+        NetworkServer.SendToClient(_ClientID_, 891, netMSG);
     }
 }

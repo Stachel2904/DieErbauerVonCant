@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.Networking.NetworkSystem;
+using UnityEngine.UI;
 
 public class NetworkClientMessagerHandler : MonoBehaviour {
 
@@ -11,6 +11,7 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         client.RegisterHandler(888, ReciveMessageFromServer);
         client.RegisterHandler(889, ReciveTradeMessage);
         client.RegisterHandler(890, ReciveAcceptMessage);
+        client.RegisterHandler(891, ReciveInventoryMessage);
         client.RegisterHandler(MsgType.Connect, OnConnect);
         client.RegisterHandler(MsgType.Disconnect, OnDisconnect);
     }
@@ -69,7 +70,7 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         NetMessage netMSG = new NetMessage();
         switch (_message_.ReadMessage<NetMessage>().command) {
             case "Go":
-
+                //AskForReadyHere (Send AcceptMessage)
                 break;
             default:
                 break;
@@ -89,9 +90,17 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
                 //Tradeaccept stuff
                 break;
             case "Ready":
-            //Readyaccept stuff
+                //Readyaccept stuff
+                break;
             default:
                 break;
         }
+    }
+    private void ReciveInventoryMessage(NetworkMessage _message_) {
+        NetMessage netMSG = new NetMessage();
+        netMSG.command = _message_.ReadMessage<NetMessage>().command;
+        string[] deltas = netMSG.command.Split('|');
+        string name = deltas[0];
+        GameObject.Find("Window").transform.Find("Hand").Find(name).Find("AmountBG").Find("Amount").GetComponent<Text>().text = deltas[1];
     }
 }

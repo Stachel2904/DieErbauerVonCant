@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Inventory
 {
@@ -23,12 +24,9 @@ public class Inventory
         inven.Add("Village", 5);
         inven.Add("Town", 4);
     }
-
-    public void AddItem(string name, int count = 1)
-    {
+    public void AddItem(string name, int count = 1) {
         inven[name] += count;
     }
-
     /// <summary>
     /// Removes Ressources from Inventory. If you remove a Pawn, the Ressources will be automatically removed.
     /// </summary>
