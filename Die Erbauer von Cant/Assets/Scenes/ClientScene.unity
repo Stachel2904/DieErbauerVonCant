@@ -7204,7 +7204,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1418005267
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10322,7 +10322,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1987474802
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10688,7 +10688,6 @@ MonoBehaviour:
   m_ShowGUI: 0
   m_OffsetX: 0
   m_OffsetY: 0
-  timeout: 5
   ipAddress: 
   serverMessage: 
   port: 0

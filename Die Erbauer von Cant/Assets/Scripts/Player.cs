@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+enum PlayerColor {BLUE, RED, ORANGE, WHITE}
+
 public class Player
 {
     public Inventory inventory = new Inventory();

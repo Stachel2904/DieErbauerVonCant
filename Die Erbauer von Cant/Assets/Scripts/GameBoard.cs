@@ -2,9 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class GameBoard
 {
+    //Singleton
+    private static GameBoard mainBoard;
+    public static GameBoard MainBoard
+    {
+        get
+        {
+            if (mainBoard == null)
+            {
+                mainBoard = new GameBoard();
+            }
+            return mainBoard;
+        }
+    }
+
     public Field[] tiles = new Field[16];
+    public Field[][] tilesGrid = new Field[][] { new Field[9], new Field[9], new Field[9], new Field[9], new Field[9]};
+
+    public List<Pawn>[] pawns = new List<Pawn>[]
+    {
+        new List<Pawn>(),
+        new List<Pawn>(),
+        new List<Pawn>(),
+        new List<Pawn>()
+    };
+
     
     public void SpreadResources(int rolledNumber)
     {
@@ -30,41 +55,310 @@ public class GameBoard
 
     public Place[] GetAllPositions(Pawn buildedPawn)
     {
+
+        //Spielfiguren selbst speichern und dann die möglichen bauplätze aus den eigenen spielfiguren ermitteln
+        // Die gebaute Spielfigur wird dann auf das zugehörige Tile gelegt
+
+        PlayerColor pawnColor;
+        switch (buildedPawn.color)
+        {
+            case "Blue":
+                pawnColor = PlayerColor.BLUE;
+                break;
+            case "Red":
+                pawnColor = PlayerColor.RED;
+                break;
+            case "Orange":
+                pawnColor = PlayerColor.ORANGE;
+                break;
+            case "White":
+                pawnColor = PlayerColor.WHITE;
+                break;
+            default:
+                Debug.Log("Die zu bauende Spielfigur hat die undefinierte Farbe: " + buildedPawn.color);
+                return null;
+        }
+
         List<Place> possiblePositions = new List<Place>();
 
-        for (int i = 0; i < tiles.Length; i++)
+        if (buildedPawn.type == "Town")
         {
-            for (int j = 0; j < tiles[i].pawns.Length; j++)
-			{
-                Pawn cachedPawn = tiles[i].pawns[j];
+            for (int i = 0; i < pawns[(int) pawnColor].Count; i++)
+            {
+                Pawn currentPawn = pawns[(int)pawnColor][i];
 
-                //this position 
-                if(cachedPawn != null)
+                if (currentPawn.type == "Village")
                 {
-                    if(cachedPawn.type == "Village" && cachedPawn.color == buildedPawn.color)
+                    Place newPlace = new Place();
+                    newPlace.usedFields = currentPawn.GetFields();
+                    newPlace.posAtField = currentPawn.GetPosAtField();
+                }
+            }
+            return possiblePositions.ToArray();
+        }
+
+        if (buildedPawn.type == "Street")
+        {
+            for (int i = 0; i < pawns[(int)pawnColor].Count; i++)
+            {
+                Pawn currentPawn = pawns[(int)pawnColor][i];
+
+                if (currentPawn.type == "Street")
+                {
+                    Field[] currentFields = currentPawn.GetFields();
+                    int[] currentPosition = currentPawn.GetPosAtField();
+                    for (int j = 0; j < currentFields.Length; j++)
                     {
                         Place newPlace = new Place();
+                        List<Field> newPlaceFields = new List<Field>();
+                        List<int> newPlacePos = new List<int>();
 
-                        if(j == 1)
+                        //Abfrage, ob an der benachbarten position eine Straße ist
+                        //Wenn nicht, dann wird es dem possible Places hinzugefügt
+                        if(currentFields[i].pawns[currentPosition[i] + 2] == null)
                         {
-                            newPlace.usedFields = new Field[]{};
+                            int newPos = currentPosition[i] + 2;
+                            if(newPos >= 12)
+                            {
+                                newPos = newPos - 12;
+                            }
+
+                            //erstes Feld
+                            newPlaceFields.Add(currentFields[i]);
+                            newPlacePos.Add(newPos);
+
+                            //zweites Feld
+                            newPlaceFields.Add(currentFields[i].GetConnectedFields(newPos)[0]);
+
+                            //position des zweiten feldes ermitteln
+                            int posAtSecondField = newPos + 6;
+                            if(posAtSecondField >= 12)
+                            {
+                                posAtSecondField = posAtSecondField - 12;
+                            }
+                            newPlacePos.Add(posAtSecondField);
+
+                            //werte zuweisen
+                            newPlace.usedFields = newPlaceFields.ToArray();
+                            newPlace.posAtField = newPlacePos.ToArray();
+                            possiblePositions.Add(newPlace);
                         }
 
+                        //zurücksetzen der werte
+                        newPlace = new Place();
+                        newPlaceFields = new List<Field>();
+                        newPlacePos = new List<int>();
+
+                        //erstellen einer weiteren neuen platzes
+                        if (currentFields[i].pawns[currentPosition[i] - 2] == null)
+                        {
+                            int newPos = currentPosition[i] - 2;
+                            if (newPos < 0)
+                            {
+                                newPos = newPos + 12;
+                            }
+
+                            //erstes Feld
+                            newPlaceFields.Add(currentFields[i]);
+                            newPlacePos.Add(newPos);
+
+                            //zweites Feld
+                            //Feld ermitteln
+                            Field secondField = null;
+
+                            //check if the place is on the water and may not have a second field
+                            bool fieldOnTop = (currentFields[i].row == 0 && (newPos == 1 || newPos == 11));
+                            bool fieldOnRight = ((currentFields[i].column == 7 || currentFields[i].column == 8) && newPos == 3);
+                            bool fieldOnBottom = (currentFields[i].row == 4 && (newPos == 5 || newPos == 7));
+                            bool fieldOnLeft = ((currentFields[i].column == 0 || currentFields[i].column == 1) && newPos == 9);
+
+                            //erlangen des zweiten feldes
+                            if (!(fieldOnTop && fieldOnRight && fieldOnBottom && fieldOnLeft))
+                            {
+                                if (newPos == 1)
+                                {
+                                    secondField = tilesGrid[currentFields[i].row - 1][currentFields[i].column + 1];
+                                }
+                                else if (newPos == 3)
+                                {
+                                    secondField = tilesGrid[currentFields[i].row][currentFields[i].column + 2];
+                                }
+                                else if (newPos == 5)
+                                {
+                                    secondField = tilesGrid[currentFields[i].row + 1][currentFields[i].column + 1];
+                                }
+                                else if (newPos == 7)
+                                {
+                                    secondField = tilesGrid[currentFields[i].row + 1][currentFields[i].column - 1];
+                                }
+                                else if (newPos == 9)
+                                {
+                                    secondField = tilesGrid[currentFields[i].row][currentFields[i].column - 2];
+                                }
+                                else if (newPos == 11)
+                                {
+                                    secondField = tilesGrid[currentFields[i].row - 1][currentFields[i].column - 1];
+                                }
+                            }
+                            newPlaceFields.Add(secondField);
+
+                            //position des zweiten feldes ermitteln
+                            int posAtSecondField = newPos + 6;
+                            if (posAtSecondField >= 12)
+                            {
+                                posAtSecondField = posAtSecondField - 12;
+                            }
+                            newPlacePos.Add(posAtSecondField);
+
+                            //werte zuweisen
+                            newPlace.usedFields = newPlaceFields.ToArray();
+                            newPlace.posAtField = newPlacePos.ToArray();
+                            possiblePositions.Add(newPlace);
+                        }
                     }
-                    continue;
                 }
+            }
+        }
 
-                if(buildedPawn.type == "Town")
+        if (buildedPawn.type == "Village")
+        {
+            for (int i = 0; i < pawns[(int)pawnColor].Count; i++)
+            {
+                Pawn currentPawn = pawns[(int)pawnColor][i];
+                Field[] currentFields = currentPawn.GetFields();
+                int[] currentPos = currentPawn.GetPosAtField();
+
+                if (currentPawn.type == "Street")
                 {
+                    /////////////////////////////////
+                    //Check first side of street
 
+                    //check if the aimed field is alredy taken
+                    int newPos = currentPos[0] - 1;
+                    if (newPos < 0)
+                    {
+                        newPos = newPos + 12;
+                    }
+                    if (currentFields[0].pawns[newPos] != null)
+                    {
+                        continue;
+                    }
+
+                    //check if first placeinreach is taken
+                    newPos = currentPos[0] + 1;
+                    if (newPos >= 12)
+                    {
+                        newPos = newPos - 12;
+                    }
+                    if (currentFields[0].pawns[newPos + 2] == null)
+                    {
+                        //check if second placeinreach is taken
+                        newPos = currentPos[0] - 3;
+                        if (newPos < 0)
+                        {
+                            newPos = newPos + 12;
+                        }
+                        if (currentFields[0].pawns[newPos - 2] == null)
+                        {
+                            //check if third placeinreach is taken
+                            newPos = currentPos[1] + 1;
+                            if (newPos >= 12)
+                            {
+                                newPos = newPos - 12;
+                            }
+                            if (currentFields[1].pawns[newPos + 2] == null)
+                            {
+                                Place newPlace = new Place();
+                                List<Field> newPlaceFields = new List<Field>();
+                                List<int> newPlacePos = new List<int>();
+
+                                //Get new Fields
+                                //first field and Position
+                                int newPos1 = currentPos[0] - 1;
+                                if (newPos1 < 0)
+                                {
+                                    newPos1 = newPos1 + 12;
+                                }
+                                newPlacePos.Add(newPos);
+                                newPlaceFields.Add(currentFields[0]);
+
+                                //second field and Position
+                                int newPos2 = currentPos[1] + 1;
+                                if (newPos2 >= 12)
+                                {
+                                    newPos2 = newPos2 - 12;
+                                }
+                                newPlacePos.Add(newPos);
+                                newPlaceFields.Add(currentFields[1]);
+
+                                //third field and Position
+                                Field[] thirdFields = currentFields[0].GetConnectedFields(currentPos[0]);
+
+                                //only add third field if there is another field in board
+                                if(thirdFields.Length == 2)
+                                {
+                                    newPlaceFields.Add((thirdFields[0].Equals(currentFields[1])) ? thirdFields[1] : thirdFields[0]);
+                                    
+                                    int newPos3 = 0;
+
+                                    if (newPos1 == 0)
+                                    {
+                                        if (newPos2 == 4)
+                                        {
+                                            newPos3 = 8;
+                                        }
+                                        else if (newPos2 == 8)
+                                        {
+                                            newPos3 = 4;
+                                        }
+                                    }
+                                    if (newPos1 == 4)
+                                    {
+                                        if (newPos2 == 0)
+                                        {
+                                            newPos3 = 8;
+                                        }
+                                        else if (newPos2 == 8)
+                                        {
+                                            newPos3 = 0;
+                                        }
+                                    }
+                                    if (newPos1 == 8)
+                                    {
+                                        if (newPos2 == 4)
+                                        {
+                                            newPos3 = 0;
+                                        }
+                                        else if (newPos2 == 0)
+                                        {
+                                            newPos3 = 4;
+                                        }
+                                    }
+                                    newPlacePos.Add(newPos3);
+                                }                                
+                                
+                                //finish Place
+                                possiblePositions.Add(newPlace);
+                            }
+                        }
+                    }
+
+                    ////////////////////////////////
+                    //check second side of street
+
+                    newPos = currentPos[0] + 1;
+                    if (newPos >= 12)
+                    {
+                        newPos = newPos - 12;
+                    }
+
+                    //check if the aimed field is alredy taken
+                    if (currentFields[0].pawns[newPos] != null)
+                    {
+                        continue;
+                    }
                 }
-
-                if(buildedPawn.type == "Street")
-                {
-
-                }
-
-			}
+            }
         }
 
         return possiblePositions.ToArray();

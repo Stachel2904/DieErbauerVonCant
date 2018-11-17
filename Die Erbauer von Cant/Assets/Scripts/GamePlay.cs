@@ -29,7 +29,6 @@ public class GamePlay : MonoBehaviour
     public Pawn buildedPawn;
     public Player[] players;
     public int currentPlayer;
-    private GameBoard mainBoard = new GameBoard();
 
     // Trading Variables
     public bool dealAccepted = false;
@@ -65,6 +64,10 @@ public class GamePlay : MonoBehaviour
         return players[currentPlayer];
     }
 
+    /// <summary>
+    /// Check if you have enough Ressources and print possible Positions
+    /// </summary>
+    /// <param name="tryBuildedPawn">The pawn you wish to build</param>
     public void TryBuild(Pawn tryBuildedPawn)
     {
         //set buildedPawn back to null
@@ -84,7 +87,37 @@ public class GamePlay : MonoBehaviour
         buildedPawn = tryBuildedPawn;
 
         //Alle möglichen Positionen ausgeben
-        mainBoard.GetAllPositions(buildedPawn);     
+        Place[] possiblePlaces = GameBoard.MainBoard.GetAllPositions(buildedPawn);
+
+        if (possiblePlaces.Length == 0)
+        {
+            Debug.Log("Du kannst nirgendwo ein" + ((buildedPawn.type == "Village") ? " Dorf" : ((buildedPawn.type == "Street") ? "e Straße" : "e Stadt")) + "bauen...");
+        }
+
+        for (int i = 0; i < possiblePlaces.Length; i++)
+        {
+            //create PlaceObject
+            Place createdPlace = Instantiate(Resources.Load<Place>("PlacePrefab"), GameObject.Find("Places").transform);
+            createdPlace.posAtField = possiblePlaces[i].posAtField;
+            createdPlace.usedFields = possiblePlaces[i].usedFields;
+
+            createdPlace.gameObject.transform.position = GetPosInWorld(createdPlace.usedFields[0], createdPlace.posAtField[0]);
+        }
+    }
+
+    private Vector3 GetPosInWorld(Field usedField, int posAtField)
+    {
+        Vector3 result = new Vector3();
+
+        //Get pos of Field
+        result.x = usedField.row;
+        result.y = 0;
+        result.z = usedField.column / 2;
+
+        //get Pos from PosAtField
+        result += Quaternion.Euler(0, 30, 0) * Vector3.forward;
+
+        return result;
     }
 
     public void buildPawn(Place destination)
@@ -99,16 +132,21 @@ public class GamePlay : MonoBehaviour
         GetCurrentPlayer().inventory.RemoveItem(buildedPawn.type);
 
         //An die richtige Position setzen und die angrenzenden Tiles updaten
-        for (int i = 0; i < mainBoard.tiles.Length; i++)
+        for (int i = 0; i < GameBoard.MainBoard.tiles.Length; i++)
         {
             for (int j = 0; j < destination.usedFields.Length; j++)
             {
-                if (mainBoard.tiles[i].Equals(destination.usedFields[j]))
+                if (GameBoard.MainBoard.tiles[i].Equals(destination.usedFields[j]))
                 {
-                    mainBoard.tiles[i].pawns[destination.posAtField[j]] = buildedPawn;
+                    GameBoard.MainBoard.tiles[i].pawns[destination.posAtField[j]] = buildedPawn;
                 }
             }
         }
+
+        //Pawn kreieren (erst nur mesh, dann Farbe, dann position)
+        Transform createdPawn = Instantiate(Resources.Load<Transform>(buildedPawn.type), GameObject.Find("GameBoard").transform);
+        createdPawn.gameObject.GetComponent<MeshRenderer>().material = Resources.Load<Material>(buildedPawn.color);
+        createdPawn.position = destination.gameObject.transform.position;
     }
 
     // TRADING //
