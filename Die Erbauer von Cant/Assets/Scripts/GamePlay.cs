@@ -6,7 +6,7 @@ public enum Players
 {
     WHITE,
     BLUE,
-    YELLOW,
+    ORANGE,
     RED
 }
 
@@ -20,7 +20,7 @@ public class GamePlay : MonoBehaviour
         {
             if(main == null)
             {
-                main = new GamePlay();
+                main = GameObject.Find("GamePlay").GetComponent<GamePlay>();
             }
             return main;
         }
@@ -38,12 +38,14 @@ public class GamePlay : MonoBehaviour
     {
         players = new Player[]
         {
-            new Player(1, "Player1", "White"),
-            new Player(2, "Player2", "blue"),
-            new Player(3, "Player3", "yellow"),
-            new Player(4, "Player4", "red")
+            new Player("Player1", "yellow"),
+            new Player("Player2", "blue"),
+            new Player("Player3", "white"),
+            new Player("Player4", "red")
         };
         currentPlayer = 0;
+        // Delete this // Debugging stuff
+        Main.GetCurrentPlayer().inventory.AddItem("Brick", 5);
 	}
 
     public void NextPlayer()
@@ -60,7 +62,6 @@ public class GamePlay : MonoBehaviour
 
     public Player GetCurrentPlayer()
     {
-        
         return players[currentPlayer];
     }
 
@@ -202,16 +203,19 @@ public class GamePlay : MonoBehaviour
         {
             if (players[i].name == tradeOffer.giver)
             {
-                for (int j = 0; j < tradeOffer.givenRessources.Length; j++)
-                {
-                    Main.GetCurrentPlayer().inventory.RemoveItem(tradeOffer.givenRessources[i], 1);
-                }
-                for (int j = 0; j < tradeOffer.givenRessources.Length; j++)
-                {
-                    Main.GetCurrentPlayer().inventory.AddItem(tradeOffer.askedRessources[i], 1);
-                }
-            }
+                Main.GetCurrentPlayer().inventory.AddItem("Brick", tradeOffer.askedRessources[0]);
+                Main.GetCurrentPlayer().inventory.AddItem("Wheat", tradeOffer.askedRessources[1]);
+                Main.GetCurrentPlayer().inventory.AddItem("Ore", tradeOffer.askedRessources[2]);
+                Main.GetCurrentPlayer().inventory.AddItem("Wood", tradeOffer.askedRessources[3]);
+                Main.GetCurrentPlayer().inventory.AddItem("Wool", tradeOffer.askedRessources[4]);
 
+                Main.GetCurrentPlayer().inventory.RemoveItem("Brick", tradeOffer.givenRessources[0]);
+                Main.GetCurrentPlayer().inventory.RemoveItem("Wheat", tradeOffer.givenRessources[1]);
+                Main.GetCurrentPlayer().inventory.RemoveItem("Ore", tradeOffer.givenRessources[2]);
+                Main.GetCurrentPlayer().inventory.RemoveItem("Wood", tradeOffer.givenRessources[3]);
+                Main.GetCurrentPlayer().inventory.RemoveItem("Wool", tradeOffer.givenRessources[4]);
+            } 
+             
             if (players[i].name == tradeOffer.taker)
             {
                 Player taker;
@@ -242,18 +246,27 @@ public class GamePlay : MonoBehaviour
                 }
                 if (taker != null)
                 {
-                    
-                    for (int j = 0; j < tradeOffer.givenRessources.Length; j++)
-                    {
-                        taker.inventory.RemoveItem(tradeOffer.askedRessources[i], 1);
-                    }
-                    for (int j = 0; j < tradeOffer.givenRessources.Length; j++)
-                    {
-                        taker.inventory.AddItem(tradeOffer.givenRessources[i], 1);
-                    }
-                }
-                
+                    taker.inventory.AddItem("Brick", tradeOffer.givenRessources[0]);
+                    taker.inventory.AddItem("Wheat", tradeOffer.givenRessources[1]);
+                    taker.inventory.AddItem("Ore", tradeOffer.givenRessources[2]);
+                    taker.inventory.AddItem("Wood", tradeOffer.givenRessources[3]);
+                    taker.inventory.AddItem("Wool", tradeOffer.givenRessources[4]);
 
+                    taker.inventory.RemoveItem("Brick", tradeOffer.askedRessources[0]);
+                    taker.inventory.RemoveItem("Wheat", tradeOffer.askedRessources[1]);
+                    taker.inventory.RemoveItem("Ore", tradeOffer.askedRessources[2]);
+                    taker.inventory.RemoveItem("Wood", tradeOffer.askedRessources[3]);
+                    taker.inventory.RemoveItem("Wool", tradeOffer.askedRessources[4]);
+
+                    //for (int j = 0; j < tradeOffer.givenRessources.Length; j++)
+                    //{
+                    //    //taker.inventory.RemoveItem(tradeOffer.askedRessources[i], 1);
+                    //}
+                    //for (int j = 0; j < tradeOffer.givenRessources.Length; j++)
+                    //{
+                    //    //taker.inventory.AddItem(tradeOffer.givenRessources[i], 1);
+                    //}
+                }
             }
         }
     }

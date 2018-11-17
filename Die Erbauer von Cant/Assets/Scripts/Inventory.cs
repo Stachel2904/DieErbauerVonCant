@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Inventory : MonoBehaviour {
-
+public class Inventory
+{
+    
     // Use this for initialization
 
     /// <summary>
@@ -11,23 +13,20 @@ public class Inventory : MonoBehaviour {
     /// </summary>
     public Dictionary<string, int> inven = new Dictionary<string, int>();
 
-    private void Start()
+    public Inventory()
     {
-        inven.Add("Wood", 0);
-        inven.Add("Ore", 0);
         inven.Add("Brick", 0);
-        inven.Add("Wool", 0);
         inven.Add("Wheat", 0);
+        inven.Add("Ore", 0);
+        inven.Add("Wood", 0);
+        inven.Add("Wool", 0);
         inven.Add("Street", 15);
         inven.Add("Village", 5);
         inven.Add("Town", 4);
     }
-
-    public void AddItem(string name, int count = 1)
-    {
+    public void AddItem(string name, int count = 1) {
         inven[name] += count;
     }
-
     /// <summary>
     /// Removes Ressources from Inventory. If you remove a Pawn, the Ressources will be automatically removed.
     /// </summary>

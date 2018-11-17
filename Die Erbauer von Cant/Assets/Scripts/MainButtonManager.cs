@@ -1,13 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MainButtonManager : MonoBehaviour {
 
-    public Button client;
-    public Button server;
+    [SerializeField]
+    Button client;
+    [SerializeField]
+    Button server;
 
 	// Use this for initialization
 	void Start () {

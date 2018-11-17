@@ -28,9 +28,11 @@
 /// </summary>
 public class NetMessage : MessageBase { //ToDo: Anpassen, fehlende Daten ergänzen
     public string command;
-    public string attribut;
-    public int value;
 }
 public class TradeMessage : MessageBase {
     public Trade trade;
+}
+public class AcceptMessage : MessageBase {
+    public string acceptType;
+    public bool isAccepted;
 }
