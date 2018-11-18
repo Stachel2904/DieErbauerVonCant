@@ -78,7 +78,7 @@ public class GamePlay : MonoBehaviour
             players[i].inventory.AddItem("Wool", 2);
         }
 
-        GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient("Start")
+        GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("Start");
     }
 
     public void NextPlayer()
