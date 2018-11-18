@@ -115,14 +115,14 @@ public class GameBoard
 
                         //Abfrage, ob an der benachbarten position eine Straße ist
                         //Wenn nicht, dann wird es dem possible Places hinzugefügt
-                        if(currentFields[i].pawns[currentPosition[i] + 2] == null)
+                        int newPos = currentPosition[i] + 2;
+                        if (newPos >= 12)
                         {
-                            int newPos = currentPosition[i] + 2;
-                            if(newPos >= 12)
-                            {
-                                newPos = newPos - 12;
-                            }
+                            newPos = newPos - 12;
+                        }
 
+                        if (currentFields[i].pawns[newPos] == null)
+                        {
                             //erstes Feld
                             newPlaceFields.Add(currentFields[i]);
                             newPlacePos.Add(newPos);
@@ -150,14 +150,14 @@ public class GameBoard
                         newPlacePos = new List<int>();
 
                         //erstellen einer weiteren neuen platzes
-                        if (currentFields[i].pawns[currentPosition[i] - 2] == null)
+                        newPos = currentPosition[i] - 2;
+                        if (newPos < 0)
                         {
-                            int newPos = currentPosition[i] - 2;
-                            if (newPos < 0)
-                            {
-                                newPos = newPos + 12;
-                            }
+                            newPos = newPos + 12;
+                        }
 
+                        if (currentFields[i].pawns[newPos] == null)
+                        {
                             //erstes Feld
                             newPlaceFields.Add(currentFields[i]);
                             newPlacePos.Add(newPos);
