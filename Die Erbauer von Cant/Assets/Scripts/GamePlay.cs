@@ -85,9 +85,6 @@ public class GamePlay : MonoBehaviour
         return players[currentPlayer];
     }
 
-    // TRADING //
-   
-
     public void UpdateBoard(Pawn buildedPawn, Place destination)
     {
         if(buildedPawn.type != "Street")
@@ -118,26 +115,11 @@ public class GamePlay : MonoBehaviour
     {
 
         GamePlay.Main.GetCurrentPlayer().inventory.AddItem(wantedRessource);
-        string stringTemp = wantedRessource+"|" + Main.GetCurrentPlayer().inventory.inven[wantedRessource].ToString();
-        GameObject.Find("ClientManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(Main.GetCurrentPlayer().clientID, stringTemp);
+        string stringTemp = wantedRessource + "|" + GetCurrentPlayer().inventory.inven[wantedRessource].ToString();
+        GameObject.Find("ClientManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(GetCurrentPlayer().clientID, stringTemp);
         GamePlay.Main.GetCurrentPlayer().inventory.RemoveItem(givenRessource, 4);
-        stringTemp = givenRessource + "|" + Main.GetCurrentPlayer().inventory.inven[givenRessource].ToString();
-        GameObject.Find("ClientManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(Main.GetCurrentPlayer().clientID, stringTemp);
-    }
-
-    /// <summary>
-    /// Make a trade offer with another player
-    /// </summary>
-    /// <param name="tradeOffer"> Contains the struct of the Tradeoffer that has been proposed </param>
-    public void Trytrade(Trade tradeOffer)
-    {
-         
-        // if deal was Accepted
-        if (dealAccepted)
-        {
-            Trading(tradeOffer);
-            dealAccepted = false;
-        }
+        stringTemp = givenRessource + "|" + GetCurrentPlayer().inventory.inven[givenRessource].ToString();
+        GameObject.Find("ClientManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(GetCurrentPlayer().clientID, stringTemp);
     }
 
     /// <summary>
@@ -172,8 +154,8 @@ public class GamePlay : MonoBehaviour
                 Main.GetCurrentPlayer().inventory.RemoveItem("Wool", tradeOffer.givenRessources[4]);
                 stringTemp = "Wool|" + players[i].inventory.inven["Wool"].ToString();
                 GameObject.Find("ClientManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(players[i].clientID, stringTemp);
-            } 
-             
+            }
+
             if (players[i].name == tradeOffer.taker)
             {
                 Player taker;
@@ -183,15 +165,18 @@ public class GamePlay : MonoBehaviour
                     case "player1":
                         {
                             taker = main.players[0];
-                        } break;
+                        }
+                        break;
                     case "player2":
                         {
                             taker = main.players[1];
-                        } break;
+                        }
+                        break;
                     case "player3":
                         {
                             taker = main.players[2];
-                        } break;
+                        }
+                        break;
                     case "player4":
                         {
                             taker = main.players[3];
@@ -238,7 +223,7 @@ public class GamePlay : MonoBehaviour
             }
         }
     }
-
+    
     public void GameWon(string color)
     {
         print("Player" + color + "won");

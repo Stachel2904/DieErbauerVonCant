@@ -156,13 +156,12 @@ public class CreateTrade : MonoBehaviour {
         ResetTrade();
 
         GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("Player started Trading");
-
-
-
     }
+
     public void StoppedTrading()
     {
         GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("Player stopped Trading");
+        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.SetActive(true);
     }
 
     public void createAskedPlayer(string name)
@@ -181,8 +180,6 @@ public class CreateTrade : MonoBehaviour {
         createdTrade.RemoveGivenRessource(name);
     }
 
-
-
     public void inkrementAskedRessource(string name)
     {
         createdTrade.AddAskedRessource(name);
@@ -197,6 +194,7 @@ public class CreateTrade : MonoBehaviour {
     {
         GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendTradeToServer(createdTrade);
         GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("Player accepted Trading");
+        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.SetActive(true);
     }
 
     public void tradeAsking()
@@ -207,6 +205,7 @@ public class CreateTrade : MonoBehaviour {
     public void declineTrade()
     {
         GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("Player declined Trading");
+        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.SetActive(true);
     }
 
     public void ResetTrade()
@@ -232,15 +231,10 @@ public class CreateTrade : MonoBehaviour {
 
     public void ShowTrade(Trade tradeoffer)
     {
-
         createdTrade = tradeoffer;
         createdTrade.timesSend++;
-
        
         GameObject.Find("TradeAcception").SetActive(true);
-        
-
-
     }
 
     // Trade 4 : 1
@@ -302,8 +296,6 @@ public class CreateTrade : MonoBehaviour {
     {
         
         GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendCreateTradeToServer(temp4to1Ressource, ressource);
-    }
-
-
-    
+        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.SetActive(true);
+    }    
 }

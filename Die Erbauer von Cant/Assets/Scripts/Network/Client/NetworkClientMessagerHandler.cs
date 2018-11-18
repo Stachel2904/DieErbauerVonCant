@@ -115,10 +115,11 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
             case "Blue":
                 break;
             case "Red":
-                GameObject.Find("ButtonManager").GetComponent<ClientButtonManager>().DiceRoll.SetActive(true);
+                GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().DiceRoll.SetActive(true);
                 break;
             case "Start":
-                GameObject.Find("Window").transform.Find("ClientDefault").gameObject.SetActive(true);
+                GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.SetActive(true);
+                GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().WaitScreen.SetActive(false);
                 break;
             case "Player declined Trading":
                 GameObject.Find("TradeWasDeclined").SetActive(true);
