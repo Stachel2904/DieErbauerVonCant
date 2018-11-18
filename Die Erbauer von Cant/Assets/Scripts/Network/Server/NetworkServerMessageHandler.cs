@@ -55,6 +55,12 @@ public class NetworkServerMessageHandler : MonoBehaviour {
                 //NextPlayerStuffHere
                 SendToClient(GamePlay.Main.GetCurrentPlayer().clientID, "Go");
                 break;
+            case "Player started Trading":
+                GameObject.Find("Window").transform.Find("TradingMessage").gameObject.SetActive(true);
+                break;
+            case "Player stopped Trading":
+                GameObject.Find("Window").transform.Find("TradingMessage").gameObject.SetActive(false);
+                break;
             default:
                 Debug.LogError("Can not read message from Client: " + _message_.conn.connectionId);
                 break;
