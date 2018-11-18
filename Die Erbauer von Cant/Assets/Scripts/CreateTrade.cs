@@ -231,57 +231,69 @@ public class CreateTrade : MonoBehaviour {
 
     public void ShowTrade(Trade tradeoffer)
     {
+        bool checkBrick = GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.CheckInventory("Brick", createdTrade.askedRessources[0]);
+        bool checkWheat = GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.CheckInventory("Wheat", createdTrade.askedRessources[1]);
+        bool checkOre = GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.CheckInventory("Ore", createdTrade.askedRessources[2]);
+        bool checkWood = GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.CheckInventory("Wood", createdTrade.askedRessources[3]);
+        bool checkWool = GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.CheckInventory("Wool", createdTrade.askedRessources[4]);
+
         createdTrade = tradeoffer;
         createdTrade.timesSend++;
-       
+
         GameObject.Find("TradeAcception").SetActive(true);
+        GameObject.Find("TradeAcception").transform.Find("Accept").gameObject.SetActive(false);
+
+        if (checkBrick && checkWheat && checkOre && checkWood & checkWool)
+        {
+            GameObject.Find("TradeAcception").transform.Find("Accept").gameObject.SetActive(true);
+        }
     }
 
     // Trade 4 : 1
 
     public void check4to1Inventory()
     {
-        if (GamePlay.Main.GetCurrentPlayer().inventory.inven["Brick"] > 3)
+        if (GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.inven["Brick"] > 3)
         {
             GameObject.Find("SystemTradeWindow1").transform.Find("Brick").gameObject.SetActive(true);
         }
-        if (GamePlay.Main.GetCurrentPlayer().inventory.inven["Brick"] <= 3)
+        if (GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.inven["Brick"] <= 3)
         {
             GameObject.Find("SystemTradeWindow1").transform.Find("Brick").gameObject.SetActive(false);
         }
 
-        if (GamePlay.Main.GetCurrentPlayer().inventory.inven["Wheat"] > 3)
+        if (GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.inven["Wheat"] > 3)
         {
             GameObject.Find("SystemTradeWindow1").transform.Find("Wheat").gameObject.SetActive(true);
         }
-        if (GamePlay.Main.GetCurrentPlayer().inventory.inven["Wheat"] <= 3)
+        if (GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.inven["Wheat"] <= 3)
         {
             GameObject.Find("SystemTradeWindow1").transform.Find("Wheat").gameObject.SetActive(false);
         }
 
-        if (GamePlay.Main.GetCurrentPlayer().inventory.inven["Ore"] > 3)
+        if (GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.inven["Ore"] > 3)
         {
             GameObject.Find("SystemTradeWindow1").transform.Find("Ore").gameObject.SetActive(true);
         }
-        if (GamePlay.Main.GetCurrentPlayer().inventory.inven["Ore"] <= 3)
+        if (GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.inven["Ore"] <= 3)
         {
             GameObject.Find("SystemTradeWindow1").transform.Find("Ore").gameObject.SetActive(false);
         }
 
-        if (GamePlay.Main.GetCurrentPlayer().inventory.inven["Wood"] > 3)
+        if (GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.inven["Wood"] > 3)
         {
             GameObject.Find("SystemTradeWindow1").transform.Find("Wood").gameObject.SetActive(true);
         }
-        if (GamePlay.Main.GetCurrentPlayer().inventory.inven["Wood"] <= 3)
+        if (GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.inven["Wood"] <= 3)
         {
             GameObject.Find("SystemTradeWindow1").transform.Find("Wood").gameObject.SetActive(false);
         }
 
-        if (GamePlay.Main.GetCurrentPlayer().inventory.inven["Wool"] > 3)
+        if (GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.inven["Wool"] > 3)
         {
             GameObject.Find("SystemTradeWindow1").transform.Find("Wool").gameObject.SetActive(true);
         }
-        if (GamePlay.Main.GetCurrentPlayer().inventory.inven["Wool"] <= 3)
+        if (GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.inven["Wool"] <= 3)
         {
             GameObject.Find("SystemTradeWindow1").transform.Find("Wool").gameObject.SetActive(false);
         }
