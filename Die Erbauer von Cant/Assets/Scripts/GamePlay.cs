@@ -86,16 +86,7 @@ public class GamePlay : MonoBehaviour
     }
 
     // TRADING //
-    /// <summary>
-    /// Call this if the Player wants to trade 4 : 1 with the System, beforehand you need to check if enough ressources are available
-    /// </summary>
-    /// <param name="givenRessource"> The string of the 4 Ressource the player wants to trade in </param>
-    /// <param name="wantedRessource"> The string of the 1 Ressource the player wants to get </param>
-    public void tradeSystem4to1(string givenRessource, string wantedRessource)
-    {
-        GamePlay.Main.GetCurrentPlayer().inventory.AddItem(wantedRessource);
-        GamePlay.Main.GetCurrentPlayer().inventory.RemoveItem(givenRessource, 4);  
-    }
+   
 
     public void UpdateBoard(Pawn buildedPawn, Place destination)
     {
