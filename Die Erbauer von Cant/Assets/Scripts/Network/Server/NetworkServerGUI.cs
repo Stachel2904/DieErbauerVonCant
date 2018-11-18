@@ -104,9 +104,9 @@ public class NetworkServerGUI : MonoBehaviour {
             }
         }
     }
-    public void UpdateHand(string _color_) { //Update count of handcards
+    public void UpdateHand(int _ClientID_) { //Update count of handcards
         for (int i = 0; i < 4; i++) {
-            if (GamePlay.Main.players[i].color == _color_) {
+            if (GamePlay.Main.players[i].clientID == _ClientID_) {
                 switch (GamePlay.Main.players[i].avatar) {
                     case "Player1":
                         player1.transform.Find("Hand").GetComponent<Text>().text = GamePlay.Main.players[i].hand.ToString();
