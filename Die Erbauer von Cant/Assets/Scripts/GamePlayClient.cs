@@ -140,4 +140,7 @@ public class GamePlayClient : MonoBehaviour {
         createdPawn.position = destination.gameObject.transform.position;
     }
     #endregion
+
+    #region Trade
+    #endregion
 }

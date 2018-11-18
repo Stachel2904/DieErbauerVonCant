@@ -23,6 +23,6 @@ public class NetworkClientGUI : MonoBehaviour {
     }
     public void DeactivateSearchServerPanel() {
         GameObject.Find("Window").transform.Find("Addresses").gameObject.SetActive(false);
-        GameObject.Find("ButtonManager").GetComponent<ClientButtonManager>().WaitScreen.SetActive(true);
+        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().WaitScreen.SetActive(true);
     }
 }
