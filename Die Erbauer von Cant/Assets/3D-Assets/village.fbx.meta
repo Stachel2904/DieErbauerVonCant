@@ -16,6 +16,7 @@ ModelImporter:
     400008: transform2
     400010: //RootNode
     2100000: lambert1
+    2100002: lambert2
     2300000: pCube3
     3300000: pCube3
     4300000: pCube3
