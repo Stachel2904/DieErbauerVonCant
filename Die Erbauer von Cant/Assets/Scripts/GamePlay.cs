@@ -44,7 +44,7 @@ public class GamePlay : MonoBehaviour
         };
         currentPlayer = 0;
         // Delete this // Debugging stuff
-        Main.GetCurrentPlayer().inventory.AddItem("Brick", 5);
+        
 
         //Create Board
         for (int i = 0; i < 5; i++)
@@ -66,6 +66,19 @@ public class GamePlay : MonoBehaviour
         GameBoard.MainBoard.tilesGrid[3][5].pawns[11] = GameBoard.MainBoard.tilesGrid[2][4].pawns[5];
         GameBoard.MainBoard.pawns[(int)PlayerColor.ORANGE].Add(GameBoard.MainBoard.tilesGrid[2][4].pawns[5]);
 
+    }
+
+    public void StartGame()
+    {
+        for (int i = 0; i < players.Length; i++)
+        {
+            players[i].inventory.AddItem("Brick", 4);
+            players[i].inventory.AddItem("Wheat", 2);
+            players[i].inventory.AddItem("Wood", 4);
+            players[i].inventory.AddItem("Wool", 2);
+        }
+
+        GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient("Start")
     }
 
     public void NextPlayer()
