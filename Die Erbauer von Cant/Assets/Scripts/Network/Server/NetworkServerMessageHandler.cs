@@ -22,7 +22,7 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         NetworkServer.RegisterHandler(888, ServerReciveMessage);
         NetworkServer.RegisterHandler(889, ReciveTradeMessage);
         NetworkServer.RegisterHandler(890, ReciveAcceptMessage);
-        NetworkServer.RegisterHandler(892, ReciveFieldUpdateMessage);
+        //NetworkServer.RegisterHandler(892, ReciveFieldUpdateMessage);
         NetworkServer.RegisterHandler(MsgType.Connect, ServerOnClientConnect);
         NetworkServer.RegisterHandler(MsgType.Disconnect, ServerOnClientDisconnect);
         init = true;
@@ -93,12 +93,12 @@ public class NetworkServerMessageHandler : MonoBehaviour {
                 break;
         }
     }
-    private void ReciveFieldUpdateMessage(NetworkMessage _message_) {
-        FieldMessage fieldMSG = new FieldMessage();
-        _message_.reader.SeekZero();
-        fieldMSG.pawn = _message_.ReadMessage<FieldMessage>().pawn;
-        fieldMSG.place = _message_.ReadMessage<FieldMessage>().place;
-    }
+    //private void ReciveFieldUpdateMessage(NetworkMessage _message_) {
+    //    FieldMessage fieldMSG = new FieldMessage();
+    //    _message_.reader.SeekZero();
+    //    fieldMSG.pawn = _message_.ReadMessage<FieldMessage>().pawn;
+    //    fieldMSG.place = _message_.ReadMessage<FieldMessage>().place;
+    //}
     //Send to Client
     public void SendToClient(int _ClientID_, string _command_) {
         NetMessage netMSG = new NetMessage();
@@ -126,13 +126,13 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         netMSG.command = _message_;
         NetworkServer.SendToClient(_ClientID_, 891, netMSG);
     }
-    public void SendFieldUpdateToClient(Pawn _pawn_, Place _place_) {
-        FieldMessage fieldMSG = new FieldMessage();
-        fieldMSG.pawn = _pawn_;
-        fieldMSG.place = _place_;
-        bool succsess = NetworkServer.SendToAll(892, fieldMSG);
-        if (!succsess) {
-            Debug.LogError("Failed to send fieldupdateinformation!");
-        }
-    }
+    //public void SendFieldUpdateToClient(Pawn _pawn_, Place _place_) {
+    //    FieldMessage fieldMSG = new FieldMessage();
+    //    fieldMSG.pawn = _pawn_;
+    //    fieldMSG.place = _place_;
+    //    bool succsess = NetworkServer.SendToAll(892, fieldMSG);
+    //    if (!succsess) {
+    //        Debug.LogError("Failed to send fieldupdateinformation!");
+    //    }
+    //}
 }

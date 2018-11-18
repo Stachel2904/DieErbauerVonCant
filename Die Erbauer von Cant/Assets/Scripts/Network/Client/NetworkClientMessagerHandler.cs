@@ -13,7 +13,7 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         client.RegisterHandler(889, ReciveTradeMessage);
         client.RegisterHandler(890, ReciveAcceptMessage);
         client.RegisterHandler(891, ReciveInventoryMessage);
-        client.RegisterHandler(892, ReciveFieldUpdateMessage);
+        //client.RegisterHandler(892, ReciveFieldUpdateMessage);
         client.RegisterHandler(MsgType.Connect, OnConnect);
         client.RegisterHandler(MsgType.Disconnect, OnDisconnect);
     }
@@ -69,20 +69,20 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
             Debug.LogError("Client is not connected! Failed to send acceptmessage!");
         }
     }
-    public void SendFieldUpdateToServer(Pawn _pawn_, Place _place_) {
-        if (client.isConnected) {
-            FieldMessage fieldMSG = new FieldMessage();
-            fieldMSG.pawn = _pawn_;
-            fieldMSG.place = _place_;
-            bool success = client.Send(892, fieldMSG);
-            if (!success) {
-                Debug.LogError("Failed to send fieldupdatemessage!");
-            }
-        }
-        else {
-            Debug.LogError("Client is not connected! Failed to send fieldupdatemessage!");
-        }
-    }
+    //public void SendFieldUpdateToServer(Pawn _pawn_, Place _place_) {
+    //    if (client.isConnected) {
+    //        FieldMessage fieldMSG = new FieldMessage();
+    //        fieldMSG.pawn = _pawn_;
+    //        fieldMSG.place = _place_;
+    //        bool success = client.Send(892, fieldMSG);
+    //        if (!success) {
+    //            Debug.LogError("Failed to send fieldupdatemessage!");
+    //        }
+    //    }
+    //    else {
+    //        Debug.LogError("Client is not connected! Failed to send fieldupdatemessage!");
+    //    }
+    //}
     //Recive from Server
     private void ReciveMessageFromServer(NetworkMessage _message_) {
         Debug.Log("RECIVED A MESSAGE!");
@@ -125,10 +125,10 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         string name = deltas[0];
         GameObject.Find("Window").transform.Find("Hand").Find(name).Find("AmountBG").Find("Amount").GetComponent<Text>().text = deltas[1];
     }
-    private void ReciveFieldUpdateMessage(NetworkMessage _message_) {
-        FieldMessage fieldMSG = new FieldMessage();
-        _message_.reader.SeekZero();
-        fieldMSG.pawn = _message_.ReadMessage<FieldMessage>().pawn;
-        fieldMSG.place = _message_.ReadMessage<FieldMessage>().place;
-    }
+    //private void ReciveFieldUpdateMessage(NetworkMessage _message_) {
+    //    FieldMessage fieldMSG = new FieldMessage();
+    //    _message_.reader.SeekZero();
+    //    fieldMSG.pawn = _message_.ReadMessage<FieldMessage>().pawn;
+    //    fieldMSG.place = _message_.ReadMessage<FieldMessage>().place;
+    //}
 }
