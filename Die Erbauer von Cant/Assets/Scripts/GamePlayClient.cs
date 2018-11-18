@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GamePlayClient : MonoBehaviour {
 
@@ -9,14 +10,49 @@ public class GamePlayClient : MonoBehaviour {
     public Player ownPlayer;
 
     void Start ()
-    {
+    {        
 		//Get Right Color in Build Selection
         //look for right images and set same the same as "OwnColor".color
 	}
 
-    void NextPlayer()
+    public void InitClient(string color)
+    {
+        ownPlayer = new Player("", color);
+
+        Color ownColor = Color.white;
+
+        switch (color)
+        {
+            case "Orange":
+                ownColor = new Color(255, 150, 0, 255);
+                break;
+            case "Blue":
+                ownColor = Color.blue;
+                break;
+            case "White":
+                ownColor = Color.white;
+                break;
+            case "Red":
+                ownColor = Color.red;
+                break;
+        }
+
+        GameObject.Find("OwnColor").GetComponent<Image>().color = ownColor;
+        GameObject.Find("BuildSelection").transform.Find("Street").gameObject.GetComponent<Image>().color = ownColor;
+        GameObject.Find("BuildSelection").transform.Find("Village").gameObject.GetComponent<Image>().color = ownColor;
+        GameObject.Find("BuildSelection").transform.Find("Town").gameObject.GetComponent<Image>().color = ownColor;
+        
+        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("TradeButton").GetComponent<Button>().interactable = false;
+        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("BuildButton").GetComponent<Button>().interactable = false;
+        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("Next Player").GetComponent<Button>().interactable = false;
+    }
+
+    public void NextPlayer()
     {
         GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("NextPlayer");
+        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("TradeButton").GetComponent<Button>().interactable = false;
+        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("BuildButton").GetComponent<Button>().interactable = false;
+        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("Next Player").GetComponent<Button>().interactable = false;
     }
 
     #region Build
@@ -140,7 +176,5 @@ public class GamePlayClient : MonoBehaviour {
         createdPawn.position = destination.gameObject.transform.position;
     }
     #endregion
-
-    #region Trade
-    #endregion
+    
 }

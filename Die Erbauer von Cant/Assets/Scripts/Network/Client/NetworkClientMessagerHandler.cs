@@ -2,6 +2,7 @@
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class NetworkClientMessagerHandler : MonoBehaviour {
 
@@ -22,7 +23,7 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         Debug.Log("Client is connected: " + client.isConnected);
         Debug.Log("Server: " + client.serverIp);
         GetComponent<NetworkClientGUI>().DeactivateSearchServerPanel();
-        GameObject.Find("Window").transform.Find("DiceRoll").gameObject.SetActive(true);
+        GameObject.Find("Window").transform.Find("ClientDefault").gameObject.SetActive(true);
     }
     private void OnDisconnect(NetworkMessage _message_) {
         Debug.Log("Client is connected: " + client.isConnected);
@@ -107,15 +108,23 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         _message_.reader.SeekZero();
         switch (_message_.ReadMessage<NetMessage>().command) {
             case "Go":
-            //AskForReadyHere (Send AcceptMessage)
+                //AskForReadyHere (Send AcceptMessage)
+                GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("TradeButton").GetComponent<Button>().interactable = true;
+                GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("BuildButton").GetComponent<Button>().interactable = true;
+                GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("Next Player").GetComponent<Button>().interactable = true;
+                GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().DiceRoll.SetActive(true);
+                break;
             case "Orange":
+                GameObject.Find("GamePlay").GetComponent<GamePlayClient>().InitClient("Orange");
                 break;
             case "White":
+                GameObject.Find("GamePlay").GetComponent<GamePlayClient>().InitClient("White");
                 break;
             case "Blue":
+                GameObject.Find("GamePlay").GetComponent<GamePlayClient>().InitClient("Blue");
                 break;
             case "Red":
-                GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().DiceRoll.SetActive(true);
+                GameObject.Find("GamePlay").GetComponent<GamePlayClient>().InitClient("Red");
                 break;
             case "Start":
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.SetActive(true);
@@ -172,6 +181,7 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         string[] deltas = netMSG.command.Split('|');
         string name = deltas[0];
         GameObject.Find("Window").transform.Find("Hand").Find(name).Find("AmountBG").Find("Amount").GetComponent<Text>().text = deltas[1];
+        GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.inven[name] = Int32.Parse(deltas[1]);
     }
     //UPDATE FIELD
     private void ReciveFieldUpdateMessage(NetworkMessage _message_) {

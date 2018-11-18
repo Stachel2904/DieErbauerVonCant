@@ -35,6 +35,10 @@ public class ClientButtonManager : MonoBehaviour {
 	}
     private void RollTheDice() {
         GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("Roll Dice");
+        DiceRoll.SetActive(false);
+        ClientDefault.transform.Find("TradeButton").GetComponent<Button>().interactable = true;
+        ClientDefault.transform.Find("BuildButton").GetComponent<Button>().interactable = true;
+        ClientDefault.transform.Find("Next Player").GetComponent<Button>().interactable = true;
     }
     private void GoNextPlayer() {
         GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("Next Player");
