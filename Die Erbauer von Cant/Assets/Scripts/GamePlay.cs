@@ -26,7 +26,6 @@ public class GamePlay : MonoBehaviour
         }
     }
 
-    public Pawn buildedPawn;
     public Player[] players;
     public int currentPlayer;
 
@@ -69,11 +68,6 @@ public class GamePlay : MonoBehaviour
 
     }
 
-    public void DebugBuild()
-    {
-        TryBuild("Village");
-    }
-
     public void NextPlayer()
     {
         if (currentPlayer == 3)
@@ -91,86 +85,24 @@ public class GamePlay : MonoBehaviour
         return players[currentPlayer];
     }
 
+    // TRADING //
     /// <summary>
-    /// Check if you have enough Ressources and print possible Positions
+    /// Call this if the Player wants to trade 4 : 1 with the System, beforehand you need to check if enough ressources are available
     /// </summary>
-    /// <param name="tryBuildedPawn">The pawn you wish to build</param>
-    public void TryBuild(string type)
+    /// <param name="givenRessource"> The string of the 4 Ressource the player wants to trade in </param>
+    /// <param name="wantedRessource"> The string of the 1 Ressource the player wants to get </param>
+    public void tradeSystem4to1(string givenRessource, string wantedRessource)
     {
-        //set buildedPawn back to null
-        if (type == "")
-        {
-            buildedPawn = null;
-            return;
-        }
-
-        //Ressourcen überprüfen
-        //if (!GetCurrentPlayer().inventory.CheckInventory(type))
-        //{
-        //    Debug.Log("You have not enough Ressources...");
-        //    return;
-        //}
-
-        buildedPawn = new Pawn(type, GetCurrentPlayer().color);
-
-        //Alle möglichen Positionen ausgeben
-        Place[] possiblePlaces = GameBoard.MainBoard.GetAllPositions(buildedPawn);
-
-        if (possiblePlaces.Length == 0)
-        {
-            Debug.Log("Du kannst nirgendwo ein" + ((buildedPawn.type == "Village") ? " Dorf" : ((buildedPawn.type == "Street") ? "e Straße" : "e Stadt")) + " bauen...");
-        }
-
-        for (int i = 0; i < possiblePlaces.Length; i++)
-        {
-            //create PlaceObject
-            Place createdPlace = Instantiate(Resources.Load<Place>("Prefabs/PossiblePlace"), GameObject.Find("Places").transform);
-            createdPlace.posAtField = possiblePlaces[i].posAtField;
-            createdPlace.usedFields = possiblePlaces[i].usedFields;
-            
-            createdPlace.gameObject.transform.position = GetPosInWorld(createdPlace.usedFields[0], createdPlace.posAtField[0]);
-        }
+        GamePlay.Main.GetCurrentPlayer().inventory.AddItem(wantedRessource);
+        GamePlay.Main.GetCurrentPlayer().inventory.RemoveItem(givenRessource, 4);  
     }
 
-    private Vector3 GetPosInWorld(Field usedField, int posAtField)
+    public void UpdateBoard(Pawn buildedPawn, Place destination)
     {
-        Vector3 result = new Vector3();
-
-        //Get pos of Field
-        result.x = usedField.column * -6 + 6;
-        result.y = 0;
-        result.z = usedField.row * 6.93f + (3.46f + 6.93f / 2);
-
-        //get Pos from PosAtField
-        result += Quaternion.Euler(0, 30 * posAtField, 0) * Vector3.back * ((buildedPawn.type == "Street") ? 6.0f : 16.86f / 2.0f);
-
-        return result;
-    }
-
-    public void buildPawn(Place destination)
-    {
-        if(buildedPawn == null)
+        if(buildedPawn.type != "Street")
         {
-            Debug.Log("Which pawn do you want to build?");
-            return;
-        }
-
-        //Ressourcenmanagement/Rohstoffe abziehen etc.
-        GetCurrentPlayer().inventory.RemoveItem(buildedPawn.type);
-
-        //An die richtige Position setzen und die angrenzenden Tiles updaten
-        for (int i = 0; i < GameBoard.MainBoard.tilesGrid.Length; i++)
-        {
-            for (int j = 0; j < GameBoard.MainBoard.tilesGrid[i].Length; j++)
-            {
-                for (int k = 0; k < destination.usedFields.Length; k++)
-                {
-                    if (GameBoard.MainBoard.tilesGrid[i][j].Equals(destination.usedFields[k]))
-                    {
-                        GameBoard.MainBoard.tilesGrid[i][j].pawns[destination.posAtField[k]] = buildedPawn;
-                    }
-                }
-            }
+            GetCurrentPlayer().victoryPoints++;
+            GameObject.Find("ServerManager").GetComponent<NetworkServerGUI>().UpdateVictoryPoints(buildedPawn.color);
         }
 
         //Pawn kreieren (erst nur mesh, dann Farbe, dann position)
@@ -201,7 +133,6 @@ public class GamePlay : MonoBehaviour
         stringTemp = givenRessource + "|" + Main.GetCurrentPlayer().inventory.inven[givenRessource].ToString();
         GameObject.Find("ClientManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(Main.GetCurrentPlayer().clientID, stringTemp);
     }
-
 
     /// <summary>
     /// Make a trade offer with another player

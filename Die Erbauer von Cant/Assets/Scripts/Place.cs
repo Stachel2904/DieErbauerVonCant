@@ -15,9 +15,9 @@ public class Place : MonoBehaviour{
             GameObject.Find("Places").transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
         }
         this.gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
-        GameObject buildAcceptionInterface = GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildAcceptionInterface;
+        GameObject buildAcceptionInterface = GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildAcception;
         buildAcceptionInterface.SetActive(true);
         buildAcceptionInterface.transform.Find("Accept").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
-        buildAcceptionInterface.transform.Find("Accept").gameObject.GetComponent<Button>().onClick.AddListener(delegate { GamePlay.Main.buildPawn(this); });
+        buildAcceptionInterface.transform.Find("Accept").gameObject.GetComponent<Button>().onClick.AddListener(delegate { GameObject.Find("GamePlay").GetComponent<GamePlayClient>().buildPawn(this); });
     }
 }

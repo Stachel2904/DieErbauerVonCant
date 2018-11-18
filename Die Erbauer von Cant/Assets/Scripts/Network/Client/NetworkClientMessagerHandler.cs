@@ -107,7 +107,18 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         _message_.reader.SeekZero();
         switch (_message_.ReadMessage<NetMessage>().command) {
             case "Go":
-                //AskForReadyHere (Send AcceptMessage)
+            //AskForReadyHere (Send AcceptMessage)
+            case "Orange":
+                break;
+            case "White":
+                break;
+            case "Blue":
+                break;
+            case "Red":
+                GameObject.Find("ButtonManager").GetComponent<ClientButtonManager>().DiceRoll.SetActive(true);
+                break;
+            case "Start":
+                GameObject.Find("Window").transform.Find("ClientDefault").gameObject.SetActive(true);
                 break;
             case "Player declined Trading":
                 GameObject.Find("TradeWasDeclined").SetActive(true);
@@ -137,7 +148,7 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
     }
     //ACCEPT
     private void ReciveAcceptMessage(NetworkMessage _message_) {
-        Debug.Log("RECIVED A ACCEPTMESSAGE!");
+        Debug.Log("RECIVED AN ACCEPTMESSAGE!");
         AcceptMessage acceptMSG = new AcceptMessage();
         _message_.reader.SeekZero();
         acceptMSG.isAccepted = _message_.ReadMessage<AcceptMessage>().isAccepted;
@@ -152,6 +163,7 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
                 break;
         }
     }
+    //INVENTORY
     private void ReciveInventoryMessage(NetworkMessage _message_) {
         NetMessage netMSG = new NetMessage();
         _message_.reader.SeekZero();
@@ -160,10 +172,12 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         string name = deltas[0];
         GameObject.Find("Window").transform.Find("Hand").Find(name).Find("AmountBG").Find("Amount").GetComponent<Text>().text = deltas[1];
     }
+    //UPDATE FIELD
     private void ReciveFieldUpdateMessage(NetworkMessage _message_) {
         FieldMessage fieldMSG = new FieldMessage();
         _message_.reader.SeekZero();
         fieldMSG.pawn = _message_.ReadMessage<FieldMessage>().pawn;
         fieldMSG.place = _message_.ReadMessage<FieldMessage>().place;
+        GameObject.Find("GamePlay").GetComponent<GamePlayClient>().UpdateBoard(new Pawn(fieldMSG.pawn, GamePlay.Main.GetCurrentPlayer().color), fieldMSG.place);
     }
 }

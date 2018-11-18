@@ -56,6 +56,7 @@ public class NetworkServerUI : MonoBehaviour {
             if (GamePlay.Main.players[i].clientID == -1) { //ToDo: Player muss vor ClientConnect erstellt sein!
                 GamePlay.Main.players[i].clientID = _clientID_;
                 GamePlay.Main.players[i].name = _clientID_.ToString(); //ToDo: Später Namen einfügen
+                GetComponent<NetworkServerMessageHandler>().SendToClient(_clientID_, GamePlay.Main.players[i].color);
                 break;
             }
         }
