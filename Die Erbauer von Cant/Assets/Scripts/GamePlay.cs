@@ -193,22 +193,8 @@ public class GamePlay : MonoBehaviour
     /// <param name="wantedRessource"> The string of the 1 Ressource the player wants to get </param>
     public void tradeSystem4to1(string givenRessource, string wantedRessource)
     {
-        
-
-        foreach (KeyValuePair<string, int> item in main.GetCurrentPlayer().inventory.inven)
-        {
-            if (item.Key == givenRessource)
-            {
-                 main.GetCurrentPlayer().inventory.RemoveItem(givenRessource, 4);
-            }
-
-            if (item.Key == wantedRessource)
-            {
-                main.GetCurrentPlayer().inventory.AddItem(wantedRessource, 1);
-            }
-           
-        }
-        
+        GamePlay.Main.GetCurrentPlayer().inventory.AddItem(wantedRessource);
+        GamePlay.Main.GetCurrentPlayer().inventory.RemoveItem(givenRessource, 4);  
     }
 
 
@@ -218,8 +204,7 @@ public class GamePlay : MonoBehaviour
     /// <param name="tradeOffer"> Contains the struct of the Tradeoffer that has been proposed </param>
     public void Trytrade(Trade tradeOffer)
     {
-        
-
+         
         // if deal was Accepted
         if (dealAccepted)
         {
