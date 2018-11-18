@@ -193,8 +193,13 @@ public class GamePlay : MonoBehaviour
     /// <param name="wantedRessource"> The string of the 1 Ressource the player wants to get </param>
     public void tradeSystem4to1(string givenRessource, string wantedRessource)
     {
+
         GamePlay.Main.GetCurrentPlayer().inventory.AddItem(wantedRessource);
-        GamePlay.Main.GetCurrentPlayer().inventory.RemoveItem(givenRessource, 4);  
+        string stringTemp = wantedRessource+"|" + Main.GetCurrentPlayer().inventory.inven[wantedRessource].ToString();
+        GameObject.Find("ClientManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(Main.GetCurrentPlayer().clientID, stringTemp);
+        GamePlay.Main.GetCurrentPlayer().inventory.RemoveItem(givenRessource, 4);
+        stringTemp = givenRessource + "|" + Main.GetCurrentPlayer().inventory.inven[givenRessource].ToString();
+        GameObject.Find("ClientManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(Main.GetCurrentPlayer().clientID, stringTemp);
     }
 
 
@@ -219,6 +224,7 @@ public class GamePlay : MonoBehaviour
     /// <param name="tradeOffer"> Contains the struct of the Tradeoffer that has been proposed </param>
     public void Trading(Trade tradeOffer)
     {
+        string stringTemp;
         for (int i = 0; i < players.Length; i++)
         {
             if (players[i].name == tradeOffer.giver)
@@ -230,10 +236,20 @@ public class GamePlay : MonoBehaviour
                 Main.GetCurrentPlayer().inventory.AddItem("Wool", tradeOffer.askedRessources[4]);
 
                 Main.GetCurrentPlayer().inventory.RemoveItem("Brick", tradeOffer.givenRessources[0]);
+                stringTemp = "Brick|" + players[i].inventory.inven["Brick"].ToString();
+                GameObject.Find("ClientManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(players[i].clientID, stringTemp);
                 Main.GetCurrentPlayer().inventory.RemoveItem("Wheat", tradeOffer.givenRessources[1]);
+                stringTemp = "Wheat|" + players[i].inventory.inven["Wheat"].ToString();
+                GameObject.Find("ClientManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(players[i].clientID, stringTemp);
                 Main.GetCurrentPlayer().inventory.RemoveItem("Ore", tradeOffer.givenRessources[2]);
+                stringTemp = "Ore|" + players[i].inventory.inven["Ore"].ToString();
+                GameObject.Find("ClientManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(players[i].clientID, stringTemp);
                 Main.GetCurrentPlayer().inventory.RemoveItem("Wood", tradeOffer.givenRessources[3]);
+                stringTemp = "Wood|" + players[i].inventory.inven["Wood"].ToString();
+                GameObject.Find("ClientManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(players[i].clientID, stringTemp);
                 Main.GetCurrentPlayer().inventory.RemoveItem("Wool", tradeOffer.givenRessources[4]);
+                stringTemp = "Wool|" + players[i].inventory.inven["Wool"].ToString();
+                GameObject.Find("ClientManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(players[i].clientID, stringTemp);
             } 
              
             if (players[i].name == tradeOffer.taker)
@@ -273,10 +289,20 @@ public class GamePlay : MonoBehaviour
                     taker.inventory.AddItem("Wool", tradeOffer.givenRessources[4]);
 
                     taker.inventory.RemoveItem("Brick", tradeOffer.askedRessources[0]);
+                    stringTemp = "Brick|" + taker.inventory.inven["Brick"].ToString();
+                    GameObject.Find("ClientManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(taker.clientID, stringTemp);
                     taker.inventory.RemoveItem("Wheat", tradeOffer.askedRessources[1]);
+                    stringTemp = "Wheat|" + taker.inventory.inven["Wheat"].ToString();
+                    GameObject.Find("ClientManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(taker.clientID, stringTemp);
                     taker.inventory.RemoveItem("Ore", tradeOffer.askedRessources[2]);
+                    stringTemp = "Ore|" + taker.inventory.inven["Ore"].ToString();
+                    GameObject.Find("ClientManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(taker.clientID, stringTemp);
                     taker.inventory.RemoveItem("Wood", tradeOffer.askedRessources[3]);
+                    stringTemp = "Wood|" + taker.inventory.inven["Wood"].ToString();
+                    GameObject.Find("ClientManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(taker.clientID, stringTemp);
                     taker.inventory.RemoveItem("Wool", tradeOffer.askedRessources[4]);
+                    stringTemp = "Wool|" + taker.inventory.inven["Wool"].ToString();
+                    GameObject.Find("ClientManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(taker.clientID, stringTemp);
 
                     //for (int j = 0; j < tradeOffer.givenRessources.Length; j++)
                     //{

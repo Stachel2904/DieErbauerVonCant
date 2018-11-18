@@ -61,6 +61,12 @@ public class NetworkServerMessageHandler : MonoBehaviour {
             case "Player stopped Trading":
                 GameObject.Find("Window").transform.Find("TradingMessage").gameObject.SetActive(false);
                 break;
+            case "Player declined Trading":
+                SendToClient(GamePlay.Main.GetCurrentPlayer().clientID, "Player declined Trading");
+                break;
+            case "Player accepted Trading":
+                SendToClient(GamePlay.Main.GetCurrentPlayer().clientID, "Player declined Trading");
+                break;
             default:
                 Debug.LogError("Can not read message from Client: " + _message_.conn.connectionId);
                 break;
@@ -73,6 +79,25 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         _message_.reader.SeekZero();
         tradeMSG.trade = _message_.ReadMessage<TradeMessage>().trade;
         //Tradestuff here
+        switch (tradeMSG.trade.timesSend)
+        {
+            case 0:
+                for (int i = 0; i < 4; i++)
+                {
+                    if (GamePlay.Main.players[i].color == tradeMSG.trade.taker)
+                    {
+                        SendTradeToClient(GamePlay.Main.players[i].clientID, tradeMSG.trade);
+                    }
+                }
+                break;
+            case 1:
+
+                GamePlay.Main.Trading(tradeMSG.trade);
+                break;
+            default:
+                break;
+        }
+       
     }
     private void ReciveCreateTradeMessage(NetworkMessage _message_) {
         Debug.Log("RECIVED A CREATETRADEMESSAGE!");
@@ -80,6 +105,8 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         _message_.reader.SeekZero();
         tradeMSG.ressource1 = _message_.ReadMessage<CreateTradeMessage>().ressource1;
         tradeMSG.ressource2 = _message_.ReadMessage<CreateTradeMessage>().ressource2;
+
+        GamePlay.Main.tradeSystem4to1(tradeMSG.ressource1, tradeMSG.ressource2);
     }
     //Recive AcceptMessage
     private void ReciveAcceptMessage(NetworkMessage _message_) {

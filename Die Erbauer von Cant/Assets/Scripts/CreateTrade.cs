@@ -119,7 +119,7 @@ public class CreateTrade : MonoBehaviour {
         shownaskedWoodText = text19.GetComponent<Text>();
         shownaskedWoolText = text20.GetComponent<Text>();
 
-        createdTrade.giver = GamePlay.Main.GetCurrentPlayer().name;
+        
 
     }
     private void Update()
@@ -151,7 +151,14 @@ public class CreateTrade : MonoBehaviour {
 
     public void StartedTrading()
     {
+        createdTrade.giver = GamePlay.Main.GetCurrentPlayer().name;
+
+        ResetTrade();
+
         GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("Player started Trading");
+
+
+
     }
     public void StoppedTrading()
     {
@@ -188,13 +195,24 @@ public class CreateTrade : MonoBehaviour {
 
     public void FinishPlayerTrade()
     {
-        GamePlay.Main.Trading(createdTrade);
+        GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendTradeToServer(createdTrade);
+        GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("Player accepted Trading");
     }
 
-    
+    public void tradeAsking()
+    {
+        GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendTradeToServer(createdTrade);
+    }
+
+    public void declineTrade()
+    {
+        GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("Player declined Trading");
+    }
 
     public void ResetTrade()
     {
+        createdTrade.timesSend = 0;
+
         createdTrade.givenRessources[0] = 0;
         createdTrade.givenRessources[1] = 0;
         createdTrade.givenRessources[2] = 0;
@@ -209,21 +227,18 @@ public class CreateTrade : MonoBehaviour {
     }
 
 
+
     // Second Player Trading
 
     public void ShowTrade(Trade tradeoffer)
     {
 
         createdTrade = tradeoffer;
+        createdTrade.timesSend++;
 
-        if (true) // Wenn ich der Spieler bin mit dem gehandelt wird
-        {
-
-
-            GameObject.Find("TradeAcception").SetActive(true);
-
-
-        }
+       
+        GameObject.Find("TradeAcception").SetActive(true);
+        
 
 
     }
@@ -285,9 +300,8 @@ public class CreateTrade : MonoBehaviour {
 
     public void finish4to1Trade(string ressource)
     {
-        GamePlay.Main.tradeSystem4to1(temp4to1Ressource, ressource);
-
         
+        GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendCreateTradeToServer(temp4to1Ressource, ressource);
     }
 
 

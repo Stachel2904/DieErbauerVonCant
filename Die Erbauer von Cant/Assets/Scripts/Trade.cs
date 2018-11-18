@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Trade
 {
+    public int timesSend = 0;
     public string giver;
     public string taker;
 

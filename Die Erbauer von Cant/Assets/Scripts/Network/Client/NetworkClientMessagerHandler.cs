@@ -109,6 +109,12 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
             case "Go":
                 //AskForReadyHere (Send AcceptMessage)
                 break;
+            case "Player declined Trading":
+                GameObject.Find("TradeWasDeclined").SetActive(true);
+                break;
+            case "Player accepted Trading":
+                GameObject.Find("TradeWasAccepted").SetActive(true);
+                break;
             default:
                 break;
         }
@@ -119,6 +125,8 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         TradeMessage tradeMSG = new TradeMessage();
         _message_.reader.SeekZero();
         tradeMSG.trade = _message_.ReadMessage<TradeMessage>().trade;
+
+        GameObject.Find("Trade").GetComponent<CreateTrade>().ShowTrade(tradeMSG.trade);
     }
     private void ReciveCreateTradeMessage(NetworkMessage _message_) {
         Debug.Log("RECIVED A CREATETRADEMESSAGE!");
