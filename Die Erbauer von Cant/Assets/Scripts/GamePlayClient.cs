@@ -38,9 +38,9 @@ public class GamePlayClient : MonoBehaviour {
         }
 
         GameObject.Find("OwnColor").GetComponent<Image>().color = ownColor;
-        GameObject.Find("BuildSelection").transform.Find("Street").gameObject.GetComponent<Image>().color = ownColor;
-        GameObject.Find("BuildSelection").transform.Find("Village").gameObject.GetComponent<Image>().color = ownColor;
-        GameObject.Find("BuildSelection").transform.Find("Town").gameObject.GetComponent<Image>().color = ownColor;
+        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildSelection.transform.Find("Street").gameObject.GetComponent<Image>().color = ownColor;
+        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildSelection.transform.Find("Village").gameObject.GetComponent<Image>().color = ownColor;
+        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildSelection.transform.Find("Town").gameObject.GetComponent<Image>().color = ownColor;
         
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("TradeButton").GetComponent<Button>().interactable = false;
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("BuildButton").GetComponent<Button>().interactable = false;
