@@ -83,6 +83,15 @@ public class CreateTrade : MonoBehaviour {
         askedWoolText.text = createdTrade.askedRessources[4].ToString();
     }
 
+    public void StartedTrading()
+    {
+        GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("Player started Trading");
+    }
+    public void StoppedTrading()
+    {
+        GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("Player stopped Trading");
+    }
+
     public void createAskedPlayer(string name)
     {
         createdTrade.taker = name;
