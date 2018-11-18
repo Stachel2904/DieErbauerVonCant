@@ -125,7 +125,7 @@ public class GamePlay : MonoBehaviour
 
         for (int i = 0; i < players.Length; i++)
         {
-            if (players[i].clientID == clientID)
+            if (players[i].clientID == clientID && players[i].clientID != -1)
             {
                 stringTemp = "Brick|" + players[i].inventory.inven["Brick"].ToString();
                 GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(clientID, stringTemp);
@@ -141,7 +141,7 @@ public class GamePlay : MonoBehaviour
                 players[i].hand = Main.players[i].inventory.inven["Brick"] + Main.players[i].inventory.inven["Wheat"] + Main.players[i].inventory.inven["Ore"] + Main.players[i].inventory.inven["Wood"] + Main.players[i].inventory.inven["Wool"];
                 GameObject.Find("ServerManager").GetComponent<NetworkServerGUI>().UpdateHand(players[i].clientID);
             }
-            
+
         }
         
        //ToDo: Straßen, Siedlungen, Städte updaten

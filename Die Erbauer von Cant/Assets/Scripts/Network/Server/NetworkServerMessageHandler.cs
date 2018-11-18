@@ -167,6 +167,7 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         NetMessage netMSG = new NetMessage();
         netMSG.command = _message_;
         NetworkServer.SendToClient(_ClientID_, 891, netMSG);
+        Debug.Log("Geschafft!");
     }
     //UPDATE FIELD
     public void SendFieldUpdateToClient(string _pawn_, Place _place_) {

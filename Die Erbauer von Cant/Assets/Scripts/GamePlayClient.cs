@@ -9,12 +9,6 @@ public class GamePlayClient : MonoBehaviour {
 
     public Player ownPlayer;
 
-    void Start ()
-    {        
-		//Get Right Color in Build Selection
-        //look for right images and set same the same as "OwnColor".color
-	}
-
     public void InitClient(string color)
     {
         ownPlayer = new Player("", color);
@@ -70,11 +64,11 @@ public class GamePlayClient : MonoBehaviour {
         }
 
         //Ressourcen überprüfen
-        //if (!GetCurrentPlayer().inventory.CheckInventory(type))
-        //{
-        //    Debug.Log("You have not enough Ressources...");
-        //    return;
-        //}
+        if (!ownPlayer.inventory.CheckInventory(type))
+        {
+            Debug.Log("You have not enough Ressources...");
+            return;
+        }
 
         buildedPawn = new Pawn(type, ownPlayer.color);
         Debug.Log("Started building a " + buildedPawn.color + " " + buildedPawn.type + ".");
@@ -175,6 +169,5 @@ public class GamePlayClient : MonoBehaviour {
         createdPawn.gameObject.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/" + buildedPawn.color);
         createdPawn.position = destination.gameObject.transform.position;
     }
-    #endregion
-    
+    #endregion    
 }

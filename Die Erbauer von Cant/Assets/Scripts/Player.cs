@@ -18,6 +18,7 @@ public class Player
     public Player(string _name, string _color)
     {
         name = _name;
+        avatar = _name;
         color = _color;
     }
 	/// <summary>
