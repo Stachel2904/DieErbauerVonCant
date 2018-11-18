@@ -178,4 +178,9 @@ public class NetworkServerMessageHandler : MonoBehaviour {
             Debug.LogError("Failed to send fieldupdateinformation!");
         }
     }
+    public void SendToAllClients(string _command_) {
+        NetMessage netMSG = new NetMessage();
+        netMSG.command = _command_;
+        NetworkServer.SendToAll(888, netMSG);
+    }
 }
