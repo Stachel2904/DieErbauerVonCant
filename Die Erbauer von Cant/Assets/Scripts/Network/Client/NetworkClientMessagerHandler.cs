@@ -127,6 +127,7 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
                 GameObject.Find("GamePlay").GetComponent<GamePlayClient>().InitClient("Red");
                 break;
             case "Start":
+                Debug.Log("START");
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.SetActive(true);
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().WaitScreen.SetActive(false);
                 break;
