@@ -23,6 +23,7 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         NetworkServer.RegisterHandler(889, ReciveTradeMessage);
         NetworkServer.RegisterHandler(890, ReciveAcceptMessage);
         NetworkServer.RegisterHandler(892, ReciveFieldUpdateMessage);
+        NetworkServer.RegisterHandler(893, ReciveCreateTradeMessage);
         NetworkServer.RegisterHandler(MsgType.Connect, ServerOnClientConnect);
         NetworkServer.RegisterHandler(MsgType.Disconnect, ServerOnClientDisconnect);
         init = true;
@@ -73,6 +74,13 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         tradeMSG.trade = _message_.ReadMessage<TradeMessage>().trade;
         //Tradestuff here
     }
+    private void ReciveCreateTradeMessage(NetworkMessage _message_) {
+        Debug.Log("RECIVED A CREATETRADEMESSAGE!");
+        CreateTradeMessage tradeMSG = new CreateTradeMessage();
+        _message_.reader.SeekZero();
+        tradeMSG.ressource1 = _message_.ReadMessage<CreateTradeMessage>().ressource1;
+        tradeMSG.ressource2 = _message_.ReadMessage<CreateTradeMessage>().ressource2;
+    }
     //Recive AcceptMessage
     private void ReciveAcceptMessage(NetworkMessage _message_) {
         Debug.Log("RECIVED A ACCEPTMESSAGE!");
@@ -110,6 +118,12 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         TradeMessage tradeMSG = new TradeMessage();
         tradeMSG.trade = _trade_;
         NetworkServer.SendToClient(_ClientID_, 889, tradeMSG);
+    }
+    public void SendCreateTradeToClient(int _ClientID_, string _resource1_, string _resource2_) {
+        CreateTradeMessage tradeMSG = new CreateTradeMessage();
+        tradeMSG.ressource1 = _resource1_;
+        tradeMSG.ressource2 = _resource2_;
+        NetworkServer.SendToClient(_ClientID_, 893, tradeMSG);
     }
     //Send Accept To Client
     public void SendAcceptToClient(int _ClientID_, string _AcceptType_, bool _isAccepted_) {
