@@ -18,6 +18,6 @@ public class NetworkClientDiscovery : NetworkDiscovery {
         string s_port = _data_.Substring(_data_.LastIndexOf("|") + 1, _data_.Length - (_data_.LastIndexOf("|") + 1));
         int.TryParse(s_port, out port);
         Debug.Log(ipAddress + " / " + port);
-        this.gameObject.GetComponent<NetworkClientUI>().OutputAdresses();
+        this.gameObject.GetComponent<NetworkClientGUI>().OutputAdresses();
     }
 }

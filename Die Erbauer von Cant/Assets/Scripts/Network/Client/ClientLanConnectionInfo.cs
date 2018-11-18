@@ -8,6 +8,5 @@
         broadcastText = _data_.Substring(_data_.LastIndexOf(":") + 1, _data_.Length - (_data_.LastIndexOf(":") + 1));
         string s_port = _data_.Substring(_data_.LastIndexOf("|") + 1, _data_.Length - (_data_.LastIndexOf("|") + 1));
         int.TryParse(s_port, out port);
-        //port = 5555; //ToDo: Port aus broadcast Text auslesen + belegte Slots aus Broadcaster auslesen (Wenn Serverseitig Updater Implementiert)
     }
 }

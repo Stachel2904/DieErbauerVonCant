@@ -36,3 +36,7 @@ public class AcceptMessage : MessageBase {
     public string acceptType;
     public bool isAccepted;
 }
+public class FieldMessage : MessageBase {
+    public Pawn pawn;
+    public Place place;
+}
