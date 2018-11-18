@@ -38,15 +38,41 @@ public class GamePlay : MonoBehaviour
     {
         players = new Player[]
         {
-            new Player("Player1", "yellow"),
-            new Player("Player2", "blue"),
-            new Player("Player3", "white"),
-            new Player("Player4", "red")
+            new Player("Player1", "Orange"),
+            new Player("Player2", "Blue"),
+            new Player("Player3", "White"),
+            new Player("Player4", "Red")
         };
         currentPlayer = 0;
         // Delete this // Debugging stuff
         Main.GetCurrentPlayer().inventory.AddItem("Brick", 5);
-	}
+
+        //Create Board
+        for (int i = 0; i < 5; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                GameBoard.MainBoard.tilesGrid[i][j] = new Field("", 3);
+                GameBoard.MainBoard.tilesGrid[i][j].row = i;
+                GameBoard.MainBoard.tilesGrid[i][j].column = j;
+            }
+        }
+
+        //Set startPawns
+        GameBoard.MainBoard.tilesGrid[2][4].pawns[3] = new Pawn("Street", "Orange");
+        GameBoard.MainBoard.tilesGrid[2][6].pawns[9] = GameBoard.MainBoard.tilesGrid[2][4].pawns[3];
+        GameBoard.MainBoard.pawns[(int)PlayerColor.ORANGE].Add(GameBoard.MainBoard.tilesGrid[2][4].pawns[3]);
+
+        GameBoard.MainBoard.tilesGrid[2][4].pawns[5] = new Pawn("Street", "Orange");
+        GameBoard.MainBoard.tilesGrid[3][5].pawns[11] = GameBoard.MainBoard.tilesGrid[2][4].pawns[5];
+        GameBoard.MainBoard.pawns[(int)PlayerColor.ORANGE].Add(GameBoard.MainBoard.tilesGrid[2][4].pawns[5]);
+
+    }
+
+    public void DebugBuild()
+    {
+        TryBuild("Village");
+    }
 
     public void NextPlayer()
     {
@@ -69,39 +95,39 @@ public class GamePlay : MonoBehaviour
     /// Check if you have enough Ressources and print possible Positions
     /// </summary>
     /// <param name="tryBuildedPawn">The pawn you wish to build</param>
-    public void TryBuild(Pawn tryBuildedPawn)
+    public void TryBuild(string type)
     {
         //set buildedPawn back to null
-        if (tryBuildedPawn == null)
+        if (type == "")
         {
             buildedPawn = null;
             return;
         }
 
         //Ressourcen überprüfen
-        if (!GetCurrentPlayer().inventory.CheckInventory(tryBuildedPawn.type))
-        {
-            Debug.Log("You have not enough Ressources...");
-            return;
-        }
+        //if (!GetCurrentPlayer().inventory.CheckInventory(type))
+        //{
+        //    Debug.Log("You have not enough Ressources...");
+        //    return;
+        //}
 
-        buildedPawn = tryBuildedPawn;
+        buildedPawn = new Pawn(type, GetCurrentPlayer().color);
 
         //Alle möglichen Positionen ausgeben
         Place[] possiblePlaces = GameBoard.MainBoard.GetAllPositions(buildedPawn);
 
         if (possiblePlaces.Length == 0)
         {
-            Debug.Log("Du kannst nirgendwo ein" + ((buildedPawn.type == "Village") ? " Dorf" : ((buildedPawn.type == "Street") ? "e Straße" : "e Stadt")) + "bauen...");
+            Debug.Log("Du kannst nirgendwo ein" + ((buildedPawn.type == "Village") ? " Dorf" : ((buildedPawn.type == "Street") ? "e Straße" : "e Stadt")) + " bauen...");
         }
 
         for (int i = 0; i < possiblePlaces.Length; i++)
         {
             //create PlaceObject
-            Place createdPlace = Instantiate(Resources.Load<Place>("PlacePrefab"), GameObject.Find("Places").transform);
+            Place createdPlace = Instantiate(Resources.Load<Place>("Prefabs/PossiblePlace"), GameObject.Find("Places").transform);
             createdPlace.posAtField = possiblePlaces[i].posAtField;
             createdPlace.usedFields = possiblePlaces[i].usedFields;
-
+            
             createdPlace.gameObject.transform.position = GetPosInWorld(createdPlace.usedFields[0], createdPlace.posAtField[0]);
         }
     }
@@ -111,12 +137,12 @@ public class GamePlay : MonoBehaviour
         Vector3 result = new Vector3();
 
         //Get pos of Field
-        result.x = usedField.row;
+        result.x = usedField.column * -6 + 6;
         result.y = 0;
-        result.z = usedField.column / 2;
+        result.z = usedField.row * 6.93f + (3.46f + 6.93f / 2);
 
         //get Pos from PosAtField
-        result += Quaternion.Euler(0, 30, 0) * Vector3.forward;
+        result += Quaternion.Euler(0, 30 * posAtField, 0) * Vector3.back * ((buildedPawn.type == "Street") ? 6.0f : 16.86f / 2.0f);
 
         return result;
     }
@@ -133,21 +159,30 @@ public class GamePlay : MonoBehaviour
         GetCurrentPlayer().inventory.RemoveItem(buildedPawn.type);
 
         //An die richtige Position setzen und die angrenzenden Tiles updaten
-        for (int i = 0; i < GameBoard.MainBoard.tiles.Length; i++)
+        for (int i = 0; i < GameBoard.MainBoard.tilesGrid.Length; i++)
         {
-            for (int j = 0; j < destination.usedFields.Length; j++)
+            for (int j = 0; j < GameBoard.MainBoard.tilesGrid[i].Length; j++)
             {
-                if (GameBoard.MainBoard.tiles[i].Equals(destination.usedFields[j]))
+                for (int k = 0; k < destination.usedFields.Length; k++)
                 {
-                    GameBoard.MainBoard.tiles[i].pawns[destination.posAtField[j]] = buildedPawn;
+                    if (GameBoard.MainBoard.tilesGrid[i][j].Equals(destination.usedFields[k]))
+                    {
+                        GameBoard.MainBoard.tilesGrid[i][j].pawns[destination.posAtField[k]] = buildedPawn;
+                    }
                 }
             }
         }
 
         //Pawn kreieren (erst nur mesh, dann Farbe, dann position)
-        Transform createdPawn = Instantiate(Resources.Load<Transform>(buildedPawn.type), GameObject.Find("GameBoard").transform);
-        createdPawn.gameObject.GetComponent<MeshRenderer>().material = Resources.Load<Material>(buildedPawn.color);
+        Transform createdPawn = Instantiate(Resources.Load<Transform>("Prefabs/" + buildedPawn.type), GameObject.Find("Board").transform);
+        createdPawn.gameObject.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/" + buildedPawn.color);
         createdPawn.position = destination.gameObject.transform.position;
+
+        //Places löschen
+        for (int i = 0; i < GameObject.Find("Places").transform.childCount; i++)
+        {
+            GameObject.Destroy(GameObject.Find("Places").transform.GetChild(i).gameObject);
+        }
     }
 
     // TRADING //

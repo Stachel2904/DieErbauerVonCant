@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Place : MonoBehaviour{
 
@@ -9,6 +10,14 @@ public class Place : MonoBehaviour{
 
     private void OnMouseDown()
     {
-        GamePlay.Main.buildPawn(this);
+        for (int i = 0; i < GameObject.Find("Places").transform.childCount; i++)
+        {
+            GameObject.Find("Places").transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
+        }
+        this.gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
+        GameObject buildAcceptionInterface = GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildAcceptionInterface;
+        buildAcceptionInterface.SetActive(true);
+        buildAcceptionInterface.transform.Find("Accept").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+        buildAcceptionInterface.transform.Find("Accept").gameObject.GetComponent<Button>().onClick.AddListener(delegate { GamePlay.Main.buildPawn(this); });
     }
 }

@@ -7,6 +7,7 @@ TextureImporter:
     21300004: UI_2
     21300006: UI_3
     21300008: UI_4
+    21300010: UI_5
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -195,6 +196,26 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: e4c4394090745b14eae45b04e3819aa8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_5
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 1
+        width: 21
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 10, y: 10, z: 10, w: 10}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b0970c65c70b464489d3bd17cdb6f0e
       vertices: []
       indices: 
       edges: []

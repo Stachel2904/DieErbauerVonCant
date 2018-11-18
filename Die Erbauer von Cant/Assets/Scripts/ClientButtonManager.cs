@@ -7,6 +7,8 @@ public class ClientButtonManager : MonoBehaviour {
     Button rollDice;
     [SerializeField]
     Button nextPlayer;
+    
+    public GameObject BuildAcceptionInterface;
 
     // Use this for initialization
     void Start () {

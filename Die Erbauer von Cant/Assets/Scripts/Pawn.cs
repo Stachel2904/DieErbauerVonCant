@@ -18,13 +18,17 @@ public class Pawn
 	public Field[] GetFields()
     {
         List<Field> result = new List<Field>();
-        for (int i = 0; i < GameBoard.MainBoard.tiles.Length; i++)
+
+        for (int i = 0; i < GameBoard.MainBoard.tilesGrid.Length; i++)
         {
-            for (int j = 0; j < GameBoard.MainBoard.tiles[i].pawns.Length; j++)
+            for (int j = 0; j < GameBoard.MainBoard.tilesGrid[i].Length; j++)
             {
-                if (GameBoard.MainBoard.tiles[i].pawns[j].Equals(this))
+                for (int k = 0; k < GameBoard.MainBoard.tilesGrid[i][j].pawns.Length; k++)
                 {
-                    result.Add(GameBoard.MainBoard.tiles[i]);
+                    if (GameBoard.MainBoard.tilesGrid[i][j].pawns[k] != null && GameBoard.MainBoard.tilesGrid[i][j].pawns[k].Equals(this))
+                    {
+                        result.Add(GameBoard.MainBoard.tilesGrid[i][j]);
+                    }
                 }
             }
         }
@@ -38,13 +42,16 @@ public class Pawn
 
         Field[] fields = GetFields();
 
-        for (int i = 0; i < fields.Length; i++)
+        for (int i = 0; i < GameBoard.MainBoard.tilesGrid.Length; i++)
         {
-            for (int j = 0; j < fields[i].pawns.Length; j++)
+            for (int j = 0; j < GameBoard.MainBoard.tilesGrid[i].Length; j++)
             {
-                if (fields[i].pawns[j].Equals(this))
+                for (int k = 0; k < GameBoard.MainBoard.tilesGrid[i][j].pawns.Length; k++)
                 {
-                    result.Add(j);
+                    if (GameBoard.MainBoard.tilesGrid[i][j].pawns[k] != null && GameBoard.MainBoard.tilesGrid[i][j].pawns[k].Equals(this))
+                    {
+                        result.Add(k);
+                    }
                 }
             }
         }
