@@ -11,6 +11,9 @@ public class Field
     public int row;
     public int column;
 
+    public Field() {
+        //t
+    }
     public Field(string _resourceName, int _chipNumber)
     {
         resourceName = _resourceName;

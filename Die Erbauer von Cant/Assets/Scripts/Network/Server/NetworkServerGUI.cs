@@ -23,16 +23,16 @@ public class NetworkServerGUI : MonoBehaviour {
         for (int i = 0; i < 4; i++) {
             if (GamePlay.Main.players[i].clientID == _clientID_) {
                 switch (GamePlay.Main.players[i].color) {
-                    case "yellow":
-                        ctemp = Color.yellow;
+                    case "Orange":
+                        ctemp = new Color(255,150,0);
                         break;
-                    case "white":
+                    case "White":
                         ctemp = Color.white;
                         break;
-                    case "red":
+                    case "Red":
                         ctemp = Color.red;
                         break;
-                    case "blue":
+                    case "Blue":
                         ctemp = Color.blue;
                         break;
                 }
