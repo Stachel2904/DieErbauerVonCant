@@ -162,7 +162,7 @@ public class NetworkServerMessageHandler : MonoBehaviour {
     }
     //Send Inventoryinformation to Client
     /// <param name="_ClientID_">ID</param>
-    /// <param name="_message_">Brick|8</param> Der Wert muss aus dem Inventar ausgelesen werden, dies ist die Zahl, die angezeigt wird
+    /// <param name="_message_">Brick|8 Der Wert muss aus dem Inventar ausgelesen werden, dies ist die Zahl, die angezeigt wird</param> Der Wert muss aus dem Inventar ausgelesen werden, dies ist die Zahl, die angezeigt wird
     public void SendInventoryToClient(int _ClientID_, string _message_) {
         NetMessage netMSG = new NetMessage();
         netMSG.command = _message_;
