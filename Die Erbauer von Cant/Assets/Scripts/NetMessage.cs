@@ -32,11 +32,15 @@ public class NetMessage : MessageBase { //ToDo: Anpassen, fehlende Daten ergänz
 public class TradeMessage : MessageBase {
     public Trade trade;
 }
+public class CreateTradeMessage : MessageBase {
+    public string ressource1;
+    public string ressource2;
+}
 public class AcceptMessage : MessageBase {
     public string acceptType;
     public bool isAccepted;
 }
-//public class FieldMessage : MessageBase {
-//    public Pawn pawn;
-//    public Place place;
-//}
+public class FieldMessage : MessageBase {
+    public string pawn;
+    public Place place;
+}

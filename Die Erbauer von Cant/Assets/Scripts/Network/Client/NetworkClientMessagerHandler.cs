@@ -13,7 +13,8 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         client.RegisterHandler(889, ReciveTradeMessage);
         client.RegisterHandler(890, ReciveAcceptMessage);
         client.RegisterHandler(891, ReciveInventoryMessage);
-        //client.RegisterHandler(892, ReciveFieldUpdateMessage);
+        client.RegisterHandler(892, ReciveFieldUpdateMessage);
+        client.RegisterHandler(893, ReciveCreateTradeMessage);
         client.RegisterHandler(MsgType.Connect, OnConnect);
         client.RegisterHandler(MsgType.Disconnect, OnDisconnect);
     }
@@ -42,6 +43,7 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
             Debug.LogError("Client is not connected! Failed to send message!");
         }
     }
+    //TRADE
     public void SendTradeToServer(Trade _trade_) {
         if (client.isConnected) {
             TradeMessage tradeMSG = new TradeMessage();
@@ -55,6 +57,21 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
             Debug.LogError("Client is not connected! Failed to send trademessage!");
         }
     }
+    public void SendCreateTradeToServer(string _resource1_, string _resource2_) {
+        if (client.isConnected) {
+            CreateTradeMessage tradeMSG = new CreateTradeMessage();
+            tradeMSG.ressource1 = _resource1_;
+            tradeMSG.ressource2 = _resource2_;
+            bool success = client.Send(893, tradeMSG);
+            if (!success) {
+                Debug.LogError("Failed to send trademessage!");
+            }
+        }
+        else {
+            Debug.LogError("Client is not connected! Failed to send trademessage!");
+        }
+    }
+    //ACCEPT
     public void SendAcceptToServer(string _AcceptType_, bool _isAccepted_) {
         if (client.isConnected) {
             AcceptMessage acceptMSG = new AcceptMessage();
@@ -69,20 +86,21 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
             Debug.LogError("Client is not connected! Failed to send acceptmessage!");
         }
     }
-    //public void SendFieldUpdateToServer(Pawn _pawn_, Place _place_) {
-    //    if (client.isConnected) {
-    //        FieldMessage fieldMSG = new FieldMessage();
-    //        fieldMSG.pawn = _pawn_;
-    //        fieldMSG.place = _place_;
-    //        bool success = client.Send(892, fieldMSG);
-    //        if (!success) {
-    //            Debug.LogError("Failed to send fieldupdatemessage!");
-    //        }
-    //    }
-    //    else {
-    //        Debug.LogError("Client is not connected! Failed to send fieldupdatemessage!");
-    //    }
-    //}
+    //FIELD
+    public void SendFieldUpdateToServer(string _pawn_, Place _place_) {
+        if (client.isConnected) {
+            FieldMessage fieldMSG = new FieldMessage();
+            fieldMSG.pawn = _pawn_;
+            fieldMSG.place = _place_;
+            bool success = client.Send(892, fieldMSG);
+            if (!success) {
+                Debug.LogError("Failed to send fieldupdatemessage!");
+            }
+        }
+        else {
+            Debug.LogError("Client is not connected! Failed to send fieldupdatemessage!");
+        }
+    }
     //Recive from Server
     private void ReciveMessageFromServer(NetworkMessage _message_) {
         Debug.Log("RECIVED A MESSAGE!");
@@ -95,12 +113,21 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
                 break;
         }
     }
+    //TRADE
     private void ReciveTradeMessage(NetworkMessage _message_) {
         Debug.Log("RECIVED A TRADEMESSAGE!");
         TradeMessage tradeMSG = new TradeMessage();
         _message_.reader.SeekZero();
         tradeMSG.trade = _message_.ReadMessage<TradeMessage>().trade;
     }
+    private void ReciveCreateTradeMessage(NetworkMessage _message_) {
+        Debug.Log("RECIVED A CREATETRADEMESSAGE!");
+        CreateTradeMessage tradeMSG = new CreateTradeMessage();
+        _message_.reader.SeekZero();
+        tradeMSG.ressource1 = _message_.ReadMessage<CreateTradeMessage>().ressource1;
+        tradeMSG.ressource2 = _message_.ReadMessage<CreateTradeMessage>().ressource2;
+    }
+    //ACCEPT
     private void ReciveAcceptMessage(NetworkMessage _message_) {
         Debug.Log("RECIVED A ACCEPTMESSAGE!");
         AcceptMessage acceptMSG = new AcceptMessage();
@@ -125,10 +152,10 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         string name = deltas[0];
         GameObject.Find("Window").transform.Find("Hand").Find(name).Find("AmountBG").Find("Amount").GetComponent<Text>().text = deltas[1];
     }
-    //private void ReciveFieldUpdateMessage(NetworkMessage _message_) {
-    //    FieldMessage fieldMSG = new FieldMessage();
-    //    _message_.reader.SeekZero();
-    //    fieldMSG.pawn = _message_.ReadMessage<FieldMessage>().pawn;
-    //    fieldMSG.place = _message_.ReadMessage<FieldMessage>().place;
-    //}
+    private void ReciveFieldUpdateMessage(NetworkMessage _message_) {
+        FieldMessage fieldMSG = new FieldMessage();
+        _message_.reader.SeekZero();
+        fieldMSG.pawn = _message_.ReadMessage<FieldMessage>().pawn;
+        fieldMSG.place = _message_.ReadMessage<FieldMessage>().place;
+    }
 }
