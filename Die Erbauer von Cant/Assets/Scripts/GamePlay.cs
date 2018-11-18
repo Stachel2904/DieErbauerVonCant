@@ -128,18 +128,18 @@ public class GamePlay : MonoBehaviour
             if (players[i].clientID == clientID)
             {
                 stringTemp = "Brick|" + players[i].inventory.inven["Brick"].ToString();
-                GameObject.Find("ClientManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(clientID, stringTemp);
+                GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(clientID, stringTemp);
                 stringTemp = "Wheat|" + players[i].inventory.inven["Wheat"].ToString();
-                GameObject.Find("ClientManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(clientID, stringTemp);
+                GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(clientID, stringTemp);
                 stringTemp = "Ore|" + players[i].inventory.inven["Ore"].ToString();
-                GameObject.Find("ClientManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(clientID, stringTemp);
+                GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(clientID, stringTemp);
                 stringTemp = "Wood|" + players[i].inventory.inven["Wood"].ToString();
-                GameObject.Find("ClientManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(clientID, stringTemp);
+                GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(clientID, stringTemp);
                 stringTemp = "Wool|" + players[i].inventory.inven["Wool"].ToString();
-                GameObject.Find("ClientManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(clientID, stringTemp);
+                GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(clientID, stringTemp);
 
                 players[i].hand = Main.players[i].inventory.inven["Brick"] + Main.players[i].inventory.inven["Wheat"] + Main.players[i].inventory.inven["Ore"] + Main.players[i].inventory.inven["Wood"] + Main.players[i].inventory.inven["Wool"];
-                GameObject.Find("ClientManager").GetComponent<NetworkServerGUI>().UpdateHand(players[i].clientID);
+                GameObject.Find("ServerManager").GetComponent<NetworkServerGUI>().UpdateHand(players[i].clientID);
             }
             
         }
