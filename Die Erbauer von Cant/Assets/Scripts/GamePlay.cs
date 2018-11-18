@@ -79,8 +79,9 @@ public class GamePlay : MonoBehaviour
 
             UpdateInventory(players[i].clientID);
         }
-
+        Debug.Log("START GAME");
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("Start");
+        Debug.Log("START GAME 2");
     }
 
     public void NextPlayer()

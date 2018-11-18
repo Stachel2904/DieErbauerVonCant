@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Networking;
-using UnityEngine.Networking.NetworkSystem;
 
 public class NetworkServerMessageHandler : MonoBehaviour {
 
