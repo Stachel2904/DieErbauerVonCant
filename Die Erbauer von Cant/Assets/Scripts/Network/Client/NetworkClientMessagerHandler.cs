@@ -89,7 +89,10 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         _message_.reader.SeekZero();
         switch (_message_.ReadMessage<NetMessage>().command) {
             case "Go":
-                //AskForReadyHere (Send AcceptMessage)
+                GameObject.Find("ButtonManager").GetComponent<ClientButtonManager>().DiceRoll.SetActive(true);
+                break;
+            case "Start":
+                GameObject.Find("Window").transform.Find("ClientDefault").gameObject.SetActive(true);
                 break;
             default:
                 break;
@@ -102,7 +105,7 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         tradeMSG.trade = _message_.ReadMessage<TradeMessage>().trade;
     }
     private void ReciveAcceptMessage(NetworkMessage _message_) {
-        Debug.Log("RECIVED A ACCEPTMESSAGE!");
+        Debug.Log("RECIVED AN ACCEPTMESSAGE!");
         AcceptMessage acceptMSG = new AcceptMessage();
         _message_.reader.SeekZero();
         acceptMSG.isAccepted = _message_.ReadMessage<AcceptMessage>().isAccepted;
@@ -130,5 +133,6 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         _message_.reader.SeekZero();
         fieldMSG.pawn = _message_.ReadMessage<FieldMessage>().pawn;
         fieldMSG.place = _message_.ReadMessage<FieldMessage>().place;
+        GameObject.Find("GamePlay").GetComponent<GamePlayClient>().UpdateBoard(new Pawn(fieldMSG.pawn, GamePlay.Main.GetCurrentPlayer().color), fieldMSG.place);
     }
 }

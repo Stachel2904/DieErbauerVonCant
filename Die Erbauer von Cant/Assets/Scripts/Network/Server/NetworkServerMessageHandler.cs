@@ -51,7 +51,7 @@ public class NetworkServerMessageHandler : MonoBehaviour {
                 DiceGenerator.Main.DiceRoll();
                 break;
             case "Next Player":
-                //NextPlayerStuffHere
+                GamePlay.Main.NextPlayer();
                 SendToClient(GamePlay.Main.GetCurrentPlayer().clientID, "Go");
                 break;
             case "Player started Trading":
@@ -98,6 +98,8 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         _message_.reader.SeekZero();
         fieldMSG.pawn = _message_.ReadMessage<FieldMessage>().pawn;
         fieldMSG.place = _message_.ReadMessage<FieldMessage>().place;
+        GamePlay.Main.UpdateBoard(new Pawn(fieldMSG.pawn, GamePlay.Main.GetCurrentPlayer().color), fieldMSG.place);
+        SendFieldUpdateToClient(fieldMSG.pawn, fieldMSG.place);
     }
     //Send to Client
     public void SendToClient(int _ClientID_, string _command_) {

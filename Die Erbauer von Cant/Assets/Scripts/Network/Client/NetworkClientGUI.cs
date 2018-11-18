@@ -22,9 +22,7 @@ public class NetworkClientGUI : MonoBehaviour {
         newAddress.gameObject.AddComponent<Button>().onClick.AddListener(delegate { this.gameObject.GetComponent<NetworkClientUI>().ConnectToServer(cachedIpAddress, cachedPort); });
     }
     public void DeactivateSearchServerPanel() {
-        Debug.Log("Kartoffel");
         GameObject.Find("Window").transform.Find("Addresses").gameObject.SetActive(false);
-        GameObject.Find("Window").transform.Find("ClientDefault").gameObject.SetActive(true);
-        GameObject.Find("Window").transform.Find("Hand").gameObject.SetActive(true);
+        GameObject.Find("ButtonManager").GetComponent<ClientButtonManager>().WaitScreen.SetActive(true);
     }
 }
