@@ -104,14 +104,22 @@ public class NetworkServerGUI : MonoBehaviour {
             }
         }
     }
-    public void UpdateHand(int _ClientID_) { //Update count of handcards
-        for (int i = 0; i < GamePlay.Main.players.Length; i++) {
-            if (GamePlay.Main.players[i].clientID == _ClientID_ && GamePlay.Main.players[i].clientID != -1) {
-                switch (GamePlay.Main.players[i].avatar) {
+    public void UpdateHand(int _ClientID_)
+    { //Update count of handcards
+        for (int i = 0; i < GamePlay.Main.players.Length; i++)
+        {
+            Debug.Log(" Gameplaymainplayer.length ist " + GamePlay.Main.players.Length);
+            if (GamePlay.Main.players[i].clientID == _ClientID_ && GamePlay.Main.players[i].clientID != -1)
+            {
+                Debug.Log("Funktion ruft auf");
+                switch (GamePlay.Main.players[i].avatar)
+                {
                     case "Player1":
+                        Debug.Log("case1 geht");
                         player1.transform.Find("Hand").GetComponent<Text>().text = GamePlay.Main.players[i].hand.ToString();
                         break;
                     case "Player2":
+                        Debug.Log("case2 geht");
                         player2.transform.Find("Hand").GetComponent<Text>().text = GamePlay.Main.players[i].hand.ToString();
                         break;
                     case "Player3":
