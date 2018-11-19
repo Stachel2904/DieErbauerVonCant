@@ -610,4 +610,13 @@ public class GameBoard
 
         return possiblePositions.ToArray();
     }
+
+    public void deleteAllPlaces()
+    {
+        //Places löschen
+        for (int i = 0; i < GameObject.Find("Places").transform.childCount; i++)
+        {
+            GameObject.Destroy(GameObject.Find("Places").transform.GetChild(i).gameObject);
+        }
+    }
 }

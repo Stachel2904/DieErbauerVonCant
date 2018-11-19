@@ -18,7 +18,7 @@ public class NetworkClientGUI : MonoBehaviour {
 
         newAddress.transform.Find("Address").gameObject.GetComponent<Text>().text = cachedIpAddress;
         newAddress.transform.Find("Port").gameObject.GetComponent<Text>().text = cachedPort.ToString();
-        newAddress.Translate(Vector2.down * 20);
+        newAddress.Translate(Vector2.down * 100);
         newAddress.gameObject.AddComponent<Button>().onClick.AddListener(delegate { this.gameObject.GetComponent<NetworkClientUI>().ConnectToServer(cachedIpAddress, cachedPort); });
     }
     public void DeactivateSearchServerPanel() {
