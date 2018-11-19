@@ -41,5 +41,7 @@ public class AcceptMessage : MessageBase {
 }
 public class FieldMessage : MessageBase {
     public string pawn;
+}
+public class FieldMessage2 : MessageBase {
     public Place place;
 }
