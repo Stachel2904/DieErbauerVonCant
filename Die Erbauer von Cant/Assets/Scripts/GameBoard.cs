@@ -41,6 +41,110 @@ public class GameBoard
                 tilesGrid[i][j] = new Field();
                 tilesGrid[i][j].row = i;
                 tilesGrid[i][j].column = j;
+
+                #region tilesInit
+                // First Row
+                if (i == 0 && j == 2)
+                {
+                    tilesGrid[i][j].chipNumber = 10;
+                    tilesGrid[i][j].resourceName = "Ore";
+                }
+                if (i == 0 && j == 4)
+                {
+                    tilesGrid[i][j].chipNumber = 2;
+                    tilesGrid[i][j].resourceName = "Wool";
+                }
+                if (i == 0 && j == 6)
+                {
+                    tilesGrid[i][j].chipNumber = 9;
+                    tilesGrid[i][j].resourceName = "Wood";
+                }
+                // Second Row
+                if (i == 1 && j == 1)
+                {
+                    tilesGrid[i][j].chipNumber = 12;
+                    tilesGrid[i][j].resourceName = "Wheat";
+                }
+                if (i == 1 && j == 3)
+                {
+                    tilesGrid[i][j].chipNumber = 6;
+                    tilesGrid[i][j].resourceName = "Brick";
+                }
+                if (i == 1 && j == 5)
+                {
+                    tilesGrid[i][j].chipNumber = 4;
+                    tilesGrid[i][j].resourceName = "Wool";
+                }
+                if (i == 1 && j == 7)
+                {
+                    tilesGrid[i][j].chipNumber = 10;
+                    tilesGrid[i][j].resourceName = "Brick";
+                }
+                // Third Row
+                if (i == 2 && j == 0)
+                {
+                    tilesGrid[i][j].chipNumber = 9;
+                    tilesGrid[i][j].resourceName = "Wheat";
+                }
+                if (i == 2 && j == 2)
+                {
+                    tilesGrid[i][j].chipNumber = 11;
+                    tilesGrid[i][j].resourceName = "Wood";
+                }
+                if (i == 2 && j == 4)
+                {
+                    tilesGrid[i][j].chipNumber = 2;
+                    tilesGrid[i][j].resourceName = "Brick";
+                }
+                if (i == 2 && j == 6)
+                {
+                    tilesGrid[i][j].chipNumber = 3;
+                    tilesGrid[i][j].resourceName = "Wood";
+                }
+                if (i == 2 && j == 8)
+                {
+                    tilesGrid[i][j].chipNumber = 8;
+                    tilesGrid[i][j].resourceName = "Ore";
+                }
+                // Fourth Row
+                if (i == 3 && j == 1)
+                {
+                    tilesGrid[i][j].chipNumber = 8;
+                    tilesGrid[i][j].resourceName = "Wood";
+                }
+                if (i == 3 && j == 3)
+                {
+                    tilesGrid[i][j].chipNumber = 3;
+                    tilesGrid[i][j].resourceName = "Ore";
+                }
+                if (i == 3 && j == 5)
+                {
+                    tilesGrid[i][j].chipNumber = 4;
+                    tilesGrid[i][j].resourceName = "Wheat";
+                }
+                if (i == 3 && j == 7)
+                {
+                    tilesGrid[i][j].chipNumber = 5;
+                    tilesGrid[i][j].resourceName = "Wool";
+                }
+                // Fifth Row
+                if (i == 4 && j == 2)
+                {
+                    tilesGrid[i][j].chipNumber = 5;
+                    tilesGrid[i][j].resourceName = "Brick";
+                }
+                if (i == 4 && j == 4)
+                {
+                    tilesGrid[i][j].chipNumber = 6;
+                    tilesGrid[i][j].resourceName = "Wheat";
+                }
+                if (i == 4 && j == 6)
+                {
+                    tilesGrid[i][j].chipNumber = 11;
+                    tilesGrid[i][j].resourceName = "Wool";
+                }
+                #endregion
+                
             }
         }
 

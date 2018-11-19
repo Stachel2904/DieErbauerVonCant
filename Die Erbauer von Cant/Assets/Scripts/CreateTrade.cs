@@ -118,9 +118,6 @@ public class CreateTrade : MonoBehaviour {
         shownaskedOreText = text18.GetComponent<Text>();
         shownaskedWoodText = text19.GetComponent<Text>();
         shownaskedWoolText = text20.GetComponent<Text>();
-
-        
-
     }
     private void Update()
     {

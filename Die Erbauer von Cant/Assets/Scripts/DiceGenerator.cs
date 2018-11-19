@@ -33,12 +33,15 @@ public class DiceGenerator
             result += number;
         }
 
-        Print(result);        
+        Print(result);
+        GamePlay.Main.DistributeRolledRessources(result);
+
     }
 
     private void Print(int number)
     {
         GameObject.Find("Window").transform.Find("Dice").Find("Image").Find("Text").gameObject.GetComponent<Text>().text = number.ToString();
+
     }
 
     //Get rolled Number

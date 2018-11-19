@@ -11,8 +11,10 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         if(init == true) {
             if(blockedSlots == slots) {
                 NetworkServer.dontListen = true;
+                Debug.Log("Server Full! Server stops listening for new clients!");
             }else if(blockedSlots < slots && NetworkServer.dontListen == true) {
                 NetworkServer.dontListen = false;
+                Debug.Log("Server starts listening for new clients!");
             }
         }
     }
@@ -75,7 +77,6 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         TradeMessage tradeMSG = new TradeMessage();
         _message_.reader.SeekZero();
         tradeMSG.trade = _message_.ReadMessage<TradeMessage>().trade;
-        //Tradestuff here
         switch (tradeMSG.trade.timesSend)
         {
             case 0:
@@ -88,10 +89,10 @@ public class NetworkServerMessageHandler : MonoBehaviour {
                 }
                 break;
             case 1:
-
                 GamePlay.Main.Trading(tradeMSG.trade);
                 break;
             default:
+                Debug.LogError("Reciving trade not possible! No avaible case between 0 and 1!");
                 break;
         }
        
@@ -100,10 +101,9 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         Debug.Log("RECIVED A CREATETRADEMESSAGE!");
         CreateTradeMessage tradeMSG = new CreateTradeMessage();
         _message_.reader.SeekZero();
-        tradeMSG.ressource1 = _message_.ReadMessage<CreateTradeMessage>().ressource1;
-        tradeMSG.ressource2 = _message_.ReadMessage<CreateTradeMessage>().ressource2;
-
-        GamePlay.Main.tradeSystem4to1(tradeMSG.ressource1, tradeMSG.ressource2);
+        tradeMSG.ressource = _message_.ReadMessage<CreateTradeMessage>().ressource;
+        string[] deltas = tradeMSG.ressource.Split('|');
+        GamePlay.Main.tradeSystem4to1(deltas[0], deltas[1]);
     }
     //Recive AcceptMessage
     private void ReciveAcceptMessage(NetworkMessage _message_) {
@@ -145,12 +145,6 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         tradeMSG.trade = _trade_;
         NetworkServer.SendToClient(_ClientID_, 889, tradeMSG);
     }
-    public void SendCreateTradeToClient(int _ClientID_, string _resource1_, string _resource2_) {
-        CreateTradeMessage tradeMSG = new CreateTradeMessage();
-        tradeMSG.ressource1 = _resource1_;
-        tradeMSG.ressource2 = _resource2_;
-        NetworkServer.SendToClient(_ClientID_, 893, tradeMSG);
-    }
     //Send Accept To Client
     public void SendAcceptToClient(int _ClientID_, string _AcceptType_, bool _isAccepted_) {
         AcceptMessage acceptMSG = new AcceptMessage();
@@ -165,7 +159,6 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         NetMessage netMSG = new NetMessage();
         netMSG.command = _message_;
         NetworkServer.SendToClient(_ClientID_, 891, netMSG);
-        Debug.Log("Geschafft!");
     }
     //UPDATE FIELD
     public void SendFieldUpdateToClient(string _pawn_, Place _place_) {
@@ -180,6 +173,9 @@ public class NetworkServerMessageHandler : MonoBehaviour {
     public void SendToAllClients(string _command_) {
         NetMessage netMSG = new NetMessage();
         netMSG.command = _command_;
-        NetworkServer.SendToAll(888, netMSG);
+        bool succsess = NetworkServer.SendToAll(888, netMSG);
+        if (!succsess) {
+            Debug.LogError("Failed to send command: " + _command_ + "to all clients!");
+        }
     }
 }

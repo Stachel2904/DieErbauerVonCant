@@ -93,6 +93,47 @@ public class GamePlay : MonoBehaviour
         return players[currentPlayer];
     }
 
+    public void DistributeRolledRessources(int number)
+    {
+        for (int i = 0; i < GameBoard.MainBoard.tilesGrid.Length; i++)
+        {
+            for (int j = 0; j < GameBoard.MainBoard.tilesGrid[i].Length; j++)
+            {
+                if (GameBoard.MainBoard.tilesGrid[i][j].chipNumber == number)
+                {
+                    for (int h = 0; h < GameBoard.MainBoard.tilesGrid[i][j].pawns.Length; h++)
+                    {
+                        if (GameBoard.MainBoard.tilesGrid[i][j].pawns[h] != null)
+                        {
+                            if (GameBoard.MainBoard.tilesGrid[i][j].pawns[h].type == "Village")
+                            {
+                                for (int k = 0; k < players.Length; k++)
+                                {
+                                    if (players[k].color == GameBoard.MainBoard.tilesGrid[i][j].pawns[k].color)
+                                    {
+                                        players[k].inventory.AddItem(GameBoard.MainBoard.tilesGrid[i][j].resourceName);
+                                        UpdateInventory(players[k].clientID);
+                                    }
+                                }
+                            }
+                            if (GameBoard.MainBoard.tilesGrid[i][j].pawns[h].type == "City")
+                            {
+                                for (int k = 0; k < players.Length; k++)
+                                {
+                                    if (players[k].color == GameBoard.MainBoard.tilesGrid[i][j].pawns[k].color)
+                                    {
+                                        players[k].inventory.AddItem(GameBoard.MainBoard.tilesGrid[i][j].resourceName, 2);
+                                        UpdateInventory(players[k].clientID);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public void UpdateBoard(Pawn buildedPawn, Place destination)
     {
         if(buildedPawn.type != "Street")
