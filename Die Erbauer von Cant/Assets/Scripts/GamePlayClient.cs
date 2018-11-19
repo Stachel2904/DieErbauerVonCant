@@ -90,21 +90,14 @@ public class GamePlayClient : MonoBehaviour {
             bool alreadyBuilded = false;
             Vector3 placePosition = GetPosInWorld(possiblePlaces[i].usedFields[0], possiblePlaces[i].posAtField[0]);
 
+            possiblePlaces[i].gameObject.transform.position = placePosition;
+
             for (int j = 0; j < GameObject.Find("Places").transform.childCount; j++)
             {
-                if (Vector3.Distance(GameObject.Find("Places").transform.GetChild(j).position, placePosition) < 0.5f)
+                if (Vector3.Distance(GameObject.Find("Places").transform.GetChild(j).position, placePosition) < 0.5f && !GameObject.Find("Places").transform.GetChild(j).Equals(possiblePlaces[i]))
                 {
-                    alreadyBuilded = true;
+                    GameObject.Destroy(possiblePlaces[i].gameObject);
                 }
-            }
-
-            //create PlaceObject
-            if (!alreadyBuilded)
-            {
-                Place createdPlace = Instantiate(Resources.Load<Place>("Prefabs/PossiblePlace"), GameObject.Find("Places").transform);
-                createdPlace.usedFields = possiblePlaces[i].usedFields;
-                createdPlace.posAtField = possiblePlaces[i].posAtField;
-                createdPlace.gameObject.transform.position = placePosition;
             }
         }
     }
@@ -194,7 +187,7 @@ public class GamePlayClient : MonoBehaviour {
     {
         Field[] usedFields = new Field[place.Length / 3];
         int[] posAtField = new int[place.Length / 3];
-        for (int i = 0; i < usedFields.Length; i += 3)
+        for (int i = 0; i < usedFields.Length * 3; i += 3)
         {
             usedFields[i / 3] = GameBoard.MainBoard.tilesGrid[place[i]][place[i + 1]];
             posAtField[i / 3] = place[i + 2];
