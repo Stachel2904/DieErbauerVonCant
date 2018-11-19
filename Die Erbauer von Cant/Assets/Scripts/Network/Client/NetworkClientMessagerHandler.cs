@@ -78,8 +78,6 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
             FieldMessage2 fieldMSG2 = new FieldMessage2();
             fieldMSG.pawn = _pawn_ + "|" + _color_;
             fieldMSG2.place = _place_;
-            Debug.Log("[SEND] PAWN:" + fieldMSG.pawn);
-            Debug.Log("[SEND] PLACE:" + fieldMSG2.place);
             bool success = client.Send(892, fieldMSG);
             if (!success) {
                 Debug.LogError("Failed to send fieldupdatemessage!");
@@ -158,23 +156,17 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
     string tempPawn;
     string tempColor;
     private void ReciveFieldUpdateMessage(NetworkMessage _message_) {
-        Debug.Log("[[RECIVE]Client FIELD UPDATE] Recived a Message.. start..");
         FieldMessage fieldMSG = new FieldMessage();
         _message_.reader.SeekZero();
         fieldMSG.pawn = _message_.ReadMessage<FieldMessage>().pawn;
         string[] deltas = fieldMSG.pawn.Split('|');
         tempPawn = deltas[0];
         tempColor = deltas[1];
-        Debug.Log("[[RECIVE]Client FIELD UPDATE] Recived a Message.. end..");
     }
     private void ReciveFieldUpdateMessage2(NetworkMessage _message_) {
-        Debug.Log("[[RECIVE]Client FIELD UPDATE 2] Recived a Message.. start..");
         FieldMessage2 fieldMSG2 = new FieldMessage2();
         _message_.reader.SeekZero();
         fieldMSG2.place = _message_.ReadMessage<FieldMessage2>().place;
         GameObject.Find("GamePlay").GetComponent<GamePlayClient>().UpdateBoard(new Pawn(tempPawn, tempColor), fieldMSG2.place);
-        Debug.Log("PAWN:" + tempPawn + " / " + tempColor);
-        Debug.Log("PLACE:" + fieldMSG2.place);
-        Debug.Log("[[RECIVE]Client FIELD UPDATE 2] Recived a Message.. end..");
     }
 }

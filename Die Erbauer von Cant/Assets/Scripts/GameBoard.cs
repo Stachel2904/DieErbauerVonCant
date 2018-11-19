@@ -436,7 +436,7 @@ public class GameBoard
                                 newPlaceFields.Add(currentFields[1]);
 
                                 //third field and Position
-                                Field[] thirdFields = currentFields[0].GetConnectedFields(currentPos[0]);
+                                Field[] thirdFields = currentFields[0].GetConnectedFields(newPos1);
 
                                 //only add third field if there is another field in board
                                 if (thirdFields.Length == 2)
@@ -551,7 +551,7 @@ public class GameBoard
                                 newPlaceFields.Add(currentFields[1]);
 
                                 //third field and Position
-                                Field[] thirdFields = currentFields[0].GetConnectedFields(currentPos[0]);
+                                Field[] thirdFields = currentFields[0].GetConnectedFields(newPos1);
 
                                 //only add third field if there is another field in board
                                 if (thirdFields.Length == 2)

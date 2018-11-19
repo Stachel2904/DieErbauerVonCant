@@ -362,4 +362,31 @@ public class GamePlay : MonoBehaviour
         VictoryWindow.SetActive(true);
         VictoryWindow.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = "Player " + color + " Won!";
     }
+
+    private void Update()
+    {
+        if(GameObject.Find("Debugging") != null)
+        {
+            for (int i = 0; i < GameBoard.MainBoard.tilesGrid.Length; i++)
+            {
+                for (int j = 0; j < GameBoard.MainBoard.tilesGrid[i].Length; j++)
+                {
+                    int pawns = 0;
+                    if (GameBoard.MainBoard.tilesGrid[i][j] == null)
+                    {
+                        GameObject.Find("Debugging").transform.GetChild(i).GetChild(j).gameObject.GetComponent<Text>().text = "";
+                        continue;
+                    }
+                    for (int k = 0; k < GameBoard.MainBoard.tilesGrid[i][j].pawns.Length; k++)
+                    {
+                        if (GameBoard.MainBoard.tilesGrid[i][j].pawns[k] != null)
+                        {
+                            pawns++;
+                        }
+                    }
+                    GameObject.Find("Debugging").transform.GetChild(i).GetChild(j).gameObject.GetComponent<Text>().text = pawns.ToString();
+                }
+            }
+        }
+    }
 }

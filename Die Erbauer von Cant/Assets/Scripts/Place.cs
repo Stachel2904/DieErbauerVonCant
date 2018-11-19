@@ -21,6 +21,13 @@ public class Place : MonoBehaviour{
         buildAcceptionInterface.SetActive(true);
         buildAcceptionInterface.transform.Find("Accept").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
 
+        //Debug.Log("You startet building a " + buildedPawn.color + " " + buildedPawn.type);
+        //Debug.Log("At following positions:");
+        //for (int i = 0; i < usedFields.Length * 3; i += 3)
+        //{
+        //    Debug.Log(usedFields[i / 3].row.ToString() + " / " + usedFields[i / 3].column.ToString() + " at position " + posAtField[i / 3].ToString());
+        //}
+
         //make int[] from Place
         int[] place = new int[usedFields.Length * 3];
         for (int i = 0; i < place.Length; i += 3)
