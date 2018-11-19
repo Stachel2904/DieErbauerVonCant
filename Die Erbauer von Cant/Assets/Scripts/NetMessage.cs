@@ -35,13 +35,10 @@ public class TradeMessage : MessageBase {
 public class CreateTradeMessage : MessageBase {
     public string ressource;
 }
-public class AcceptMessage : MessageBase {
-    public string acceptType;
-    public bool isAccepted;
-}
-public class FieldMessage : MessageBase {
+public class FieldMessage : MessageBase {   
     public string pawn;
 }
 public class FieldMessage2 : MessageBase {
-    public Place place;
+    //public Place place;
+    public int[] place;
 }
