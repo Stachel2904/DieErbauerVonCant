@@ -21,7 +21,6 @@ public class NetworkServerMessageHandler : MonoBehaviour {
     public void InitRecivingMessages() {
         NetworkServer.RegisterHandler(888, ServerReciveMessage);
         NetworkServer.RegisterHandler(889, ReciveTradeMessage);
-        NetworkServer.RegisterHandler(890, ReciveAcceptMessage);
         NetworkServer.RegisterHandler(892, ReciveFieldUpdateMessage);
         NetworkServer.RegisterHandler(894, ReciveFieldUpdateMessage2);
         NetworkServer.RegisterHandler(893, ReciveCreateTradeMessage);
@@ -106,26 +105,6 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         string[] deltas = tradeMSG.ressource.Split('|');
         GamePlay.Main.tradeSystem4to1(deltas[0], deltas[1]);
     }
-    //Recive AcceptMessage
-    private void ReciveAcceptMessage(NetworkMessage _message_) {
-        Debug.Log("RECIVED A ACCEPTMESSAGE!");
-        AcceptMessage acceptMSG = new AcceptMessage();
-        _message_.reader.SeekZero();
-        acceptMSG.isAccepted = _message_.ReadMessage<AcceptMessage>().isAccepted;
-        switch (_message_.ReadMessage<AcceptMessage>().acceptType) {
-            case "Trade":
-                //Tradeaccept stuff
-                break;
-            case "Go":
-                //NextPlayerStuff
-                break;
-            case "Ready":
-                //Readyaccept stuff
-            default:
-                Debug.LogError("Can not read acceptmessage from Client: " + _message_.conn.connectionId);
-                break;
-        }
-    }
     //FIELD UPDATE
     string tempPawn;
     string tempColor;
@@ -155,13 +134,6 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         TradeMessage tradeMSG = new TradeMessage();
         tradeMSG.trade = _trade_;
         NetworkServer.SendToClient(_ClientID_, 889, tradeMSG);
-    }
-    //Send Accept To Client
-    public void SendAcceptToClient(int _ClientID_, string _AcceptType_, bool _isAccepted_) {
-        AcceptMessage acceptMSG = new AcceptMessage();
-        acceptMSG.acceptType = _AcceptType_;
-        acceptMSG.isAccepted = _isAccepted_;
-        NetworkServer.SendToClient(_ClientID_, 890, acceptMSG);
     }
     //Send Inventoryinformation to Client
     /// <param name="_ClientID_">ID</param>

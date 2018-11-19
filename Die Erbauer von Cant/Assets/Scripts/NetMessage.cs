@@ -35,10 +35,6 @@ public class TradeMessage : MessageBase {
 public class CreateTradeMessage : MessageBase {
     public string ressource;
 }
-public class AcceptMessage : MessageBase {
-    public string acceptType;
-    public bool isAccepted;
-}
 public class FieldMessage : MessageBase {   
     public string pawn;
 }
