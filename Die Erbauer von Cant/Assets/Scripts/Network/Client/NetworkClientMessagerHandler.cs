@@ -15,6 +15,7 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         client.RegisterHandler(890, ReciveAcceptMessage);
         client.RegisterHandler(891, ReciveInventoryMessage);
         client.RegisterHandler(892, ReciveFieldUpdateMessage);
+        client.RegisterHandler(894, ReciveFieldUpdateMessage2);
         client.RegisterHandler(MsgType.Connect, OnConnect);
         client.RegisterHandler(MsgType.Disconnect, OnDisconnect);
     }
@@ -89,9 +90,14 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
     public void SendFieldUpdateToServer(string _pawn_, Place _place_) {
         if (client.isConnected) {
             FieldMessage fieldMSG = new FieldMessage();
+            FieldMessage2 fieldMSG2 = new FieldMessage2();
             fieldMSG.pawn = _pawn_;
-            fieldMSG.place = _place_;
+            fieldMSG2.place = _place_;
             bool success = client.Send(892, fieldMSG);
+            if (!success) {
+                Debug.LogError("Failed to send fieldupdatemessage!");
+            }
+            success = client.Send(894, fieldMSG2);
             if (!success) {
                 Debug.LogError("Failed to send fieldupdatemessage!");
             }
@@ -125,7 +131,6 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
                 GameObject.Find("GamePlay").GetComponent<GamePlayClient>().InitClient("Red");
                 break;
             case "Start":
-                Debug.Log("START");
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.SetActive(true);
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().WaitScreen.SetActive(false);
                 break;
@@ -177,11 +182,17 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.inven[name] = Int32.Parse(deltas[1]);
     }
     //UPDATE FIELD
+    string tempPawn;
     private void ReciveFieldUpdateMessage(NetworkMessage _message_) {
         FieldMessage fieldMSG = new FieldMessage();
         _message_.reader.SeekZero();
         fieldMSG.pawn = _message_.ReadMessage<FieldMessage>().pawn;
-        fieldMSG.place = _message_.ReadMessage<FieldMessage>().place;
-        GameObject.Find("GamePlay").GetComponent<GamePlayClient>().UpdateBoard(new Pawn(fieldMSG.pawn, GamePlay.Main.GetCurrentPlayer().color), fieldMSG.place);
+        tempPawn = fieldMSG.pawn;
+    }
+    private void ReciveFieldUpdateMessage2(NetworkMessage _message_) {
+        FieldMessage2 fieldMSG = new FieldMessage2();
+        _message_.reader.SeekZero();
+        fieldMSG.place = _message_.ReadMessage<FieldMessage2>().place;
+        GameObject.Find("GamePlay").GetComponent<GamePlayClient>().UpdateBoard(new Pawn(tempPawn, GamePlay.Main.GetCurrentPlayer().color), fieldMSG.place);
     }
 }

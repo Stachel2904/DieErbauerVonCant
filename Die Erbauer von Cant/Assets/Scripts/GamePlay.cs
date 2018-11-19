@@ -80,7 +80,7 @@ public class GamePlay : MonoBehaviour
 
     public void NextPlayer()
     {
-        if (currentPlayer == 3)
+        if (currentPlayer == 2)
         {
             currentPlayer = 0;
         }
