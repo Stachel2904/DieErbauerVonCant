@@ -146,7 +146,7 @@ public class GamePlay : MonoBehaviour
             posAtField[i / 3] = place[i + 2];
         }
 
-        Vector3 pos = GetPosInWorld(usedFields[0], posAtField[0]);
+        Vector3 pos = GetPosInWorld(usedFields[0], posAtField[0], buildedPawn.type);
 
         if (buildedPawn.type != "Street")
         {
@@ -217,7 +217,7 @@ public class GamePlay : MonoBehaviour
         return result;
     }
 
-    private Vector3 GetPosInWorld(Field usedField, int posAtField)
+    private Vector3 GetPosInWorld(Field usedField, int posAtField, string type)
     {
         Vector3 result = new Vector3();
 
@@ -227,7 +227,7 @@ public class GamePlay : MonoBehaviour
         result.z = usedField.row * 10.5f + 8.5f;
 
         //get Pos from PosAtField
-        result += Quaternion.Euler(0, 30 * posAtField, 0) * Vector3.back * ((buildedPawn.type == "Street") ? 6.0f : 14.0f / 2.0f);
+        result += Quaternion.Euler(0, 30 * posAtField, 0) * Vector3.back * ((type == "Street") ? 6.0f : 14.0f / 2.0f);
 
         return result;
     }
