@@ -27,7 +27,7 @@ public class Place : MonoBehaviour{
             place[i + 1] = usedFields[i / 3].column;
             place[i + 2] = posAtField[i / 3];
         }
-        buildAcceptionInterface.transform.Find("Accept").gameObject.GetComponent<Button>().onClick.AddListener(delegate { GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendFieldUpdateToServer(GameObject.Find("GamePlay").GetComponent<GamePlayClient>().buildedPawn.type, this); });
+        buildAcceptionInterface.transform.Find("Accept").gameObject.GetComponent<Button>().onClick.AddListener(delegate { GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendFieldUpdateToServer(GameObject.Find("GamePlay").GetComponent<GamePlayClient>().buildedPawn.type, GameObject.Find("GamePlay").GetComponent<GamePlayClient>().buildedPawn.color, place); });
         buildAcceptionInterface.transform.Find("Accept").gameObject.GetComponent<Button>().onClick.AddListener(GameBoard.MainBoard.deleteAllPlaces);
     }
 }

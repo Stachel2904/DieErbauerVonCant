@@ -126,6 +126,8 @@ public class GamePlayClient : MonoBehaviour {
 
     public void buildPawn(Place destination)
     {
+        Debug.Log("Huch, die funktion wird trotzdem aufgerufen...");
+
         if (buildedPawn == null)
         {
             Debug.Log("Which pawn do you want to build?");
@@ -185,7 +187,7 @@ public class GamePlayClient : MonoBehaviour {
         }
 
         //Sag Server, dass du etwas gebaut hast
-        GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendFieldUpdateToServer(buildedPawn.type, destination);
+        //GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendFieldUpdateToServer(buildedPawn.type, destination);
     }
 
     public void UpdateBoard(Pawn buildedPawn, int[] place)
