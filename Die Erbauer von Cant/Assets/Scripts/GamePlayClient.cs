@@ -44,7 +44,7 @@ public class GamePlayClient : MonoBehaviour {
 
     public void NextPlayer()
     {
-        GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("NextPlayer");
+        GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("Next Player");
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("TradeButton").GetComponent<Button>().interactable = false;
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("BuildButton").GetComponent<Button>().interactable = false;
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("Next Player").GetComponent<Button>().interactable = false;
@@ -73,7 +73,6 @@ public class GamePlayClient : MonoBehaviour {
         }
 
         buildedPawn = new Pawn(type, ownPlayer.color);
-        Debug.Log("Started building a " + buildedPawn.color + " " + buildedPawn.type + ".");
 
         //Alle möglichen Positionen ausgeben
         Place[] possiblePlaces = GameBoard.MainBoard.GetAllPositions(buildedPawn);
@@ -86,8 +85,6 @@ public class GamePlayClient : MonoBehaviour {
 
         for (int i = 0; i < possiblePlaces.Length; i++)
         {
-
-            bool alreadyBuilded = false;
             Vector3 placePosition = GetPosInWorld(possiblePlaces[i].usedFields[0], possiblePlaces[i].posAtField[0]);
 
             possiblePlaces[i].gameObject.transform.position = placePosition;
@@ -96,7 +93,8 @@ public class GamePlayClient : MonoBehaviour {
             {
                 if (Vector3.Distance(GameObject.Find("Places").transform.GetChild(j).position, placePosition) < 0.5f && !GameObject.Find("Places").transform.GetChild(j).Equals(possiblePlaces[i]))
                 {
-                    GameObject.Destroy(possiblePlaces[i].gameObject);
+                    Debug.Log("Kill it!");
+                    //GameObject.Destroy(possiblePlaces[i].gameObject);
                 }
             }
         }

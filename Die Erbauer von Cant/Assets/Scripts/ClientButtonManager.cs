@@ -5,8 +5,6 @@ public class ClientButtonManager : MonoBehaviour {
 
     [SerializeField]
     Button rollDice;
-    [SerializeField]
-    Button nextPlayer;
 
     #region cachedInterfacers
     public GameObject ClientDefault;
@@ -30,7 +28,6 @@ public class ClientButtonManager : MonoBehaviour {
     void Start () {
         Button rDice = rollDice.GetComponent<Button>();
         rDice.onClick.AddListener(RollTheDice);
-        Button nPlayer = nextPlayer.GetComponent<Button>();
 	}
     private void RollTheDice() {
         GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("Roll Dice");
