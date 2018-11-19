@@ -111,15 +111,12 @@ public class NetworkServerGUI : MonoBehaviour {
             Debug.Log(" Gameplaymainplayer.length ist " + GamePlay.Main.players.Length);
             if (GamePlay.Main.players[i].clientID == _ClientID_ && GamePlay.Main.players[i].clientID != -1)
             {
-                Debug.Log("Funktion ruft auf");
                 switch (GamePlay.Main.players[i].avatar)
                 {
                     case "Player1":
-                        Debug.Log("case1 geht");
                         player1.transform.Find("Hand").GetComponent<Text>().text = GamePlay.Main.players[i].hand.ToString();
                         break;
                     case "Player2":
-                        Debug.Log("case2 geht");
                         player2.transform.Find("Hand").GetComponent<Text>().text = GamePlay.Main.players[i].hand.ToString();
                         break;
                     case "Player3":
