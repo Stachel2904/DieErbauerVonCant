@@ -111,24 +111,26 @@ public class NetworkServerMessageHandler : MonoBehaviour {
     string tempPawn;
     string tempColor;
     private void ReciveFieldUpdateMessage(NetworkMessage _message_) {
-        Debug.Log("[FIELD UPDATE] Recived a Message.. start..");
+        Debug.Log("[[RECIVE]Server FIELD UPDATE] Recived a Message.. start..");
         FieldMessage fieldMSG = new FieldMessage();
         _message_.reader.SeekZero();
         fieldMSG.pawn = _message_.ReadMessage<FieldMessage>().pawn;
         string[] deltas = fieldMSG.pawn.Split('|');
         tempPawn = deltas[0];
         tempColor = deltas[1];
-        Debug.Log("[FIELD UPDATE] Recived a Message.. end..");
+        Debug.Log("[[RECIVE]Server FIELD UPDATE] Recived a Message.. end..");
     }
     private void ReciveFieldUpdateMessage2(NetworkMessage _message_) {
-        Debug.Log("[FIELD UPDATE 2] Recived a Message.. start..");
-        FieldMessage2 fieldMSG = new FieldMessage2();
+        Debug.Log("[[RECIVE]Server FIELD UPDATE 2] Recived a Message.. start..");
+        FieldMessage2 fieldMSG2 = new FieldMessage2();
         _message_.reader.SeekZero();
-        fieldMSG.place = _message_.ReadMessage<FieldMessage2>().place;
+        fieldMSG2.place = _message_.ReadMessage<FieldMessage2>().place;
         //GamePlay.Main.UpdateBoard(new Pawn(tempPawn, tempColor), fieldMSG.place); //ToDo: In GamePlay eine UpdateBoardFunktion, die Gebüde setzt und die Rohstoffe vom betreffenden Spieler entfernt!
-        SendFieldUpdateToClient(tempPawn, tempColor, fieldMSG.place);
+        SendFieldUpdateToClient(tempPawn, tempColor, fieldMSG2.place);
         GameObject.Find("GamePlay").GetComponent<GamePlay>().UpdateInventory(_message_.conn.connectionId);
-        Debug.Log("[FIELD UPDATE 2] Recived a Message.. end..");
+        Debug.Log("[RECIVE] PAWN:" + tempPawn + " / " + tempColor);
+        Debug.Log("[RECIVE] PLACE:" + fieldMSG2.place);
+        Debug.Log("[[RECIVE]Server FIELD UPDATE 2] Recived a Message.. end..");
     }
     //Send to Client
     public void SendToClient(int _ClientID_, string _command_) {
@@ -156,6 +158,8 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         FieldMessage2 fieldMSG2 = new FieldMessage2();
         fieldMSG.pawn = _pawn_ + "|" + _color_;
         fieldMSG2.place = _place_;
+        Debug.Log("[SEND] PAWN: " + fieldMSG.pawn);
+        Debug.Log("[SEND] PLACE: " + fieldMSG2.place);
         bool succsess = NetworkServer.SendToAll(892, fieldMSG);
         if (!succsess) {
             Debug.LogError("Failed to send fieldupdateinformation [PAWN]!");
