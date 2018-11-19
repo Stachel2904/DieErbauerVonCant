@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum Players
 {
@@ -28,6 +29,8 @@ public class GamePlay : MonoBehaviour
 
     public Player[] players;
     public int currentPlayer;
+
+    public GameObject VictoryWindow;
 
     // Trading Variables
     public bool dealAccepted = false;
@@ -351,6 +354,7 @@ public class GamePlay : MonoBehaviour
 
     public void GameWon(string color)
     {
-        print("Player" + color + "won");
+        VictoryWindow.SetActive(true);
+        VictoryWindow.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = "Player " + color + " Won!";
     }
 }

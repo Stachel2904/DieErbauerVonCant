@@ -37,36 +37,6 @@ public class CreateTrade : MonoBehaviour {
     [SerializeField]
     GameObject text10;
 
-    //[SerializeField]
-    //GameObject text11;
-
-    //[SerializeField]
-    //GameObject text12;
-
-    //[SerializeField]
-    //GameObject text13;
-
-    //[SerializeField]
-    //GameObject text14;
-
-    //[SerializeField]
-    //GameObject text15;
-
-    //[SerializeField]
-    //GameObject text16;
-
-    //[SerializeField]
-    //GameObject text17;
-
-    //[SerializeField]
-    //GameObject text18;
-
-    //[SerializeField]
-    //GameObject text19;
-
-    //[SerializeField]
-    //GameObject text20;
-
     Text givenBrickText;
     Text givenWheatText;
     Text givenOreText;
@@ -78,18 +48,6 @@ public class CreateTrade : MonoBehaviour {
     Text askedOreText;
     Text askedWoodText;
     Text askedWoolText;
-
-    //Text showngivenBrickText;
-    //Text showngivenWheatText;
-    //Text showngivenOreText;
-    //Text showngivenWoodText;
-    //Text showngivenWoolText;
-
-    //Text shownaskedBrickText;
-    //Text shownaskedWheatText;
-    //Text shownaskedOreText;
-    //Text shownaskedWoodText;
-    //Text shownaskedWoolText;
 
     string temp4to1Ressource;
 
@@ -106,18 +64,6 @@ public class CreateTrade : MonoBehaviour {
         askedOreText = text8.GetComponent<Text>();
         askedWoodText = text9.GetComponent<Text>();
         askedWoolText = text10.GetComponent<Text>();
-
-        //showngivenBrickText = text11.GetComponent<Text>();
-        //showngivenWheatText = text12.GetComponent<Text>();
-        //showngivenOreText = text13.GetComponent<Text>();
-        //showngivenWoodText = text14.GetComponent<Text>();
-        //showngivenWoolText = text15.GetComponent<Text>();
-
-        //shownaskedBrickText = text16.GetComponent<Text>();
-        //shownaskedWheatText = text17.GetComponent<Text>();
-        //shownaskedOreText = text18.GetComponent<Text>();
-        //shownaskedWoodText = text19.GetComponent<Text>();
-        //shownaskedWoolText = text20.GetComponent<Text>();
     }
     private void Update()
     {
@@ -149,19 +95,6 @@ public class CreateTrade : MonoBehaviour {
         GameObject.Find("ClientTextManager").GetComponent<TextManager>().text18.text = createdTrade.askedRessources[2].ToString();
         GameObject.Find("ClientTextManager").GetComponent<TextManager>().text19.text = createdTrade.askedRessources[3].ToString();
         GameObject.Find("ClientTextManager").GetComponent<TextManager>().text20.text = createdTrade.askedRessources[4].ToString();
-
-
-        //showngivenBrickText.text = createdTrade.givenRessources[0].ToString();
-        //showngivenWheatText.text = createdTrade.givenRessources[1].ToString();
-        //showngivenOreText.text = createdTrade.givenRessources[2].ToString();
-        //showngivenWoodText.text = createdTrade.givenRessources[3].ToString();
-        //showngivenWoolText.text = createdTrade.givenRessources[4].ToString();
-
-        //shownaskedBrickText.text = createdTrade.askedRessources[0].ToString();
-        //shownaskedWheatText.text = createdTrade.askedRessources[1].ToString();
-        //shownaskedOreText.text = createdTrade.askedRessources[2].ToString();
-        //shownaskedWoodText.text = createdTrade.askedRessources[3].ToString();
-        //shownaskedWoolText.text = createdTrade.askedRessources[4].ToString();
     }
 
     public void StartedTrading()
