@@ -64,12 +64,11 @@ public class GamePlayClient : MonoBehaviour {
         }
 
         //Ressourcen überprüfen
-        //if (!ownPlayer.inventory.CheckInventory(type))
-        //{
-        //    Debug.Log("You have not enough Ressources...");
-        //    return;
-        //}
-        ownPlayer = new Player("", "Orange");
+        if (!ownPlayer.inventory.CheckInventory(type))
+        {
+            Debug.Log("You have not enough Ressources...");
+            return;
+        }
 
         buildedPawn = new Pawn(type, ownPlayer.color);
         Debug.Log("Started building a " + buildedPawn.color + " " + buildedPawn.type + ".");
@@ -89,15 +88,11 @@ public class GamePlayClient : MonoBehaviour {
             bool alreadyBuilded = false;
             Vector3 placePosition = GetPosInWorld(possiblePlaces[i].usedFields[0], possiblePlaces[i].posAtField[0]);
 
-            Debug.Log("You can build at the Tile: " + possiblePlaces[i].usedFields[0].row.ToString() + " / " + possiblePlaces[i].usedFields[0].column.ToString());
-            Debug.Log("At the Position: " + possiblePlaces[i].posAtField[0].ToString());
-
             for (int j = 0; j < GameObject.Find("Places").transform.childCount; j++)
             {
-                if (Vector3.Distance(GameObject.Find("Places").transform.GetChild(j).position, placePosition) < 0.1f)
+                if (Vector3.Distance(GameObject.Find("Places").transform.GetChild(j).position, placePosition) < 0.5f)
                 {
                     alreadyBuilded = true;
-                    Debug.Log("But it is already a Place there");
                 }
             }
 
@@ -153,12 +148,33 @@ public class GamePlayClient : MonoBehaviour {
             }
         }
 
-        GameBoard.MainBoard.pawns[(int) ConvertColor(buildedPawn.color)].Add(buildedPawn);        
+        GameBoard.MainBoard.pawns[(int) ConvertColor(buildedPawn.color)].Add(buildedPawn);
 
         //Pawn kreieren (erst nur mesh, dann Farbe, dann position)
         Transform createdPawn = Instantiate(Resources.Load<Transform>("Prefabs/" + buildedPawn.type), GameObject.Find("Board").transform);
         createdPawn.gameObject.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/" + buildedPawn.color);
         createdPawn.position = destination.gameObject.transform.position;
+
+        //Wenn eine Stadt platziert wird, wird die Siedlung gelöscht
+        if (buildedPawn.type == "Town")
+        {
+            for (int i = 0; i < GameObject.Find("Board").transform.childCount; i++)
+            {
+                GameObject currentPawn = GameObject.Find("Board").transform.GetChild(i).gameObject;
+
+                if (currentPawn.name == "Village(Clone)")
+                {
+                    if (Vector3.Distance(destination.gameObject.transform.position, currentPawn.transform.position) < 0.5f)
+                    {
+                        GameObject.Destroy(currentPawn);
+                    }
+                }
+            }
+        }
+        else if (buildedPawn.type == "Street")
+        {
+            createdPawn.Rotate(0.0f, 30.0f * destination.posAtField[0], 0.0f);
+        }
 
         //Places löschen
         for (int i = 0; i < GameObject.Find("Places").transform.childCount; i++)

@@ -149,13 +149,29 @@ public class GameBoard
         }
 
         //Set startPawns
-        tilesGrid[2][4].pawns[3] = new Pawn("Street", "Orange");
-        tilesGrid[2][6].pawns[9] = tilesGrid[2][4].pawns[3];
-        pawns[(int)PlayerColor.ORANGE].Add(tilesGrid[2][4].pawns[3]);
+        tilesGrid[2][6].pawns[3] = new Pawn("Street", "Orange");
+        tilesGrid[2][8].pawns[9] = tilesGrid[2][6].pawns[3];
+        pawns[(int)PlayerColor.ORANGE].Add(tilesGrid[2][6].pawns[3]);
+        tilesGrid[1][7].pawns[6] = new Pawn("Village", "Orange");
+        tilesGrid[2][6].pawns[2] = tilesGrid[1][7].pawns[6];
+        tilesGrid[2][8].pawns[10] = tilesGrid[1][7].pawns[6];
+        pawns[(int)PlayerColor.ORANGE].Add(tilesGrid[1][7].pawns[6]);
 
-        tilesGrid[2][4].pawns[5] = new Pawn("Street", "Orange");
-        MainBoard.tilesGrid[3][5].pawns[11] = tilesGrid[2][4].pawns[5];
-        pawns[(int)PlayerColor.ORANGE].Add(tilesGrid[2][4].pawns[5]);
+        tilesGrid[0][2].pawns[5] = new Pawn("Street", "Blue");
+        tilesGrid[1][3].pawns[11] = tilesGrid[0][2].pawns[5];
+        pawns[(int)PlayerColor.BLUE].Add(tilesGrid[0][2].pawns[5]);
+        tilesGrid[0][2].pawns[4] = new Pawn("Village", "Blue");
+        tilesGrid[0][4].pawns[8] = tilesGrid[0][2].pawns[4];
+        tilesGrid[1][3].pawns[0] = tilesGrid[0][2].pawns[4];
+        pawns[(int)PlayerColor.BLUE].Add(tilesGrid[0][2].pawns[4]);
+
+        tilesGrid[3][3].pawns[7] = new Pawn("Street", "White");
+        tilesGrid[4][2].pawns[1] = tilesGrid[3][3].pawns[7];
+        pawns[(int)PlayerColor.WHITE].Add(tilesGrid[2][4].pawns[3]);
+        tilesGrid[3][3].pawns[6] = new Pawn("Village", "White");
+        tilesGrid[4][2].pawns[2] = tilesGrid[3][3].pawns[6];
+        tilesGrid[4][4].pawns[10] = tilesGrid[3][3].pawns[6];
+        pawns[(int)PlayerColor.WHITE].Add(tilesGrid[3][3].pawns[6]);
     }
 
     
@@ -203,7 +219,7 @@ public class GameBoard
                 pawnColor = PlayerColor.WHITE;
                 break;
             default:
-                Debug.Log("Die zu bauende Spielfigur hat die undefinierte Farbe: " + buildedPawn.color);
+                Debug.LogError("Die zu bauende Spielfigur hat die undefinierte Farbe: " + buildedPawn.color);
                 return null;
         }
 
@@ -214,12 +230,13 @@ public class GameBoard
             for (int i = 0; i < pawns[(int) pawnColor].Count; i++)
             {
                 Pawn currentPawn = pawns[(int)pawnColor][i];
-
+                
                 if (currentPawn.type == "Village")
                 {
                     Place newPlace = new Place();
                     newPlace.usedFields = currentPawn.GetFields();
                     newPlace.posAtField = currentPawn.GetPosAtField();
+                    possiblePositions.Add(newPlace);
                 }
             }
             return possiblePositions.ToArray();
@@ -243,20 +260,20 @@ public class GameBoard
 
                         //Abfrage, ob an der benachbarten position eine Straße ist
                         //Wenn nicht, dann wird es dem possible Places hinzugefügt
-                        int newPos = currentPosition[i] + 2;
+                        int newPos = currentPosition[j] + 2;
                         if (newPos >= 12)
                         {
                             newPos = newPos - 12;
                         }
 
-                        if (currentFields[i].pawns[newPos] == null)
+                        if (currentFields[j].pawns[newPos] == null)
                         {
                             //erstes Feld
-                            newPlaceFields.Add(currentFields[i]);
+                            newPlaceFields.Add(currentFields[j]);
                             newPlacePos.Add(newPos);
 
                             //zweites Feld
-                            newPlaceFields.Add(currentFields[i].GetConnectedFields(newPos)[0]);
+                            newPlaceFields.Add(currentFields[j].GetConnectedFields(newPos)[0]);
 
                             //position des zweiten feldes ermitteln
                             int posAtSecondField = newPos + 6;
@@ -278,16 +295,16 @@ public class GameBoard
                         newPlacePos = new List<int>();
 
                         //erstellen einer weiteren neuen platzes
-                        newPos = currentPosition[i] - 2;
+                        newPos = currentPosition[j] - 2;
                         if (newPos < 0)
                         {
                             newPos = newPos + 12;
                         }
 
-                        if (currentFields[i].pawns[newPos] == null)
+                        if (currentFields[j].pawns[newPos] == null)
                         {
                             //erstes Feld
-                            newPlaceFields.Add(currentFields[i]);
+                            newPlaceFields.Add(currentFields[j]);
                             newPlacePos.Add(newPos);
 
                             //zweites Feld
@@ -295,37 +312,37 @@ public class GameBoard
                             Field secondField = null;
 
                             //check if the place is on the water and may not have a second field
-                            bool fieldOnTop = (currentFields[i].row == 0 && (newPos == 1 || newPos == 11));
-                            bool fieldOnRight = ((currentFields[i].column == 7 || currentFields[i].column == 8) && newPos == 3);
-                            bool fieldOnBottom = (currentFields[i].row == 4 && (newPos == 5 || newPos == 7));
-                            bool fieldOnLeft = ((currentFields[i].column == 0 || currentFields[i].column == 1) && newPos == 9);
+                            bool fieldOnTop = (currentFields[j].row == 0 && (newPos == 1 || newPos == 11));
+                            bool fieldOnRight = ((currentFields[j].column == 7 || currentFields[j].column == 8) && newPos == 3);
+                            bool fieldOnBottom = (currentFields[j].row == 4 && (newPos == 5 || newPos == 7));
+                            bool fieldOnLeft = ((currentFields[j].column == 0 || currentFields[j].column == 1) && newPos == 9);
 
                             //erlangen des zweiten feldes
                             if (!(fieldOnTop && fieldOnRight && fieldOnBottom && fieldOnLeft))
                             {
                                 if (newPos == 1)
                                 {
-                                    secondField = tilesGrid[currentFields[i].row - 1][currentFields[i].column + 1];
+                                    secondField = tilesGrid[currentFields[j].row - 1][currentFields[j].column + 1];
                                 }
                                 else if (newPos == 3)
                                 {
-                                    secondField = tilesGrid[currentFields[i].row][currentFields[i].column + 2];
+                                    secondField = tilesGrid[currentFields[j].row][currentFields[j].column + 2];
                                 }
                                 else if (newPos == 5)
                                 {
-                                    secondField = tilesGrid[currentFields[i].row + 1][currentFields[i].column + 1];
+                                    secondField = tilesGrid[currentFields[j].row + 1][currentFields[j].column + 1];
                                 }
                                 else if (newPos == 7)
                                 {
-                                    secondField = tilesGrid[currentFields[i].row + 1][currentFields[i].column - 1];
+                                    secondField = tilesGrid[currentFields[j].row + 1][currentFields[j].column - 1];
                                 }
                                 else if (newPos == 9)
                                 {
-                                    secondField = tilesGrid[currentFields[i].row][currentFields[i].column - 2];
+                                    secondField = tilesGrid[currentFields[j].row][currentFields[j].column - 2];
                                 }
                                 else if (newPos == 11)
                                 {
-                                    secondField = tilesGrid[currentFields[i].row - 1][currentFields[i].column - 1];
+                                    secondField = tilesGrid[currentFields[j].row - 1][currentFields[j].column - 1];
                                 }
                             }
                             newPlaceFields.Add(secondField);
@@ -350,7 +367,6 @@ public class GameBoard
 
         if (buildedPawn.type == "Village")
         {
-            Debug.Log("Looking for Places...");
             for (int i = 0; i < pawns[(int)pawnColor].Count; i++)
             {
                 Pawn currentPawn = pawns[(int)pawnColor][i];
@@ -359,7 +375,6 @@ public class GameBoard
 
                 if (currentPawn.type == "Street")
                 {
-                    Debug.Log("Found Street!");
                     /////////////////////////////////
                     //Check first side of street
 
@@ -398,7 +413,6 @@ public class GameBoard
                             }
                             if (currentFields[1].pawns[newPos] == null)
                             {
-                                Debug.Log("No other Village");
                                 Place newPlace = new Place();
                                 List<Field> newPlaceFields = new List<Field>();
                                 List<int> newPlacePos = new List<int>();
@@ -514,7 +528,6 @@ public class GameBoard
                             }
                             if (currentFields[1].pawns[newPos] == null)
                             {
-                                Debug.Log("No other Village");
                                 Place newPlace = new Place();
                                 List<Field> newPlaceFields = new List<Field>();
                                 List<int> newPlacePos = new List<int>();
