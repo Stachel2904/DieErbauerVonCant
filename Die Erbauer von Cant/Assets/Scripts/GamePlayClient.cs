@@ -91,10 +91,9 @@ public class GamePlayClient : MonoBehaviour {
 
             for (int j = 0; j < GameObject.Find("Places").transform.childCount; j++)
             {
-                if (Vector3.Distance(GameObject.Find("Places").transform.GetChild(j).position, placePosition) < 0.5f && !GameObject.Find("Places").transform.GetChild(j).Equals(possiblePlaces[i]))
+                if (Vector3.Distance(GameObject.Find("Places").transform.GetChild(j).position, placePosition) < 0.5f && !GameObject.Find("Places").transform.GetChild(j).gameObject.Equals(possiblePlaces[i].gameObject))
                 {
-                    Debug.Log("Kill it!");
-                    //GameObject.Destroy(possiblePlaces[i].gameObject);
+                    GameObject.Destroy(possiblePlaces[i].gameObject);
                 }
             }
         }
@@ -231,7 +230,7 @@ public class GamePlayClient : MonoBehaviour {
     public PlayerColor ConvertColor(string color)
     {
         PlayerColor result = PlayerColor.NONE;
-        switch (buildedPawn.color)
+        switch (color)
         {
             case "Blue":
                 result = PlayerColor.BLUE;

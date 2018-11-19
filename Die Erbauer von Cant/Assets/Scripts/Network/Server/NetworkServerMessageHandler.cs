@@ -125,7 +125,7 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         FieldMessage2 fieldMSG2 = new FieldMessage2();
         _message_.reader.SeekZero();
         fieldMSG2.place = _message_.ReadMessage<FieldMessage2>().place;
-        //GamePlay.Main.UpdateBoard(new Pawn(tempPawn, tempColor), fieldMSG.place); //ToDo: In GamePlay eine UpdateBoardFunktion, die Gebüde setzt und die Rohstoffe vom betreffenden Spieler entfernt!
+        GamePlay.Main.UpdateBoard(new Pawn(tempPawn, tempColor), fieldMSG2.place); //ToDo: In GamePlay eine UpdateBoardFunktion, die Gebüde setzt und die Rohstoffe vom betreffenden Spieler entfernt!
         SendFieldUpdateToClient(tempPawn, tempColor, fieldMSG2.place);
         GameObject.Find("GamePlay").GetComponent<GamePlay>().UpdateInventory(_message_.conn.connectionId);
         Debug.Log("[RECIVE] PAWN:" + tempPawn + " / " + tempColor);

@@ -136,9 +136,19 @@ public class GamePlay : MonoBehaviour
         }
     }
 
-    public void UpdateBoard(Pawn buildedPawn, Place destination)
+    public void UpdateBoard(Pawn buildedPawn, int[] place)
     {
-        if(buildedPawn.type != "Street")
+        Field[] usedFields = new Field[place.Length / 3];
+        int[] posAtField = new int[place.Length / 3];
+        for (int i = 0; i < usedFields.Length * 3; i += 3)
+        {
+            usedFields[i / 3] = GameBoard.MainBoard.tilesGrid[place[i]][place[i + 1]];
+            posAtField[i / 3] = place[i + 2];
+        }
+
+        Vector3 pos = GetPosInWorld(usedFields[0], posAtField[0], buildedPawn.type);
+
+        if (buildedPawn.type != "Street")
         {
             GetCurrentPlayer().victoryPoints++;
             GameObject.Find("ServerManager").GetComponent<NetworkServerGUI>().UpdateVictoryPoints(buildedPawn.color);
@@ -147,14 +157,81 @@ public class GamePlay : MonoBehaviour
         //Pawn kreieren (erst nur mesh, dann Farbe, dann position)
         Transform createdPawn = Instantiate(Resources.Load<Transform>("Prefabs/" + buildedPawn.type), GameObject.Find("Board").transform);
         createdPawn.gameObject.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/" + buildedPawn.color);
-        createdPawn.position = destination.gameObject.transform.position;
+        createdPawn.position = pos;
 
-        //Places löschen
-        for (int i = 0; i < GameObject.Find("Places").transform.childCount; i++)
+        //Variablen Updaten
+        GameBoard.MainBoard.pawns[(int)ConvertColor(buildedPawn.color)].Add(buildedPawn);
+        for (int i = 0; i < usedFields.Length; i++)
         {
-            GameObject.Destroy(GameObject.Find("Places").transform.GetChild(i).gameObject);
+            if (usedFields[i] != null)
+            {
+                GameBoard.MainBoard.tilesGrid[usedFields[i].row][usedFields[i].column].pawns[posAtField[i]] = buildedPawn;
+            }
         }
+
+        if (buildedPawn.type == "Town")
+        {
+            for (int i = 0; i < GameObject.Find("Board").transform.childCount; i++)
+            {
+                GameObject currentPawn = GameObject.Find("Board").transform.GetChild(i).gameObject;
+
+                if (currentPawn.name == "Village(Clone)")
+                {
+                    if (Vector3.Distance(pos, currentPawn.transform.position) < 0.5f)
+                    {
+                        GameObject.Destroy(currentPawn);
+                    }
+                }
+            }
+        }
+        else if (buildedPawn.type == "Street")
+        {
+            createdPawn.Rotate(0.0f, 30.0f * posAtField[0], 0.0f);
+        }
+
+        //Ressourcen Updaten
+        GetCurrentPlayer().inventory.RemoveItem(buildedPawn.type);
     }
+
+    public PlayerColor ConvertColor(string color)
+    {
+        PlayerColor result = PlayerColor.NONE;
+        switch (color)
+        {
+            case "Blue":
+                result = PlayerColor.BLUE;
+                break;
+            case "Red":
+                result = PlayerColor.RED;
+                break;
+            case "Orange":
+                result = PlayerColor.ORANGE;
+                break;
+            case "White":
+                result = PlayerColor.WHITE;
+                break;
+            default:
+                Debug.Log("Die zu bauende Spielfigur hat die undefinierte Farbe: " + color);
+                break;
+        }
+        return result;
+    }
+
+    private Vector3 GetPosInWorld(Field usedField, int posAtField, string type)
+    {
+        Vector3 result = new Vector3();
+
+        //Get pos of Field
+        result.x = usedField.column * -6 - 6;
+        result.y = 0;
+        result.z = usedField.row * 10.5f + 8.5f;
+
+        //get Pos from PosAtField
+        result += Quaternion.Euler(0, 30 * posAtField, 0) * Vector3.back * ((type == "Street") ? 6.0f : 14.0f / 2.0f);
+
+        return result;
+    }
+
     public void UpdateInventory(int clientID)
     {
         //string stringTemp;
