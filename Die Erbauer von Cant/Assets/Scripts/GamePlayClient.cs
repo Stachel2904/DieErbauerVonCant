@@ -32,13 +32,14 @@ public class GamePlayClient : MonoBehaviour {
         }
 
         GameObject.Find("OwnColor").GetComponent<Image>().color = ownColor;
-        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildSelection.transform.Find("Street").gameObject.GetComponent<Image>().color = ownColor;
-        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildSelection.transform.Find("Village").gameObject.GetComponent<Image>().color = ownColor;
-        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildSelection.transform.Find("Town").gameObject.GetComponent<Image>().color = ownColor;
+        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildSelection.transform.Find("Street").GetChild(0).gameObject.GetComponent<Image>().color = ownColor;
+        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildSelection.transform.Find("Village").GetChild(0).gameObject.GetComponent<Image>().color = ownColor;
+        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildSelection.transform.Find("Town").GetChild(0).gameObject.GetComponent<Image>().color = ownColor;
         
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("TradeButton").GetComponent<Button>().interactable = false;
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("BuildButton").GetComponent<Button>().interactable = false;
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("Next Player").GetComponent<Button>().interactable = false;
+        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ChooseTradePlayer.transform.Find("Player4Button").GetComponent<Button>().interactable = false;
     }
 
     public void NextPlayer()
@@ -67,6 +68,7 @@ public class GamePlayClient : MonoBehaviour {
         if (!ownPlayer.inventory.CheckInventory(type))
         {
             Debug.Log("You have not enough Ressources...");
+            GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.SetActive(true);
             return;
         }
 
