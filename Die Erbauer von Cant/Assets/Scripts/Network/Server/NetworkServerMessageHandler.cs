@@ -21,7 +21,6 @@ public class NetworkServerMessageHandler : MonoBehaviour {
     public void InitRecivingMessages() {
         NetworkServer.RegisterHandler(888, ServerReciveMessage);
         NetworkServer.RegisterHandler(889, ReciveTradeMessage);
-        NetworkServer.RegisterHandler(890, ReciveAcceptMessage);
         NetworkServer.RegisterHandler(892, ReciveFieldUpdateMessage);
         NetworkServer.RegisterHandler(894, ReciveFieldUpdateMessage2);
         NetworkServer.RegisterHandler(893, ReciveCreateTradeMessage);
@@ -106,40 +105,24 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         string[] deltas = tradeMSG.ressource.Split('|');
         GamePlay.Main.tradeSystem4to1(deltas[0], deltas[1]);
     }
-    //Recive AcceptMessage
-    private void ReciveAcceptMessage(NetworkMessage _message_) {
-        Debug.Log("RECIVED A ACCEPTMESSAGE!");
-        AcceptMessage acceptMSG = new AcceptMessage();
-        _message_.reader.SeekZero();
-        acceptMSG.isAccepted = _message_.ReadMessage<AcceptMessage>().isAccepted;
-        switch (_message_.ReadMessage<AcceptMessage>().acceptType) {
-            case "Trade":
-                //Tradeaccept stuff
-                break;
-            case "Go":
-                //NextPlayerStuff
-                break;
-            case "Ready":
-                //Readyaccept stuff
-            default:
-                Debug.LogError("Can not read acceptmessage from Client: " + _message_.conn.connectionId);
-                break;
-        }
-    }
     //FIELD UPDATE
-    string pawnTemp;
+    string tempPawn;
+    string tempColor;
     private void ReciveFieldUpdateMessage(NetworkMessage _message_) {
         FieldMessage fieldMSG = new FieldMessage();
         _message_.reader.SeekZero();
         fieldMSG.pawn = _message_.ReadMessage<FieldMessage>().pawn;
-        pawnTemp = fieldMSG.pawn;
+        string[] deltas = fieldMSG.pawn.Split('|');
+        tempPawn = deltas[0];
+        tempColor = deltas[1];
     }
     private void ReciveFieldUpdateMessage2(NetworkMessage _message_) {
         FieldMessage2 fieldMSG = new FieldMessage2();
         _message_.reader.SeekZero();
         fieldMSG.place = _message_.ReadMessage<FieldMessage2>().place;
-        GamePlay.Main.UpdateBoard(new Pawn(pawnTemp, GamePlay.Main.GetCurrentPlayer().color), fieldMSG.place);
-        SendFieldUpdateToClient(pawnTemp, fieldMSG.place);
+        //GamePlay.Main.UpdateBoard(new Pawn(tempPawn, tempColor), fieldMSG.place); //ToDo: In GamePlay eine UpdateBoardFunktion, die Gebüde setzt und die Rohstoffe vom betreffenden Spieler entfernt!
+        SendFieldUpdateToClient(tempPawn, tempColor, fieldMSG.place);
+        GameObject.Find("GamePlay").GetComponent<GamePlay>().UpdateInventory(_message_.conn.connectionId);
     }
     //Send to Client
     public void SendToClient(int _ClientID_, string _command_) {
@@ -153,13 +136,6 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         tradeMSG.trade = _trade_;
         NetworkServer.SendToClient(_ClientID_, 889, tradeMSG);
     }
-    //Send Accept To Client
-    public void SendAcceptToClient(int _ClientID_, string _AcceptType_, bool _isAccepted_) {
-        AcceptMessage acceptMSG = new AcceptMessage();
-        acceptMSG.acceptType = _AcceptType_;
-        acceptMSG.isAccepted = _isAccepted_;
-        NetworkServer.SendToClient(_ClientID_, 890, acceptMSG);
-    }
     //Send Inventoryinformation to Client
     /// <param name="_ClientID_">ID</param>
     /// <param name="_message_">Brick|8 Der Wert muss aus dem Inventar ausgelesen werden, dies ist die Zahl, die angezeigt wird</param> Der Wert muss aus dem Inventar ausgelesen werden, dies ist die Zahl, die angezeigt wird
@@ -169,10 +145,10 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         NetworkServer.SendToClient(_ClientID_, 891, netMSG);
     }
     //UPDATE FIELD
-    public void SendFieldUpdateToClient(string _pawn_, Place _place_) {
+    public void SendFieldUpdateToClient(string _pawn_, string _color_, int[] _place_) {
         FieldMessage fieldMSG = new FieldMessage();
         FieldMessage2 fieldMSG2 = new FieldMessage2();
-        fieldMSG.pawn = _pawn_;
+        fieldMSG.pawn = _pawn_ + "|" + _color_;
         fieldMSG2.place = _place_;
         bool succsess = NetworkServer.SendToAll(892, fieldMSG);
         if (!succsess) {

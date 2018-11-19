@@ -12,7 +12,6 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         client = _client_;
         client.RegisterHandler(888, ReciveMessageFromServer);
         client.RegisterHandler(889, ReciveTradeMessage);
-        client.RegisterHandler(890, ReciveAcceptMessage);
         client.RegisterHandler(891, ReciveInventoryMessage);
         client.RegisterHandler(892, ReciveFieldUpdateMessage);
         client.RegisterHandler(894, ReciveFieldUpdateMessage2);
@@ -71,27 +70,13 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
             Debug.LogError("Client is not connected! Failed to send trademessage!");
         }
     }
-    //ACCEPT
-    public void SendAcceptToServer(string _AcceptType_, bool _isAccepted_) {
-        if (client.isConnected) {
-            AcceptMessage acceptMSG = new AcceptMessage();
-            acceptMSG.acceptType = _AcceptType_;
-            acceptMSG.isAccepted = _isAccepted_;
-            bool success = client.Send(890, acceptMSG);
-            if (!success) {
-                Debug.LogError("Failed to send acceptmessage!");
-            }
-        }
-        else {
-            Debug.LogError("Client is not connected! Failed to send acceptmessage!");
-        }
-    }
+
     //FIELD
-    public void SendFieldUpdateToServer(string _pawn_, Place _place_) {
+    public void SendFieldUpdateToServer(string _pawn_, string _color_, int[] _place_) {
         if (client.isConnected) {
             FieldMessage fieldMSG = new FieldMessage();
             FieldMessage2 fieldMSG2 = new FieldMessage2();
-            fieldMSG.pawn = _pawn_;
+            fieldMSG.pawn = _pawn_ + "|" + _color_;
             fieldMSG2.place = _place_;
             bool success = client.Send(892, fieldMSG);
             if (!success) {
@@ -153,24 +138,6 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         tradeMSG.trade = _message_.ReadMessage<TradeMessage>().trade;
         GameObject.Find("Trade").GetComponent<CreateTrade>().ShowTrade(tradeMSG.trade);
     }
-    //ACCEPT
-    private void ReciveAcceptMessage(NetworkMessage _message_) {
-        Debug.Log("RECIVED AN ACCEPTMESSAGE!");
-        AcceptMessage acceptMSG = new AcceptMessage();
-        _message_.reader.SeekZero();
-        acceptMSG.isAccepted = _message_.ReadMessage<AcceptMessage>().isAccepted;
-        switch (_message_.ReadMessage<AcceptMessage>().acceptType) {
-            case "Trade":
-                //Tradeaccept stuff
-                break;
-            case "Ready":
-                //Readyaccept stuff
-                break;
-            default:
-                Debug.LogError("Can not read acceptmessage from Server!");
-                break;
-        }
-    }
     //INVENTORY
     private void ReciveInventoryMessage(NetworkMessage _message_) {
         NetMessage netMSG = new NetMessage();
@@ -183,16 +150,19 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
     }
     //UPDATE FIELD
     string tempPawn;
+    string tempColor;
     private void ReciveFieldUpdateMessage(NetworkMessage _message_) {
         FieldMessage fieldMSG = new FieldMessage();
         _message_.reader.SeekZero();
         fieldMSG.pawn = _message_.ReadMessage<FieldMessage>().pawn;
-        tempPawn = fieldMSG.pawn;
+        string[] deltas = fieldMSG.pawn.Split('|');
+        tempPawn = deltas[0];
+        tempColor = deltas[1];
     }
     private void ReciveFieldUpdateMessage2(NetworkMessage _message_) {
         FieldMessage2 fieldMSG = new FieldMessage2();
         _message_.reader.SeekZero();
         fieldMSG.place = _message_.ReadMessage<FieldMessage2>().place;
-        GameObject.Find("GamePlay").GetComponent<GamePlayClient>().UpdateBoard(new Pawn(tempPawn, GamePlay.Main.GetCurrentPlayer().color), fieldMSG.place);
+        GameObject.Find("GamePlay").GetComponent<GamePlayClient>().UpdateBoard(new Pawn(tempPawn, tempColor), fieldMSG.place);
     }
 }
