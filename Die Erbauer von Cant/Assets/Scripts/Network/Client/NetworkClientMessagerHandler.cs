@@ -118,6 +118,7 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
             case "Start":
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.SetActive(true);
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().WaitScreen.SetActive(false);
+                GameBoard.MainBoard.Init();
                 break;
             case "Player declined Trading":
                 GameObject.Find("TradeWasDeclined").SetActive(true);
