@@ -14,6 +14,7 @@ public class GameBoard
             if (mainBoard == null)
             {
                 mainBoard = new GameBoard();
+                mainBoard.Init();
             }
             return mainBoard;
         }
@@ -29,6 +30,29 @@ public class GameBoard
         new List<Pawn>(),
         new List<Pawn>()
     };
+
+    private void Init()
+    {
+        //Create Tiles
+        for (int i = 0; i < 5; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                tilesGrid[i][j] = new Field();
+                tilesGrid[i][j].row = i;
+                tilesGrid[i][j].column = j;
+            }
+        }
+
+        //Set startPawns
+        tilesGrid[2][4].pawns[3] = new Pawn("Street", "Orange");
+        tilesGrid[2][6].pawns[9] = tilesGrid[2][4].pawns[3];
+        pawns[(int)PlayerColor.ORANGE].Add(tilesGrid[2][4].pawns[3]);
+
+        tilesGrid[2][4].pawns[5] = new Pawn("Street", "Orange");
+        MainBoard.tilesGrid[3][5].pawns[11] = tilesGrid[2][4].pawns[5];
+        pawns[(int)PlayerColor.ORANGE].Add(tilesGrid[2][4].pawns[5]);
+    }
 
     
     public void SpreadResources(int rolledNumber)
@@ -282,7 +306,7 @@ public class GameBoard
                                 {
                                     newPos1 = newPos1 + 12;
                                 }
-                                newPlacePos.Add(newPos);
+                                newPlacePos.Add(newPos1);
                                 newPlaceFields.Add(currentFields[0]);
 
                                 //second field and Position
@@ -291,7 +315,7 @@ public class GameBoard
                                 {
                                     newPos2 = newPos2 - 12;
                                 }
-                                newPlacePos.Add(newPos);
+                                newPlacePos.Add(newPos2);
                                 newPlaceFields.Add(currentFields[1]);
 
                                 //third field and Position
@@ -393,21 +417,21 @@ public class GameBoard
 
                                 //Get new Fields
                                 //first field and Position
-                                int newPos1 = currentPos[0] - 1;
-                                if (newPos1 < 0)
+                                int newPos1 = currentPos[0] + 1;
+                                if (newPos1 >= 12)
                                 {
-                                    newPos1 = newPos1 + 12;
+                                    newPos1 = newPos1 - 12;
                                 }
-                                newPlacePos.Add(newPos);
+                                newPlacePos.Add(newPos1);
                                 newPlaceFields.Add(currentFields[0]);
 
                                 //second field and Position
-                                int newPos2 = currentPos[1] + 1;
-                                if (newPos2 >= 12)
+                                int newPos2 = currentPos[1] - 1;
+                                if (newPos2 < 0)
                                 {
-                                    newPos2 = newPos2 - 12;
+                                    newPos2 = newPos2 + 12;
                                 }
-                                newPlacePos.Add(newPos);
+                                newPlacePos.Add(newPos2);
                                 newPlaceFields.Add(currentFields[1]);
 
                                 //third field and Position

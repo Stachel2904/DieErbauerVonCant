@@ -57,15 +57,6 @@ public class GamePlay : MonoBehaviour
             }
         }
 
-        //Set startPawns
-        GameBoard.MainBoard.tilesGrid[2][4].pawns[3] = new Pawn("Street", "Orange");
-        GameBoard.MainBoard.tilesGrid[2][6].pawns[9] = GameBoard.MainBoard.tilesGrid[2][4].pawns[3];
-        GameBoard.MainBoard.pawns[(int)PlayerColor.ORANGE].Add(GameBoard.MainBoard.tilesGrid[2][4].pawns[3]);
-
-        GameBoard.MainBoard.tilesGrid[2][4].pawns[5] = new Pawn("Street", "Orange");
-        GameBoard.MainBoard.tilesGrid[3][5].pawns[11] = GameBoard.MainBoard.tilesGrid[2][4].pawns[5];
-        GameBoard.MainBoard.pawns[(int)PlayerColor.ORANGE].Add(GameBoard.MainBoard.tilesGrid[2][4].pawns[5]);
-
     }
 
     public void StartGame()
@@ -82,6 +73,7 @@ public class GamePlay : MonoBehaviour
         Debug.Log("START GAME");
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("Start");
         Debug.Log("START GAME 2");
+        GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(GamePlay.main.GetCurrentPlayer().clientID, "Go");
     }
 
     public void NextPlayer()

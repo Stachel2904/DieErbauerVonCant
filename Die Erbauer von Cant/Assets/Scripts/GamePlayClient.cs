@@ -64,11 +64,12 @@ public class GamePlayClient : MonoBehaviour {
         }
 
         //Ressourcen überprüfen
-        if (!ownPlayer.inventory.CheckInventory(type))
-        {
-            Debug.Log("You have not enough Ressources...");
-            return;
-        }
+        //if (!ownPlayer.inventory.CheckInventory(type))
+        //{
+        //    Debug.Log("You have not enough Ressources...");
+        //    return;
+        //}
+        ownPlayer = new Player("", "Orange");
 
         buildedPawn = new Pawn(type, ownPlayer.color);
         Debug.Log("Started building a " + buildedPawn.color + " " + buildedPawn.type + ".");
@@ -79,6 +80,7 @@ public class GamePlayClient : MonoBehaviour {
         if (possiblePlaces.Length == 0)
         {
             Debug.Log("Du kannst nirgendwo ein" + ((buildedPawn.type == "Village") ? " Dorf" : ((buildedPawn.type == "Street") ? "e Straße" : "e Stadt")) + " bauen...");
+            GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.SetActive(true);
         }
 
         for (int i = 0; i < possiblePlaces.Length; i++)
@@ -87,11 +89,15 @@ public class GamePlayClient : MonoBehaviour {
             bool alreadyBuilded = false;
             Vector3 placePosition = GetPosInWorld(possiblePlaces[i].usedFields[0], possiblePlaces[i].posAtField[0]);
 
+            Debug.Log("You can build at the Tile: " + possiblePlaces[i].usedFields[0].row.ToString() + " / " + possiblePlaces[i].usedFields[0].column.ToString());
+            Debug.Log("At the Position: " + possiblePlaces[i].posAtField[0].ToString());
+
             for (int j = 0; j < GameObject.Find("Places").transform.childCount; j++)
             {
                 if (Vector3.Distance(GameObject.Find("Places").transform.GetChild(j).position, placePosition) < 0.1f)
                 {
                     alreadyBuilded = true;
+                    Debug.Log("But it is already a Place there");
                 }
             }
 
@@ -111,12 +117,12 @@ public class GamePlayClient : MonoBehaviour {
         Vector3 result = new Vector3();
 
         //Get pos of Field
-        result.x = usedField.column * -6 + 6;
+        result.x = usedField.column * -6 - 6;
         result.y = 0;
-        result.z = usedField.row * 6.93f + (3.46f + 6.93f / 2);
+        result.z = usedField.row * 10.5f + 8.5f;
 
         //get Pos from PosAtField
-        result += Quaternion.Euler(0, 30 * posAtField, 0) * Vector3.back * ((buildedPawn.type == "Street") ? 6.0f : 16.86f / 2.0f);
+        result += Quaternion.Euler(0, 30 * posAtField, 0) * Vector3.back * ((buildedPawn.type == "Street") ? 6.0f : 14.0f / 2.0f);
 
         return result;
     }
@@ -147,6 +153,8 @@ public class GamePlayClient : MonoBehaviour {
             }
         }
 
+        GameBoard.MainBoard.pawns[(int) ConvertColor(buildedPawn.color)].Add(buildedPawn);        
+
         //Pawn kreieren (erst nur mesh, dann Farbe, dann position)
         Transform createdPawn = Instantiate(Resources.Load<Transform>("Prefabs/" + buildedPawn.type), GameObject.Find("Board").transform);
         createdPawn.gameObject.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/" + buildedPawn.color);
@@ -169,5 +177,29 @@ public class GamePlayClient : MonoBehaviour {
         createdPawn.gameObject.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/" + buildedPawn.color);
         createdPawn.position = destination.gameObject.transform.position;
     }
-    #endregion    
+    #endregion
+
+    public PlayerColor ConvertColor(string color)
+    {
+        PlayerColor result = PlayerColor.NONE;
+        switch (buildedPawn.color)
+        {
+            case "Blue":
+                result = PlayerColor.BLUE;
+                break;
+            case "Red":
+                result = PlayerColor.RED;
+                break;
+            case "Orange":
+                result = PlayerColor.ORANGE;
+                break;
+            case "White":
+                result = PlayerColor.WHITE;
+                break;
+            default:
+                Debug.Log("Die zu bauende Spielfigur hat die undefinierte Farbe: " + buildedPawn.color);
+                break;
+        }
+        return result;
+    }
 }
