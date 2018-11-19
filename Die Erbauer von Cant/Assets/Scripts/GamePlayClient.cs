@@ -210,7 +210,9 @@ public class GamePlayClient : MonoBehaviour {
         GameBoard.MainBoard.pawns[(int)ConvertColor(ownPlayer.color)].Add(buildedPawn);
         for (int i = 0; i < usedFields.Length; i++)
         {
-            GameBoard.MainBoard.tilesGrid[usedFields[i].row][usedFields[i].column].pawns[posAtField[i]] = buildedPawn;
+            if (usedFields[i] != null) {
+                GameBoard.MainBoard.tilesGrid[usedFields[i].row][usedFields[i].column].pawns[posAtField[i]] = buildedPawn;
+            }
         }
 
         if (buildedPawn.type == "Town")
