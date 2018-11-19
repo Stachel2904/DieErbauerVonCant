@@ -120,10 +120,12 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().WaitScreen.SetActive(false);
                 break;
             case "Player declined Trading":
-                GameObject.Find("TradeWasDeclined").SetActive(true);
+                GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().TradeDecline.SetActive(true);
+                //GameObject.Find("TradeWasDeclined").SetActive(true);
                 break;
             case "Player accepted Trading":
-                GameObject.Find("TradeWasAccepted").SetActive(true);
+                GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().TradeAccept.SetActive(true);
+                //GameObject.Find("TradeWasAccepted").SetActive(true);
                 break;
             default:
                 Debug.LogError("Can not read message from Server!");
@@ -136,7 +138,8 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         TradeMessage tradeMSG = new TradeMessage();
         _message_.reader.SeekZero();
         tradeMSG.trade = _message_.ReadMessage<TradeMessage>().trade;
-        GameObject.Find("Trade").GetComponent<CreateTrade>().ShowTrade(tradeMSG.trade);
+        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().Trade.GetComponent<CreateTrade>().ShowTrade(tradeMSG.trade);
+        //GameObject.Find("Trade").GetComponent<CreateTrade>().ShowTrade(tradeMSG.trade);
     }
     //INVENTORY
     private void ReciveInventoryMessage(NetworkMessage _message_) {

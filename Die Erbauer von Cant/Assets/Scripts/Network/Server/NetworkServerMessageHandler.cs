@@ -82,8 +82,10 @@ public class NetworkServerMessageHandler : MonoBehaviour {
             case 0:
                 for (int i = 0; i < 4; i++)
                 {
+
                     if (GamePlay.Main.players[i].color == tradeMSG.trade.taker)
                     {
+                        Debug.Log("color ist " + tradeMSG.trade.taker);
                         SendTradeToClient(GamePlay.Main.players[i].clientID, tradeMSG.trade);
                     }
                 }
