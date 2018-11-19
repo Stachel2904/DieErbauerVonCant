@@ -713,16 +713,6 @@ MonoBehaviour:
   text8: {fileID: 1177760102}
   text9: {fileID: 1872197331}
   text10: {fileID: 267573686}
-  text11: {fileID: 1103992161}
-  text12: {fileID: 560841328}
-  text13: {fileID: 50653714}
-  text14: {fileID: 1435667299}
-  text15: {fileID: 1575721681}
-  text16: {fileID: 1039184547}
-  text17: {fileID: 585870682}
-  text18: {fileID: 2025694818}
-  text19: {fileID: 1784817789}
-  text20: {fileID: 2022274555}
 --- !u!1 &75399352
 GameObject:
   m_ObjectHideFlags: 0
@@ -2108,10 +2098,10 @@ RectTransform:
   m_Father: {fileID: 1086189799}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 20}
-  m_SizeDelta: {x: 200, y: 80}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -80}
+  m_SizeDelta: {x: 400, y: 160}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &194694732
 MonoBehaviour:
@@ -4251,7 +4241,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rollDice: {fileID: 1316004766}
-  nextPlayer: {fileID: 462222701}
   ClientDefault: {fileID: 1987474801}
   DiceRoll: {fileID: 1086189798}
   Hand: {fileID: 231757706}
@@ -7200,11 +7189,11 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 50
+    m_FontSize: 80
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 4
-    m_MaxSize: 50
+    m_MaxSize: 80
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -13610,7 +13599,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 180, y: 60}
+  m_SizeDelta: {x: 380, y: 140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1316004766
 MonoBehaviour:
