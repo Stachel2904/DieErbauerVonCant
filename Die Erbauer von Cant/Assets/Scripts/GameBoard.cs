@@ -14,7 +14,6 @@ public class GameBoard
             if (mainBoard == null)
             {
                 mainBoard = new GameBoard();
-                mainBoard.Init();
             }
             return mainBoard;
         }
