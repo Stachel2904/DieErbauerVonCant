@@ -120,8 +120,9 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         FieldMessage2 fieldMSG = new FieldMessage2();
         _message_.reader.SeekZero();
         fieldMSG.place = _message_.ReadMessage<FieldMessage2>().place;
-        GamePlay.Main.UpdateBoard(new Pawn(tempPawn, tempColor), fieldMSG.place);
+        //GamePlay.Main.UpdateBoard(new Pawn(tempPawn, tempColor), fieldMSG.place); //ToDo: In GamePlay eine UpdateBoardFunktion, die Gebüde setzt und die Rohstoffe vom betreffenden Spieler entfernt!
         SendFieldUpdateToClient(tempPawn, tempColor, fieldMSG.place);
+        GameObject.Find("GamePlay").GetComponent<GamePlay>().UpdateInventory(_message_.conn.connectionId);
     }
     //Send to Client
     public void SendToClient(int _ClientID_, string _command_) {

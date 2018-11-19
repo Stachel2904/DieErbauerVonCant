@@ -179,7 +179,7 @@ public class GamePlay : MonoBehaviour
                 GameObject.Find("ServerManager").GetComponent<NetworkServerUI>().UpdateClientInventoryGUI(clientID, "Wood", players[i].inventory.inven["Wood"]);
                 GameObject.Find("ServerManager").GetComponent<NetworkServerUI>().UpdateClientInventoryGUI(clientID, "Wool", players[i].inventory.inven["Wool"]);
 
-                players[i].hand = Main.players[i].inventory.inven["Brick"] + Main.players[i].inventory.inven["Wheat"] + Main.players[i].inventory.inven["Ore"] + Main.players[i].inventory.inven["Wood"] + Main.players[i].inventory.inven["Wool"];
+                players[i].hand = players[i].inventory.inven["Brick"] + players[i].inventory.inven["Wheat"] + players[i].inventory.inven["Ore"] + players[i].inventory.inven["Wood"] + players[i].inventory.inven["Wool"];
                 GameObject.Find("ServerManager").GetComponent<NetworkServerGUI>().UpdateHand(players[i].clientID);
             }
 
