@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GamePlayClient : MonoBehaviour {
 
-    private Pawn buildedPawn;
+    public Pawn buildedPawn;
 
     public Player ownPlayer;
 
@@ -126,6 +126,8 @@ public class GamePlayClient : MonoBehaviour {
 
     public void buildPawn(Place destination)
     {
+        Debug.Log("Huch, die funktion wird trotzdem aufgerufen...");
+
         if (buildedPawn == null)
         {
             Debug.Log("Which pawn do you want to build?");
@@ -185,15 +187,51 @@ public class GamePlayClient : MonoBehaviour {
         }
 
         //Sag Server, dass du etwas gebaut hast
-        GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendFieldUpdateToServer(buildedPawn.type, destination);
+        //GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendFieldUpdateToServer(buildedPawn.type, destination);
     }
 
-    public void UpdateBoard(Pawn buildedPawn, Place destination)
+    public void UpdateBoard(Pawn buildedPawn, int[] place)
     {
+        Field[] usedFields = new Field[place.Length / 3];
+        int[] posAtField = new int[place.Length / 3];
+        for (int i = 0; i < usedFields.Length; i += 3)
+        {
+            usedFields[i / 3] = GameBoard.MainBoard.tilesGrid[place[i]][place[i + 1]];
+            posAtField[i / 3] = place[i + 2];
+        }
+
+
+        Vector3 pos = GetPosInWorld(usedFields[0], posAtField[0]);
         //Pawn kreieren (erst nur mesh, dann Farbe, dann position)
         Transform createdPawn = Instantiate(Resources.Load<Transform>("Prefabs/" + buildedPawn.type), GameObject.Find("Board").transform);
         createdPawn.gameObject.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/" + buildedPawn.color);
-        createdPawn.position = destination.gameObject.transform.position;
+        createdPawn.position = pos;
+
+        GameBoard.MainBoard.pawns[(int)ConvertColor(ownPlayer.color)].Add(buildedPawn);
+        for (int i = 0; i < usedFields.Length; i++)
+        {
+            GameBoard.MainBoard.tilesGrid[usedFields[i].row][usedFields[i].column].pawns[posAtField[i]] = buildedPawn;
+        }
+
+        if (buildedPawn.type == "Town")
+        {
+            for (int i = 0; i < GameObject.Find("Board").transform.childCount; i++)
+            {
+                GameObject currentPawn = GameObject.Find("Board").transform.GetChild(i).gameObject;
+
+                if (currentPawn.name == "Village(Clone)")
+                {
+                    if (Vector3.Distance(pos, currentPawn.transform.position) < 0.5f)
+                    {
+                        GameObject.Destroy(currentPawn);
+                    }
+                }
+            }
+        }
+        else if (buildedPawn.type == "Street")
+        {
+            createdPawn.Rotate(0.0f, 30.0f * posAtField[0], 0.0f);
+        }
     }
     #endregion
 
