@@ -20,7 +20,7 @@ public class NetworkServerGUI : MonoBehaviour {
         player4.gameObject.SetActive(false);
     }
     public void AddConnectedPlayerAvatar(int _clientID_) {
-        for (int i = 0; i <= GamePlay.Main.players.Length ; i++) {
+        for (int i = 0; i < GamePlay.Main.players.Length ; i++) {
             if (GamePlay.Main.players[i].clientID == _clientID_ && GamePlay.Main.players[i].clientID != -1) {
                 switch (GamePlay.Main.players[i].color) {
                     case "Orange":
@@ -58,7 +58,7 @@ public class NetworkServerGUI : MonoBehaviour {
         }
     }
     public void RemoveConnectedPlayerAvatar(int _clientID_) {
-        for (int i = 0; i <= GamePlay.Main.players.Length; i++) {
+        for (int i = 0; i < GamePlay.Main.players.Length; i++) {
             if (GamePlay.Main.players[i].clientID == _clientID_ && GamePlay.Main.players[i].clientID != -1) {
                 switch (GamePlay.Main.players[i].avatar) {
                     case "Player1":
@@ -82,7 +82,7 @@ public class NetworkServerGUI : MonoBehaviour {
         }
     }
     public void UpdateVictoryPoints(string _color_) { //Update Victorypoints
-        for (int i = 0; i <= GamePlay.Main.players.Length; i++) {
+        for (int i = 0; i < GamePlay.Main.players.Length; i++) {
             if (GamePlay.Main.players[i].color == _color_) {
                 switch (GamePlay.Main.players[i].avatar) {
                     case "Player1":
@@ -105,7 +105,7 @@ public class NetworkServerGUI : MonoBehaviour {
         }
     }
     public void UpdateHand(int _ClientID_) { //Update count of handcards
-        for (int i = 0; i <= GamePlay.Main.players.Length; i++) {
+        for (int i = 0; i < GamePlay.Main.players.Length; i++) {
             if (GamePlay.Main.players[i].clientID == _ClientID_ && GamePlay.Main.players[i].clientID != -1) {
                 switch (GamePlay.Main.players[i].avatar) {
                     case "Player1":
