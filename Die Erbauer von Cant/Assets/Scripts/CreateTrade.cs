@@ -148,7 +148,7 @@ public class CreateTrade : MonoBehaviour {
 
     public void StartedTrading()
     {
-        createdTrade.giver = GamePlay.Main.GetCurrentPlayer().name;
+        createdTrade.giver = GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.name;
 
         ResetTrade();
 
@@ -228,19 +228,19 @@ public class CreateTrade : MonoBehaviour {
 
     public void ShowTrade(Trade tradeoffer)
     {
+        createdTrade = tradeoffer;
+        createdTrade.timesSend++;
+
         bool checkBrick = GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.CheckInventory("Brick", createdTrade.askedRessources[0]);
         bool checkWheat = GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.CheckInventory("Wheat", createdTrade.askedRessources[1]);
         bool checkOre = GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.CheckInventory("Ore", createdTrade.askedRessources[2]);
         bool checkWood = GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.CheckInventory("Wood", createdTrade.askedRessources[3]);
         bool checkWool = GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.CheckInventory("Wool", createdTrade.askedRessources[4]);
 
-        createdTrade = tradeoffer;
-        createdTrade.timesSend++;
-
         GameObject.Find("TradeAcception").SetActive(true);
         GameObject.Find("TradeAcception").transform.Find("Accept").gameObject.SetActive(false);
 
-        if (checkBrick && checkWheat && checkOre && checkWood & checkWool)
+        if (checkBrick && checkWheat && checkOre && checkWood && checkWool)
         {
             GameObject.Find("TradeAcception").transform.Find("Accept").gameObject.SetActive(true);
         }
