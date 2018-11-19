@@ -20,14 +20,15 @@ public class Place : MonoBehaviour{
         buildAcceptionInterface.transform.Find("Accept").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
 
         //make int[] from Place
-        int[] place = new int[usedFields.Length];
+        int[] place = new int[usedFields.Length * 3];
         for (int i = 0; i < place.Length; i += 3)
         {
             place[i] = usedFields[i / 3].row;
             place[i + 1] = usedFields[i / 3].column;
             place[i + 2] = posAtField[i / 3];
         }
-        buildAcceptionInterface.transform.Find("Accept").gameObject.GetComponent<Button>().onClick.AddListener(delegate { GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendFieldUpdateToServer(GameObject.Find("GamePlay").GetComponent<GamePlayClient>().buildedPawn.type, GameObject.Find("GamePlay").GetComponent<GamePlayClient>().buildedPawn.color, place); });
+        Pawn cachedBuildedPawn = GameObject.Find("GamePlay").GetComponent<GamePlayClient>().buildedPawn;
+        buildAcceptionInterface.transform.Find("Accept").gameObject.GetComponent<Button>().onClick.AddListener(delegate { GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendFieldUpdateToServer(cachedBuildedPawn.type, cachedBuildedPawn.color, place); });
         buildAcceptionInterface.transform.Find("Accept").gameObject.GetComponent<Button>().onClick.AddListener(GameBoard.MainBoard.deleteAllPlaces);
     }
 }
