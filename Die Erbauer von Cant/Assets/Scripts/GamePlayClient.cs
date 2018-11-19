@@ -4,9 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GamePlayClient : MonoBehaviour {
-
-    public Pawn buildedPawn;
-
+    
     public Player ownPlayer;
 
     public void InitClient(string color)
@@ -60,7 +58,6 @@ public class GamePlayClient : MonoBehaviour {
         //set buildedPawn back to null
         if (type == "")
         {
-            buildedPawn = null;
             return;
         }
 
@@ -72,7 +69,7 @@ public class GamePlayClient : MonoBehaviour {
             return;
         }
 
-        buildedPawn = new Pawn(type, ownPlayer.color);
+        Pawn buildedPawn = new Pawn(type, ownPlayer.color);
 
         //Alle möglichen Positionen ausgeben
         Place[] possiblePlaces = GameBoard.MainBoard.GetAllPositions(buildedPawn);
@@ -85,9 +82,10 @@ public class GamePlayClient : MonoBehaviour {
 
         for (int i = 0; i < possiblePlaces.Length; i++)
         {
-            Vector3 placePosition = GetPosInWorld(possiblePlaces[i].usedFields[0], possiblePlaces[i].posAtField[0]);
+            Vector3 placePosition = GetPosInWorld(possiblePlaces[i].usedFields[0], possiblePlaces[i].posAtField[0], buildedPawn.type);
 
             possiblePlaces[i].gameObject.transform.position = placePosition;
+            possiblePlaces[i].buildedPawn = buildedPawn;
 
             for (int j = 0; j < GameObject.Find("Places").transform.childCount; j++)
             {
@@ -99,7 +97,7 @@ public class GamePlayClient : MonoBehaviour {
         }
     }
 
-    private Vector3 GetPosInWorld(Field usedField, int posAtField)
+    private Vector3 GetPosInWorld(Field usedField, int posAtField, string type)
     {
         Vector3 result = new Vector3();
 
@@ -109,7 +107,7 @@ public class GamePlayClient : MonoBehaviour {
         result.z = usedField.row * 10.5f + 8.5f;
 
         //get Pos from PosAtField
-        result += Quaternion.Euler(0, 30 * posAtField, 0) * Vector3.back * ((buildedPawn.type == "Street") ? 6.0f : 14.0f / 2.0f);
+        result += Quaternion.Euler(0, 30 * posAtField, 0) * Vector3.back * ((type == "Street") ? 6.0f : 14.0f / 2.0f);
 
         return result;
     }
@@ -117,7 +115,7 @@ public class GamePlayClient : MonoBehaviour {
     public void buildPawn(Place destination)
     {
         Debug.Log("Huch, die funktion wird trotzdem aufgerufen...");
-
+        /*
         if (buildedPawn == null)
         {
             Debug.Log("Which pawn do you want to build?");
@@ -178,6 +176,7 @@ public class GamePlayClient : MonoBehaviour {
 
         //Sag Server, dass du etwas gebaut hast
         //GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendFieldUpdateToServer(buildedPawn.type, destination);
+        */
     }
 
     public void UpdateBoard(Pawn buildedPawn, int[] place)
@@ -191,7 +190,7 @@ public class GamePlayClient : MonoBehaviour {
         }
 
 
-        Vector3 pos = GetPosInWorld(usedFields[0], posAtField[0]);
+        Vector3 pos = GetPosInWorld(usedFields[0], posAtField[0], buildedPawn.type);
         //Pawn kreieren (erst nur mesh, dann Farbe, dann position)
         Transform createdPawn = Instantiate(Resources.Load<Transform>("Prefabs/" + buildedPawn.type), GameObject.Find("Board").transform);
         createdPawn.gameObject.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/" + buildedPawn.color);
@@ -245,7 +244,7 @@ public class GamePlayClient : MonoBehaviour {
                 result = PlayerColor.WHITE;
                 break;
             default:
-                Debug.Log("Die zu bauende Spielfigur hat die undefinierte Farbe: " + buildedPawn.color);
+                Debug.Log("Die zu bauende Spielfigur hat die undefinierte Farbe: " + color);
                 break;
         }
         return result;
