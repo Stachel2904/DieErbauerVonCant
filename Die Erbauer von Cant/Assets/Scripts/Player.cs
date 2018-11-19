@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum PlayerColor {NONE = -1, BLUE, RED, ORANGE, WHITE}
+public enum PlayerColor {NONE = -1, ORANGE, BLUE, WHITE, RED}
 
 public class Player
 {

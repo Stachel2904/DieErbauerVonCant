@@ -8,6 +8,8 @@ public class Place : MonoBehaviour{
     public Field[] usedFields;
     public int[] posAtField;
 
+    public Pawn buildedPawn;
+
     private void OnMouseDown()
     {
         for (int i = 0; i < GameObject.Find("Places").transform.childCount; i++)
@@ -27,8 +29,7 @@ public class Place : MonoBehaviour{
             place[i + 1] = usedFields[i / 3].column;
             place[i + 2] = posAtField[i / 3];
         }
-        Pawn cachedBuildedPawn = GameObject.Find("GamePlay").GetComponent<GamePlayClient>().buildedPawn;
-        buildAcceptionInterface.transform.Find("Accept").gameObject.GetComponent<Button>().onClick.AddListener(delegate { GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendFieldUpdateToServer(cachedBuildedPawn.type, cachedBuildedPawn.color, place); });
+        buildAcceptionInterface.transform.Find("Accept").gameObject.GetComponent<Button>().onClick.AddListener(delegate { GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendFieldUpdateToServer(buildedPawn.type, buildedPawn.color, place); });
         buildAcceptionInterface.transform.Find("Accept").gameObject.GetComponent<Button>().onClick.AddListener(GameBoard.MainBoard.deleteAllPlaces);
     }
 }
