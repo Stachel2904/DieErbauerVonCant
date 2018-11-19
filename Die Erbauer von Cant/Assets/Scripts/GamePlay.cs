@@ -158,7 +158,7 @@ public class GamePlay : MonoBehaviour
         }
 
         //Pawn kreieren (erst nur mesh, dann Farbe, dann position)
-        Transform createdPawn = Instantiate(Resources.Load<Transform>("Prefabs/" + buildedPawn.type), GameObject.Find("Board").transform);
+        Transform createdPawn = Instantiate(Resources.Load<Transform>("Prefabs/" + buildedPawn.type + "_HQ"), GameObject.Find("Board").transform);
         createdPawn.gameObject.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/" + buildedPawn.color);
         createdPawn.position = pos;
 
@@ -172,13 +172,15 @@ public class GamePlay : MonoBehaviour
             }
         }
 
+        Debug.Log(GameBoard.MainBoard.tilesGrid[usedFields[0].row][usedFields[0].column].pawns[posAtField[0]]);
+
         if (buildedPawn.type == "Town")
         {
             for (int i = 0; i < GameObject.Find("Board").transform.childCount; i++)
             {
                 GameObject currentPawn = GameObject.Find("Board").transform.GetChild(i).gameObject;
 
-                if (currentPawn.name == "Village(Clone)")
+                if (currentPawn.name == "Village_HQ(Clone)")
                 {
                     if (Vector3.Distance(pos, currentPawn.transform.position) < 0.5f)
                     {

@@ -94,6 +94,11 @@ public class GamePlayClient : MonoBehaviour {
                     GameObject.Destroy(possiblePlaces[i].gameObject);
                 }
             }
+
+            if (Vector3.Distance(placePosition, Vector3.zero) < 0.5f)
+            {
+                GameObject.Destroy(possiblePlaces[i].gameObject);
+            }
         }
     }
 
