@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33310933800246276}
   - component: {fileID: 23554452453102494}
   m_Layer: 0
-  m_Name: Street
+  m_Name: Street_HQ
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

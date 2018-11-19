@@ -143,10 +143,15 @@ public class GamePlay : MonoBehaviour
     {
         Field[] usedFields = new Field[place.Length / 3];
         int[] posAtField = new int[place.Length / 3];
+        Debug.Log("You startet building a " + buildedPawn.color + " " + buildedPawn.type);
+        Debug.Log("At following positions:");
         for (int i = 0; i < usedFields.Length * 3; i += 3)
         {
             usedFields[i / 3] = GameBoard.MainBoard.tilesGrid[place[i]][place[i + 1]];
+
             posAtField[i / 3] = place[i + 2];
+
+            Debug.Log(usedFields[i / 3].row.ToString() + " / " + usedFields[i / 3].column.ToString() + " at position " + posAtField[i / 3].ToString());
         }
 
         Vector3 pos = GetPosInWorld(usedFields[0], posAtField[0], buildedPawn.type);
@@ -171,8 +176,6 @@ public class GamePlay : MonoBehaviour
                 GameBoard.MainBoard.tilesGrid[usedFields[i].row][usedFields[i].column].pawns[posAtField[i]] = buildedPawn;
             }
         }
-
-        Debug.Log(GameBoard.MainBoard.tilesGrid[usedFields[0].row][usedFields[0].column].pawns[posAtField[0]]);
 
         if (buildedPawn.type == "Town")
         {
