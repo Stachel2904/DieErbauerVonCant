@@ -202,7 +202,7 @@ public class GameBoard
         //Spielfiguren selbst speichern und dann die möglichen bauplätze aus den eigenen spielfiguren ermitteln
         // Die gebaute Spielfigur wird dann auf das zugehörige Tile gelegt
 
-        PlayerColor pawnColor;
+        PlayerColor pawnColor = PlayerColor.NONE;
         switch (buildedPawn.color)
         {
             case "Blue":
