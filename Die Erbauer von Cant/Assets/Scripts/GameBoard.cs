@@ -166,7 +166,7 @@ public class GameBoard
 
         tilesGrid[3][3].pawns[7] = new Pawn("Street", "White");
         tilesGrid[4][2].pawns[1] = tilesGrid[3][3].pawns[7];
-        pawns[(int)PlayerColor.WHITE].Add(tilesGrid[2][4].pawns[3]);
+        pawns[(int)PlayerColor.WHITE].Add(tilesGrid[3][3].pawns[7]);
         tilesGrid[3][3].pawns[6] = new Pawn("Village", "White");
         tilesGrid[4][2].pawns[2] = tilesGrid[3][3].pawns[6];
         tilesGrid[4][4].pawns[10] = tilesGrid[3][3].pawns[6];
@@ -202,7 +202,7 @@ public class GameBoard
         //Spielfiguren selbst speichern und dann die möglichen bauplätze aus den eigenen spielfiguren ermitteln
         // Die gebaute Spielfigur wird dann auf das zugehörige Tile gelegt
 
-        PlayerColor pawnColor;
+        PlayerColor pawnColor = PlayerColor.NONE;
         switch (buildedPawn.color)
         {
             case "Blue":
