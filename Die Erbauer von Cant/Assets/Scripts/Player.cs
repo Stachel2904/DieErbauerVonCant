@@ -28,7 +28,7 @@ public class Player
     {
         victoryPoints++;
         GameObject.Find("NetworkServerManager").GetComponent<NetworkServerGUI>().UpdateVictoryPoints(color);
-        if (victoryPoints == 10)
+        if (victoryPoints == 5)
         {
             GamePlay.Main.GameWon(color);
         }

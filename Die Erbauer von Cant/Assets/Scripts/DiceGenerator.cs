@@ -33,13 +33,8 @@ public class DiceGenerator
             result += number;
         }
 
-        //Debug stuff
-
-        Print(2);
-        GamePlay.Main.DistributeRolledRessources(2);
-
-        //Print(result);
-        //GamePlay.Main.DistributeRolledRessources(result);
+        Print(result);
+        GamePlay.Main.DistributeRolledRessources(result);
 
 
     }
