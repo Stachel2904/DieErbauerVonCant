@@ -288,7 +288,7 @@ public class GamePlay : MonoBehaviour
         for (int i = 0; i < players.Length; i++)
         {
 
-            if (players[i].name == tradeOffer.giver)
+            if (players[i].color == tradeOffer.giver)
             {
                 Debug.Log(" Aufgerufen name ist " + players[i].clientID);
                 Main.GetCurrentPlayer().inventory.AddItem("Brick", tradeOffer.askedRessources[0]);
@@ -306,11 +306,11 @@ public class GamePlay : MonoBehaviour
                 UpdateInventory(players[i].clientID);
             }
 
-            if (players[i].name == tradeOffer.taker)
+            if (players[i].color == tradeOffer.taker)
             {
                 Player taker;
 
-                switch (players[i].name)
+                switch (players[i].color)
                 {
                     case "player1":
                         {
