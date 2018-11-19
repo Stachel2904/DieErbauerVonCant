@@ -18,6 +18,7 @@ public class NetworkServerUI : MonoBehaviour {
             Debug.Log("Server successfully created on port: " + serverPort);
             GetComponent<NetworkServerMessageHandler>().InitRecivingMessages();
             GetComponent<NetworkServerDiscovery>().StartServerDiscovery(serverPort);
+            Debug.Log("Server initialisation complete!");
         }
 	}
     public void KillServer() {
@@ -53,7 +54,7 @@ public class NetworkServerUI : MonoBehaviour {
     //Handle
     public void AddConnectedPlayer(int _clientID_) {
         for (int i = 0; i < maxPlayer; i++) {
-            if (GamePlay.Main.players[i].clientID == -1) { //ToDo: Player muss vor ClientConnect erstellt sein!
+            if (GamePlay.Main.players[i].clientID == -1) {
                 GamePlay.Main.players[i].clientID = _clientID_;
                 GamePlay.Main.players[i].name = _clientID_.ToString(); //ToDo: Später Namen einfügen
                 GetComponent<NetworkServerMessageHandler>().SendToClient(_clientID_, GamePlay.Main.players[i].color);
