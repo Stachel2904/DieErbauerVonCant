@@ -142,7 +142,7 @@ public class NetworkServerGUI : MonoBehaviour {
     private void AddAvatar(int _player_, Image _playerAvatar_) {
         _playerAvatar_.gameObject.SetActive(true);
         _playerAvatar_.transform.Find("Playername").GetComponent<Text>().text = GamePlay.Main.players[_player_].name;
-        GamePlay.Main.players[_player_].avatar = "Player1";
+        GamePlay.Main.players[_player_].avatar = "Player" + (_player_ + 1).ToString();
         _playerAvatar_.GetComponent<Image>().color = ctemp;
     }
     private void RemoveAvatar(int _player_, Image _playerAvatar_) {
