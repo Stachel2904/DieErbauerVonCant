@@ -138,18 +138,30 @@ public class CreateTrade : MonoBehaviour {
 
     public void UpdateTradingRessources()
     {
-        //GameObject.Find("ClientTextManager").GetComponent<TextManager>().text11 = createdTrade.givenRessources[0].ToString();
-        showngivenBrickText.text = createdTrade.givenRessources[0].ToString();
-        showngivenWheatText.text = createdTrade.givenRessources[1].ToString();
-        showngivenOreText.text = createdTrade.givenRessources[2].ToString();
-        showngivenWoodText.text = createdTrade.givenRessources[3].ToString();
-        showngivenWoolText.text = createdTrade.givenRessources[4].ToString();
+        GameObject.Find("ClientTextManager").GetComponent<TextManager>().text11.text = createdTrade.givenRessources[0].ToString();
+        GameObject.Find("ClientTextManager").GetComponent<TextManager>().text12.text = createdTrade.givenRessources[1].ToString();
+        GameObject.Find("ClientTextManager").GetComponent<TextManager>().text13.text = createdTrade.givenRessources[2].ToString();
+        GameObject.Find("ClientTextManager").GetComponent<TextManager>().text14.text = createdTrade.givenRessources[3].ToString();
+        GameObject.Find("ClientTextManager").GetComponent<TextManager>().text15.text = createdTrade.givenRessources[4].ToString();
 
-        shownaskedBrickText.text = createdTrade.askedRessources[0].ToString();
-        shownaskedWheatText.text = createdTrade.askedRessources[1].ToString();
-        shownaskedOreText.text = createdTrade.askedRessources[2].ToString();
-        shownaskedWoodText.text = createdTrade.askedRessources[3].ToString();
-        shownaskedWoolText.text = createdTrade.askedRessources[4].ToString();
+        GameObject.Find("ClientTextManager").GetComponent<TextManager>().text16.text = createdTrade.askedRessources[0].ToString();
+        GameObject.Find("ClientTextManager").GetComponent<TextManager>().text17.text = createdTrade.askedRessources[1].ToString();
+        GameObject.Find("ClientTextManager").GetComponent<TextManager>().text18.text = createdTrade.askedRessources[2].ToString();
+        GameObject.Find("ClientTextManager").GetComponent<TextManager>().text19.text = createdTrade.askedRessources[3].ToString();
+        GameObject.Find("ClientTextManager").GetComponent<TextManager>().text20.text = createdTrade.askedRessources[4].ToString();
+
+
+        //showngivenBrickText.text = createdTrade.givenRessources[0].ToString();
+        //showngivenWheatText.text = createdTrade.givenRessources[1].ToString();
+        //showngivenOreText.text = createdTrade.givenRessources[2].ToString();
+        //showngivenWoodText.text = createdTrade.givenRessources[3].ToString();
+        //showngivenWoolText.text = createdTrade.givenRessources[4].ToString();
+
+        //shownaskedBrickText.text = createdTrade.askedRessources[0].ToString();
+        //shownaskedWheatText.text = createdTrade.askedRessources[1].ToString();
+        //shownaskedOreText.text = createdTrade.askedRessources[2].ToString();
+        //shownaskedWoodText.text = createdTrade.askedRessources[3].ToString();
+        //shownaskedWoolText.text = createdTrade.askedRessources[4].ToString();
     }
 
     public void StartedTrading()
