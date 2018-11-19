@@ -19,31 +19,31 @@ public class Trade
         {
             case "Brick":
                 {
-                    if (GamePlay.Main.GetCurrentPlayer().inventory.inven[addedRessource] > givenRessources[0])
+                    if (GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.inven[addedRessource] > givenRessources[0])
                         givenRessources[0]++;
                 }
                 break;
             case "Wheat":
                 {
-                    if (GamePlay.Main.GetCurrentPlayer().inventory.inven[addedRessource] > givenRessources[1])
+                    if (GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.inven[addedRessource] > givenRessources[1])
                         givenRessources[1]++;
                 }
                 break;
             case "Ore":
                 {
-                    if (GamePlay.Main.GetCurrentPlayer().inventory.inven[addedRessource] > givenRessources[2])
+                    if (GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.inven[addedRessource] > givenRessources[2])
                         givenRessources[2]++;
                 }
                 break;
             case "Wood":
                 {
-                    if (GamePlay.Main.GetCurrentPlayer().inventory.inven[addedRessource] > givenRessources[3])
+                    if (GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.inven[addedRessource] > givenRessources[3])
                         givenRessources[3]++;
                 }
                 break;
             case "Wool":
                 {
-                    if (GamePlay.Main.GetCurrentPlayer().inventory.inven[addedRessource] > givenRessources[4])
+                    if (GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.inven[addedRessource] > givenRessources[4])
                         givenRessources[4]++;
                 }
                 break;

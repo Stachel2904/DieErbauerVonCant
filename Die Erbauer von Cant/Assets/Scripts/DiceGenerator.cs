@@ -32,9 +32,9 @@ public class DiceGenerator
             
             result += number;
         }
-
         Print(result);
         GamePlay.Main.DistributeRolledRessources(result);
+        
 
     }
 

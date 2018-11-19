@@ -74,6 +74,8 @@ public class GamePlay : MonoBehaviour
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("Start");
         Debug.Log("START GAME 2");
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(GamePlay.main.GetCurrentPlayer().clientID, "Go");
+
+        GameBoard.MainBoard.Init();
     }
 
     public void NextPlayer()
@@ -109,18 +111,18 @@ public class GamePlay : MonoBehaviour
                             {
                                 for (int l = 0; l < players.Length; l++)
                                 {
-                                    if (players[l].color == GameBoard.MainBoard.tilesGrid[i][j].pawns[l].color)
+                                    if (players[l].color == GameBoard.MainBoard.tilesGrid[i][j].pawns[k].color)
                                     {
                                         players[l].inventory.AddItem(GameBoard.MainBoard.tilesGrid[i][j].resourceName);
                                         UpdateInventory(players[l].clientID);
                                     }
                                 }
                             }
-                            if (GameBoard.MainBoard.tilesGrid[i][j].pawns[k].type == "City")
+                            if (GameBoard.MainBoard.tilesGrid[i][j].pawns[k].type == "Town")
                             {
                                 for (int l = 0; l < players.Length; l++)
                                 {
-                                    if (players[l].color == GameBoard.MainBoard.tilesGrid[i][j].pawns[l].color)
+                                    if (players[l].color == GameBoard.MainBoard.tilesGrid[i][j].pawns[k].color)
                                     {
                                         players[l].inventory.AddItem(GameBoard.MainBoard.tilesGrid[i][j].resourceName, 2);
                                         UpdateInventory(players[l].clientID);

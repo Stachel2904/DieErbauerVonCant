@@ -31,7 +31,7 @@ public class GameBoard
         new List<Pawn>()
     };
 
-    private void Init()
+    public void Init()
     {
         //Create Tiles
         for (int i = 0; i < 5; i++)
