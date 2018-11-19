@@ -207,10 +207,13 @@ public class GamePlay : MonoBehaviour
     /// <param name="tradeOffer"> Contains the struct of the Tradeoffer that has been proposed </param>
     public void Trading(Trade tradeOffer)
     {
+        Debug.Log(" TradeOffer.giver ist " + tradeOffer.giver + " und tradeoffer.taker ist " + tradeOffer.taker);
         for (int i = 0; i < players.Length; i++)
         {
+
             if (players[i].name == tradeOffer.giver)
             {
+                Debug.Log(" Aufgerufen name ist " + players[i].clientID);
                 Main.GetCurrentPlayer().inventory.AddItem("Brick", tradeOffer.askedRessources[0]);
                 Main.GetCurrentPlayer().inventory.AddItem("Wheat", tradeOffer.askedRessources[1]);
                 Main.GetCurrentPlayer().inventory.AddItem("Ore", tradeOffer.askedRessources[2]);
@@ -273,14 +276,7 @@ public class GamePlay : MonoBehaviour
 
                     UpdateInventory(taker.clientID);
 
-                    //for (int j = 0; j < tradeOffer.givenRessources.Length; j++)
-                    //{
-                    //    //taker.inventory.RemoveItem(tradeOffer.askedRessources[i], 1);
-                    //}
-                    //for (int j = 0; j < tradeOffer.givenRessources.Length; j++)
-                    //{
-                    //    //taker.inventory.AddItem(tradeOffer.givenRessources[i], 1);
-                    //}
+                   
                 }
             }
         }

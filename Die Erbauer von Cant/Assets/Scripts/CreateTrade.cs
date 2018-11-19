@@ -37,35 +37,35 @@ public class CreateTrade : MonoBehaviour {
     [SerializeField]
     GameObject text10;
 
-    [SerializeField]
-    GameObject text11;
+    //[SerializeField]
+    //GameObject text11;
 
-    [SerializeField]
-    GameObject text12;
+    //[SerializeField]
+    //GameObject text12;
 
-    [SerializeField]
-    GameObject text13;
+    //[SerializeField]
+    //GameObject text13;
 
-    [SerializeField]
-    GameObject text14;
+    //[SerializeField]
+    //GameObject text14;
 
-    [SerializeField]
-    GameObject text15;
+    //[SerializeField]
+    //GameObject text15;
 
-    [SerializeField]
-    GameObject text16;
+    //[SerializeField]
+    //GameObject text16;
 
-    [SerializeField]
-    GameObject text17;
+    //[SerializeField]
+    //GameObject text17;
 
-    [SerializeField]
-    GameObject text18;
+    //[SerializeField]
+    //GameObject text18;
 
-    [SerializeField]
-    GameObject text19;
+    //[SerializeField]
+    //GameObject text19;
 
-    [SerializeField]
-    GameObject text20;
+    //[SerializeField]
+    //GameObject text20;
 
     Text givenBrickText;
     Text givenWheatText;
@@ -79,17 +79,17 @@ public class CreateTrade : MonoBehaviour {
     Text askedWoodText;
     Text askedWoolText;
 
-    Text showngivenBrickText;
-    Text showngivenWheatText;
-    Text showngivenOreText;
-    Text showngivenWoodText;
-    Text showngivenWoolText;
+    //Text showngivenBrickText;
+    //Text showngivenWheatText;
+    //Text showngivenOreText;
+    //Text showngivenWoodText;
+    //Text showngivenWoolText;
 
-    Text shownaskedBrickText;
-    Text shownaskedWheatText;
-    Text shownaskedOreText;
-    Text shownaskedWoodText;
-    Text shownaskedWoolText;
+    //Text shownaskedBrickText;
+    //Text shownaskedWheatText;
+    //Text shownaskedOreText;
+    //Text shownaskedWoodText;
+    //Text shownaskedWoolText;
 
     string temp4to1Ressource;
 
@@ -107,17 +107,17 @@ public class CreateTrade : MonoBehaviour {
         askedWoodText = text9.GetComponent<Text>();
         askedWoolText = text10.GetComponent<Text>();
 
-        showngivenBrickText = text11.GetComponent<Text>();
-        showngivenWheatText = text12.GetComponent<Text>();
-        showngivenOreText = text13.GetComponent<Text>();
-        showngivenWoodText = text14.GetComponent<Text>();
-        showngivenWoolText = text15.GetComponent<Text>();
+        //showngivenBrickText = text11.GetComponent<Text>();
+        //showngivenWheatText = text12.GetComponent<Text>();
+        //showngivenOreText = text13.GetComponent<Text>();
+        //showngivenWoodText = text14.GetComponent<Text>();
+        //showngivenWoolText = text15.GetComponent<Text>();
 
-        shownaskedBrickText = text16.GetComponent<Text>();
-        shownaskedWheatText = text17.GetComponent<Text>();
-        shownaskedOreText = text18.GetComponent<Text>();
-        shownaskedWoodText = text19.GetComponent<Text>();
-        shownaskedWoolText = text20.GetComponent<Text>();
+        //shownaskedBrickText = text16.GetComponent<Text>();
+        //shownaskedWheatText = text17.GetComponent<Text>();
+        //shownaskedOreText = text18.GetComponent<Text>();
+        //shownaskedWoodText = text19.GetComponent<Text>();
+        //shownaskedWoolText = text20.GetComponent<Text>();
     }
     private void Update()
     {
@@ -166,7 +166,7 @@ public class CreateTrade : MonoBehaviour {
 
     public void StartedTrading()
     {
-        createdTrade.giver = GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.name;
+        createdTrade.giver = GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.color;
 
         ResetTrade();
 
@@ -179,9 +179,9 @@ public class CreateTrade : MonoBehaviour {
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.SetActive(true);
     }
 
-    public void createAskedPlayer(string name)
+    public void createAskedPlayer(string color)
     {
-        createdTrade.taker = name;
+        createdTrade.taker = color;
     }
 
 
