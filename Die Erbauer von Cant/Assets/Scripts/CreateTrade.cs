@@ -133,6 +133,12 @@ public class CreateTrade : MonoBehaviour {
         askedWoodText.text = createdTrade.askedRessources[3].ToString();
         askedWoolText.text = createdTrade.askedRessources[4].ToString();
 
+        
+    }
+
+    public void UpdateTradingRessources()
+    {
+        //GameObject.Find("ClientTextManager").GetComponent<TextManager>().text11 = createdTrade.givenRessources[0].ToString();
         showngivenBrickText.text = createdTrade.givenRessources[0].ToString();
         showngivenWheatText.text = createdTrade.givenRessources[1].ToString();
         showngivenOreText.text = createdTrade.givenRessources[2].ToString();
@@ -237,7 +243,10 @@ public class CreateTrade : MonoBehaviour {
         bool checkWood = GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.CheckInventory("Wood", createdTrade.askedRessources[3]);
         bool checkWool = GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.CheckInventory("Wool", createdTrade.askedRessources[4]);
 
+        
+
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().TradeAcception.SetActive(true);
+        UpdateTradingRessources();
         //GameObject.Find("TradeAcception").SetActive(true);
         GameObject.Find("TradeAcception").transform.Find("Accept").gameObject.SetActive(false);
 
