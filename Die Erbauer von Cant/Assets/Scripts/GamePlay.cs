@@ -174,6 +174,8 @@ public class GamePlay : MonoBehaviour
 
                 players[i].hand = Main.players[i].inventory.inven["Brick"] + Main.players[i].inventory.inven["Wheat"] + Main.players[i].inventory.inven["Ore"] + Main.players[i].inventory.inven["Wood"] + Main.players[i].inventory.inven["Wool"];
                 GameObject.Find("ServerManager").GetComponent<NetworkServerGUI>().UpdateHand(players[i].clientID);
+
+               // GameObject.Find("ServerManager").GetComponent<NetworkServerUI>().UpdateClientInventoryGUI(clientID, "Brick", players[i].inventory.inven["Brick"]);
             }
 
         }
