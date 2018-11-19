@@ -312,22 +312,22 @@ public class GamePlay : MonoBehaviour
 
                 switch (players[i].color)
                 {
-                    case "player1":
+                    case "Orange":
                         {
                             taker = main.players[0];
                         }
                         break;
-                    case "player2":
+                    case "Blue":
                         {
                             taker = main.players[1];
                         }
                         break;
-                    case "player3":
+                    case "White":
                         {
                             taker = main.players[2];
                         }
                         break;
-                    case "player4":
+                    case "Red":
                         {
                             taker = main.players[3];
                         }
