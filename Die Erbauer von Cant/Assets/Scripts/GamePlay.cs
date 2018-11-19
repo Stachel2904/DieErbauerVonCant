@@ -240,16 +240,7 @@ public class GamePlay : MonoBehaviour
         {
             if (players[i].clientID == clientID && players[i].clientID != -1)
             {
-                //stringTemp = "Brick|" + players[i].inventory.inven["Brick"].ToString();
-                //GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(clientID, stringTemp);
-                //stringTemp = "Wheat|" + players[i].inventory.inven["Wheat"].ToString();
-                //GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(clientID, stringTemp);
-                //stringTemp = "Ore|" + players[i].inventory.inven["Ore"].ToString();
-                //GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(clientID, stringTemp);
-                //stringTemp = "Wood|" + players[i].inventory.inven["Wood"].ToString();
-                //GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(clientID, stringTemp);
-                //stringTemp = "Wool|" + players[i].inventory.inven["Wool"].ToString();
-                //GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(clientID, stringTemp);
+                
                 GameObject.Find("ServerManager").GetComponent<NetworkServerUI>().UpdateClientInventoryGUI(clientID, "Brick", players[i].inventory.inven["Brick"]);
                 GameObject.Find("ServerManager").GetComponent<NetworkServerUI>().UpdateClientInventoryGUI(clientID, "Wheat", players[i].inventory.inven["Wheat"]);
                 GameObject.Find("ServerManager").GetComponent<NetworkServerUI>().UpdateClientInventoryGUI(clientID, "Ore", players[i].inventory.inven["Ore"]);
@@ -284,13 +275,11 @@ public class GamePlay : MonoBehaviour
     /// <param name="tradeOffer"> Contains the struct of the Tradeoffer that has been proposed </param>
     public void Trading(Trade tradeOffer)
     {
-        Debug.Log(" TradeOffer.giver ist " + tradeOffer.giver + " und tradeoffer.taker ist " + tradeOffer.taker);
         for (int i = 0; i < players.Length; i++)
         {
 
             if (players[i].color == tradeOffer.giver)
             {
-                Debug.Log(" Aufgerufen name ist " + players[i].clientID);
                 Main.GetCurrentPlayer().inventory.AddItem("Brick", tradeOffer.askedRessources[0]);
                 Main.GetCurrentPlayer().inventory.AddItem("Wheat", tradeOffer.askedRessources[1]);
                 Main.GetCurrentPlayer().inventory.AddItem("Ore", tradeOffer.askedRessources[2]);
