@@ -33,8 +33,7 @@ public class TradeMessage : MessageBase {
     public Trade trade;
 }
 public class CreateTradeMessage : MessageBase {
-    public string ressource1;
-    public string ressource2;
+    public string ressource;
 }
 public class AcceptMessage : MessageBase {
     public string acceptType;

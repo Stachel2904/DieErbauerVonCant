@@ -15,7 +15,6 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         client.RegisterHandler(890, ReciveAcceptMessage);
         client.RegisterHandler(891, ReciveInventoryMessage);
         client.RegisterHandler(892, ReciveFieldUpdateMessage);
-        client.RegisterHandler(893, ReciveCreateTradeMessage);
         client.RegisterHandler(MsgType.Connect, OnConnect);
         client.RegisterHandler(MsgType.Disconnect, OnDisconnect);
     }
@@ -61,8 +60,7 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
     public void SendCreateTradeToServer(string _resource1_, string _resource2_) {
         if (client.isConnected) {
             CreateTradeMessage tradeMSG = new CreateTradeMessage();
-            tradeMSG.ressource1 = _resource1_;
-            tradeMSG.ressource2 = _resource2_;
+            tradeMSG.ressource = _resource1_ + "|" + _resource2_;
             bool success = client.Send(893, tradeMSG);
             if (!success) {
                 Debug.LogError("Failed to send trademessage!");
@@ -138,6 +136,7 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
                 GameObject.Find("TradeWasAccepted").SetActive(true);
                 break;
             default:
+                Debug.LogError("Can not read message from Server!");
                 break;
         }
     }
@@ -147,15 +146,7 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         TradeMessage tradeMSG = new TradeMessage();
         _message_.reader.SeekZero();
         tradeMSG.trade = _message_.ReadMessage<TradeMessage>().trade;
-
         GameObject.Find("Trade").GetComponent<CreateTrade>().ShowTrade(tradeMSG.trade);
-    }
-    private void ReciveCreateTradeMessage(NetworkMessage _message_) {
-        Debug.Log("RECIVED A CREATETRADEMESSAGE!");
-        CreateTradeMessage tradeMSG = new CreateTradeMessage();
-        _message_.reader.SeekZero();
-        tradeMSG.ressource1 = _message_.ReadMessage<CreateTradeMessage>().ressource1;
-        tradeMSG.ressource2 = _message_.ReadMessage<CreateTradeMessage>().ressource2;
     }
     //ACCEPT
     private void ReciveAcceptMessage(NetworkMessage _message_) {
@@ -171,6 +162,7 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
                 //Readyaccept stuff
                 break;
             default:
+                Debug.LogError("Can not read acceptmessage from Server!");
                 break;
         }
     }
