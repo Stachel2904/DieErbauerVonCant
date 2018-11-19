@@ -101,29 +101,29 @@ public class GamePlay : MonoBehaviour
             {
                 if (GameBoard.MainBoard.tilesGrid[i][j].chipNumber == number)
                 {
-                    for (int h = 0; h < GameBoard.MainBoard.tilesGrid[i][j].pawns.Length; h++)
+                    for (int k = 0; k < GameBoard.MainBoard.tilesGrid[i][j].pawns.Length; k++)
                     {
-                        if (GameBoard.MainBoard.tilesGrid[i][j].pawns[h] != null)
+                        if (GameBoard.MainBoard.tilesGrid[i][j].pawns[k] != null)
                         {
-                            if (GameBoard.MainBoard.tilesGrid[i][j].pawns[h].type == "Village")
+                            if (GameBoard.MainBoard.tilesGrid[i][j].pawns[k].type == "Village")
                             {
-                                for (int k = 0; k < players.Length; k++)
+                                for (int l = 0; l < players.Length; l++)
                                 {
-                                    if (players[k].color == GameBoard.MainBoard.tilesGrid[i][j].pawns[k].color)
+                                    if (players[l].color == GameBoard.MainBoard.tilesGrid[i][j].pawns[l].color)
                                     {
-                                        players[k].inventory.AddItem(GameBoard.MainBoard.tilesGrid[i][j].resourceName);
-                                        UpdateInventory(players[k].clientID);
+                                        players[l].inventory.AddItem(GameBoard.MainBoard.tilesGrid[i][j].resourceName);
+                                        UpdateInventory(players[l].clientID);
                                     }
                                 }
                             }
-                            if (GameBoard.MainBoard.tilesGrid[i][j].pawns[h].type == "City")
+                            if (GameBoard.MainBoard.tilesGrid[i][j].pawns[k].type == "City")
                             {
-                                for (int k = 0; k < players.Length; k++)
+                                for (int l = 0; l < players.Length; l++)
                                 {
-                                    if (players[k].color == GameBoard.MainBoard.tilesGrid[i][j].pawns[k].color)
+                                    if (players[l].color == GameBoard.MainBoard.tilesGrid[i][j].pawns[l].color)
                                     {
-                                        players[k].inventory.AddItem(GameBoard.MainBoard.tilesGrid[i][j].resourceName, 2);
-                                        UpdateInventory(players[k].clientID);
+                                        players[l].inventory.AddItem(GameBoard.MainBoard.tilesGrid[i][j].resourceName, 2);
+                                        UpdateInventory(players[l].clientID);
                                     }
                                 }
                             }
