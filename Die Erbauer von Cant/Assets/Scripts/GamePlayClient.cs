@@ -196,7 +196,7 @@ public class GamePlayClient : MonoBehaviour {
         createdPawn.gameObject.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/" + buildedPawn.color);
         createdPawn.position = pos;
 
-        GameBoard.MainBoard.pawns[(int)ConvertColor(ownPlayer.color)].Add(buildedPawn);
+        GameBoard.MainBoard.pawns[(int)ConvertColor(buildedPawn.color)].Add(buildedPawn);
         for (int i = 0; i < usedFields.Length; i++)
         {
             if (usedFields[i] != null) {
