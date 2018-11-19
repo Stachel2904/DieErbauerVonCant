@@ -64,7 +64,7 @@ public class NetworkServerMessageHandler : MonoBehaviour {
                 SendToClient(GamePlay.Main.GetCurrentPlayer().clientID, "Player declined Trading");
                 break;
             case "Player accepted Trading":
-                SendToClient(GamePlay.Main.GetCurrentPlayer().clientID, "Player declined Trading");
+                SendToClient(GamePlay.Main.GetCurrentPlayer().clientID, "Player accepted Trading");
                 break;
             default:
                 Debug.LogError("Can not read message from Client: " + _message_.conn.connectionId);
