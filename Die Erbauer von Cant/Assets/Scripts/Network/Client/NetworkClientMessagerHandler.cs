@@ -87,11 +87,11 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         }
     }
     //FIELD
-    public void SendFieldUpdateToServer(string _pawn_, Place _place_) {
+    public void SendFieldUpdateToServer(string _pawn_, string _color_, int[] _place_) {
         if (client.isConnected) {
             FieldMessage fieldMSG = new FieldMessage();
             FieldMessage2 fieldMSG2 = new FieldMessage2();
-            fieldMSG.pawn = _pawn_;
+            fieldMSG.pawn = _pawn_ + "|" + _color_;
             fieldMSG2.place = _place_;
             bool success = client.Send(892, fieldMSG);
             if (!success) {
@@ -183,16 +183,19 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
     }
     //UPDATE FIELD
     string tempPawn;
+    string tempColor;
     private void ReciveFieldUpdateMessage(NetworkMessage _message_) {
         FieldMessage fieldMSG = new FieldMessage();
         _message_.reader.SeekZero();
         fieldMSG.pawn = _message_.ReadMessage<FieldMessage>().pawn;
-        tempPawn = fieldMSG.pawn;
+        string[] deltas = fieldMSG.pawn.Split('|');
+        tempPawn = deltas[0];
+        tempColor = deltas[1];
     }
     private void ReciveFieldUpdateMessage2(NetworkMessage _message_) {
         FieldMessage2 fieldMSG = new FieldMessage2();
         _message_.reader.SeekZero();
         fieldMSG.place = _message_.ReadMessage<FieldMessage2>().place;
-        GameObject.Find("GamePlay").GetComponent<GamePlayClient>().UpdateBoard(new Pawn(tempPawn, GamePlay.Main.GetCurrentPlayer().color), fieldMSG.place);
+        GameObject.Find("GamePlay").GetComponent<GamePlayClient>().UpdateBoard(new Pawn(tempPawn, tempColor), fieldMSG.place);
     }
 }
