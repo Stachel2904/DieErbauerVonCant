@@ -1934,7 +1934,7 @@ GameObject:
   - component: {fileID: 170454562}
   - component: {fileID: 170454561}
   m_Layer: 5
-  m_Name: Address
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1990,7 +1990,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Addresses
+  m_Text: Name
 --- !u!222 &170454562
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -21893,6 +21893,7 @@ MonoBehaviour:
   m_OffsetY: 0
   ipAddress: 
   serverMessage: 
+  serverName: 
   port: 0
 --- !u!114 &2033183529
 MonoBehaviour:
