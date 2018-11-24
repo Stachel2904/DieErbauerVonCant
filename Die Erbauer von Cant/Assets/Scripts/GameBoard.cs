@@ -272,7 +272,10 @@ public class GameBoard
                             newPlacePos.Add(newPos);
 
                             //zweites Feld
-                            newPlaceFields.Add(currentFields[j].GetConnectedFields(newPos)[0]);
+                            if (currentFields[j].GetConnectedFields(newPos).Length > 0)
+                            {
+                                newPlaceFields.Add(currentFields[j].GetConnectedFields(newPos)[0]);
+                            }
 
                             //position des zweiten feldes ermitteln
                             int posAtSecondField = newPos + 6;
@@ -307,44 +310,10 @@ public class GameBoard
                             newPlacePos.Add(newPos);
 
                             //zweites Feld
-                            //Feld ermitteln
-                            Field secondField = null;
-
-                            //check if the place is on the water and may not have a second field
-                            bool fieldOnTop = (currentFields[j].row == 0 && (newPos == 1 || newPos == 11));
-                            bool fieldOnRight = ((currentFields[j].column == 7 || currentFields[j].column == 8) && newPos == 3);
-                            bool fieldOnBottom = (currentFields[j].row == 4 && (newPos == 5 || newPos == 7));
-                            bool fieldOnLeft = ((currentFields[j].column == 0 || currentFields[j].column == 1) && newPos == 9);
-
-                            //erlangen des zweiten feldes
-                            if (!(fieldOnTop && fieldOnRight && fieldOnBottom && fieldOnLeft))
+                            if(currentFields[j].GetConnectedFields(newPos).Length > 0)
                             {
-                                if (newPos == 1)
-                                {
-                                    secondField = tilesGrid[currentFields[j].row - 1][currentFields[j].column + 1];
-                                }
-                                else if (newPos == 3)
-                                {
-                                    secondField = tilesGrid[currentFields[j].row][currentFields[j].column + 2];
-                                }
-                                else if (newPos == 5)
-                                {
-                                    secondField = tilesGrid[currentFields[j].row + 1][currentFields[j].column + 1];
-                                }
-                                else if (newPos == 7)
-                                {
-                                    secondField = tilesGrid[currentFields[j].row + 1][currentFields[j].column - 1];
-                                }
-                                else if (newPos == 9)
-                                {
-                                    secondField = tilesGrid[currentFields[j].row][currentFields[j].column - 2];
-                                }
-                                else if (newPos == 11)
-                                {
-                                    secondField = tilesGrid[currentFields[j].row - 1][currentFields[j].column - 1];
-                                }
+                                newPlaceFields.Add(currentFields[j].GetConnectedFields(newPos)[0]);
                             }
-                            newPlaceFields.Add(secondField);
 
                             //position des zweiten feldes ermitteln
                             int posAtSecondField = newPos + 6;
@@ -359,6 +328,120 @@ public class GameBoard
                             newPlace.posAtField = newPlacePos.ToArray();
                             possiblePositions.Add(newPlace);
                         }
+
+                        //if (currentFields[j].pawns[newPos] == null)
+                        //{
+                        //    //erstes Feld
+                        //    newPlaceFields.Add(currentFields[j]);
+                        //    newPlacePos.Add(newPos);
+
+                        //    //zweites Feld
+                        //    //Feld ermitteln
+                        //    Field secondField = newPlaceFields[0];
+
+                        //    //check if the place is on the water and may not have a second field
+                        //    bool fieldOnTop = (currentFields[j].row == 0 && (newPos == 1 || newPos == 11));
+                        //    bool fieldOnRight = ((currentFields[j].column == 7 || currentFields[j].column == 8) && newPos == 3);
+                        //    bool fieldOnBottom = (currentFields[j].row == 4 && (newPos == 5 || newPos == 7));
+                        //    bool fieldOnLeft = ((currentFields[j].column == 0 || currentFields[j].column == 1) && newPos == 9);
+
+                        //    //erlangen des zweiten feldes
+                        //    if (!(fieldOnTop && fieldOnRight && fieldOnBottom && fieldOnLeft))
+                        //    {
+                        //        if (newPos == 1)
+                        //        {
+                        //            int checkedRow = currentFields[j].row - 1;
+                        //            int checkedColumn = currentFields[j].column + 1;
+                        //            if (checkedRow < tilesGrid.Length)
+                        //            {
+                        //                if (checkedColumn < tilesGrid[checkedRow].Length)
+                        //                {
+
+                        //                }
+                        //            }
+                        //            secondField = tilesGrid[currentFields[j].row - 1][currentFields[j].column + 1];
+                        //        }
+                        //        else if (newPos == 3)
+                        //        {
+                        //            int checkedRow = currentFields[j].row - 1;
+                        //            int checkedColumn = currentFields[j].column + 1;
+                        //            if (checkedRow < tilesGrid.Length)
+                        //            {
+                        //                if (checkedColumn < tilesGrid[checkedRow].Length)
+                        //                {
+
+                        //                }
+                        //            }
+                        //            secondField = tilesGrid[currentFields[j].row][currentFields[j].column + 2];
+                        //        }
+                        //        else if (newPos == 5)
+                        //        {
+                        //            int checkedRow = currentFields[j].row - 1;
+                        //            int checkedColumn = currentFields[j].column + 1;
+                        //            if (checkedRow < tilesGrid.Length)
+                        //            {
+                        //                if (checkedColumn < tilesGrid[checkedRow].Length)
+                        //                {
+
+                        //                }
+                        //            }
+                        //            secondField = tilesGrid[currentFields[j].row + 1][currentFields[j].column + 1];
+                        //        }
+                        //        else if (newPos == 7)
+                        //        {
+                        //            int checkedRow = currentFields[j].row - 1;
+                        //            int checkedColumn = currentFields[j].column + 1;
+                        //            if (checkedRow < tilesGrid.Length)
+                        //            {
+                        //                if (checkedColumn < tilesGrid[checkedRow].Length)
+                        //                {
+
+                        //                }
+                        //            }
+                        //            secondField = tilesGrid[currentFields[j].row + 1][currentFields[j].column - 1];
+                        //        }
+                        //        else if (newPos == 9)
+                        //        {
+                        //            int checkedRow = currentFields[j].row - 1;
+                        //            int checkedColumn = currentFields[j].column + 1;
+                        //            if (checkedRow < tilesGrid.Length)
+                        //            {
+                        //                if (checkedColumn < tilesGrid[checkedRow].Length)
+                        //                {
+
+                        //                }
+                        //            }
+                        //            secondField = tilesGrid[currentFields[j].row][currentFields[j].column - 2];
+                        //        }
+                        //        else if (newPos == 11)
+                        //        {
+                        //            int checkedRow = currentFields[j].row - 1;
+                        //            int checkedColumn = currentFields[j].column + 1;
+                        //            if (checkedRow < tilesGrid.Length)
+                        //            {
+                        //                if (checkedColumn < tilesGrid[checkedRow].Length)
+                        //                {
+
+                        //                }
+                        //            }
+                        //            secondField = tilesGrid[currentFields[j].row - 1][currentFields[j].column - 1];
+                        //        }
+                        //    }
+                        //    newPlaceFields.Add(secondField);
+
+                        //    //position des zweiten feldes ermitteln
+                        //    int posAtSecondField = newPos + 6;
+                        //    if (posAtSecondField >= 12)
+                        //    {
+                        //        posAtSecondField = posAtSecondField - 12;
+                        //    }
+                        //    newPlacePos.Add(posAtSecondField);
+
+                        //    //werte zuweisen
+                        //    newPlace.usedFields = newPlaceFields.ToArray();
+                        //    newPlace.posAtField = newPlacePos.ToArray();
+                        //    possiblePositions.Add(newPlace);
+                        //}
                     }
                 }
             }
