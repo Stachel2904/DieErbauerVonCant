@@ -92,7 +92,7 @@ public class GameBoard
                 }
                 if (i == 2 && j == 4)
                 {
-                    tilesGrid[i][j].chipNumber = 2;
+                    tilesGrid[i][j].chipNumber = 7;
                     tilesGrid[i][j].resourceName = "Brick";
                 }
                 if (i == 2 && j == 6)

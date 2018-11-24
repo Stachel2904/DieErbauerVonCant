@@ -1,8 +1,12 @@
 ﻿using UnityEngine.Networking;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class NetworkServerDiscovery : NetworkDiscovery {
 
-    private string serverName = "DEvC-Server";
+    public string serverName = "DEvC-Server";
+
+    public InputField newServerNamer;
 
     public void StartServerDiscovery(int _port_) {
         //StopBroadcast();
@@ -13,7 +17,7 @@ public class NetworkServerDiscovery : NetworkDiscovery {
     public void StopServerDiscovery() {
         StopBroadcast();
     }
-    public void SetServerName(string _serverName_) {
-        serverName = _serverName_;
+    public void SetServerName() {
+        serverName = newServerNamer.text;
     }
 }

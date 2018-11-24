@@ -9,9 +9,9 @@ public class NetworkServerUI : MonoBehaviour {
     public int serverPort = -1;
     int maxPlayer = 4;
 
-    private void Start(){
-        StartServer();
-    }
+    //private void Start(){
+    //    StartServer();
+    //}
 	public void StartServer(){ 
         serverPort = InitServer();
         if (serverPort != -1) {
