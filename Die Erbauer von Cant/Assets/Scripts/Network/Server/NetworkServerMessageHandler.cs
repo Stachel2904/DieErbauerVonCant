@@ -4,7 +4,7 @@ using UnityEngine.Networking;
 public class NetworkServerMessageHandler : MonoBehaviour {
 
     bool init = false;
-    int slots = 4;
+    public int slots = 4;
     public int blockedSlots = 0;
 
     private void Update() {
@@ -177,4 +177,5 @@ public class NetworkServerMessageHandler : MonoBehaviour {
             Debug.LogError("Failed to send command: " + _command_ + "to all clients!");
         }
     }
+    
 }

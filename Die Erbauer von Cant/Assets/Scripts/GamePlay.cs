@@ -29,9 +29,10 @@ public class GamePlay : MonoBehaviour
 
     public Player[] players;
     public int currentPlayer;
+    public int maxPlayer = 3;
 
     public GameObject VictoryWindow;
-
+    
     // Trading Variables
     public bool dealAccepted = false;
     
@@ -81,9 +82,32 @@ public class GamePlay : MonoBehaviour
         GameBoard.MainBoard.Init();
     }
 
+    /// <summary>
+    /// Increase the Number of maximum Players in the Host start Option
+    /// </summary>
+    public void IncreaseMaxPlayer()
+    {
+        if (maxPlayer < 3)
+        {
+            maxPlayer++;
+            GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().slots++;
+        }
+    }
+    /// <summary>
+    /// Decrease the Number of maximum Players in the Host start Option
+    /// </summary>
+    public void DecreaseMaxPlayer()
+    {
+        if (maxPlayer > 0)
+        {
+            maxPlayer--;
+            GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().slots--;
+        }
+    }
+
     public void NextPlayer()
     {
-        if (currentPlayer == 2)
+        if (currentPlayer == maxPlayer)
         {
             currentPlayer = 0;
         }
@@ -117,6 +141,7 @@ public class GamePlay : MonoBehaviour
                                     if (players[l].color == GameBoard.MainBoard.tilesGrid[i][j].pawns[k].color)
                                     {
                                         players[l].inventory.AddItem(GameBoard.MainBoard.tilesGrid[i][j].resourceName);
+                                        CreateAnimatedRessource(GameBoard.MainBoard.tilesGrid[i][j].resourceName, players[l].color);
                                         UpdateInventory(players[l].clientID);
                                     }
                                 }
@@ -128,6 +153,7 @@ public class GamePlay : MonoBehaviour
                                     if (players[l].color == GameBoard.MainBoard.tilesGrid[i][j].pawns[k].color)
                                     {
                                         players[l].inventory.AddItem(GameBoard.MainBoard.tilesGrid[i][j].resourceName, 2);
+                                        CreateAnimatedRessource(GameBoard.MainBoard.tilesGrid[i][j].resourceName, players[l].color);
                                         UpdateInventory(players[l].clientID);
                                     }
                                 }
@@ -137,6 +163,14 @@ public class GamePlay : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void CreateAnimatedRessource(string ressource, string playerColor)
+    {
+        
+        Transform createdRessource = Instantiate(Resources.Load<Transform>("Prefabs/" + ressource + "Symbol"), GameObject.Find("Window").transform);
+        createdRessource.gameObject.GetComponent<RessourceAnimation>().direction = GameObject.Find("Handcards").transform.Find(playerColor).transform.position;
+        createdRessource.gameObject.GetComponent<RessourceAnimation>().animatedRessource = ressource;
     }
 
     public void UpdateBoard(Pawn buildedPawn, int[] place)
