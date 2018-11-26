@@ -583,7 +583,9 @@ public class GamePlay : MonoBehaviour
 
         for (int i = 0; i < player.hand; i++)
         {
+            RectTransform newHandCard = GameObject.Instantiate(Resources.Load<RectTransform>("Prefabs/CardPrefab"), parent);
 
+            newHandCard.Rotate(0, 0, 150 / player.hand * i - 75);
         }
 
     }

@@ -26,22 +26,25 @@ public class DiceGenerator
     {
         int result = 0;
 
+        int[] numbers = new int[2];
+
         for (int i = 0; i < 2; i++)
         {
             int number = GetNumber();
-            
+            numbers[i] = number;
             result += number;
         }
 
-        Print(result);
+        Print(numbers);
         GamePlay.Main.DistributeRolledRessources(result);
-
-
     }
 
-    private void Print(int number)
+    private void Print(int[] numbers)
     {
-        GameObject.Find("Window").transform.Find("Dice").Find("Image").Find("Text").gameObject.GetComponent<Text>().text = number.ToString();
+        for (int i = 1; i <= 2; i++)
+        {
+            GameObject.Find("Window").transform.Find("Dice").Find("Image").Find(i.ToString()).gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Würfel" + numbers[i - 1].ToString());
+        }
 
     }
 
