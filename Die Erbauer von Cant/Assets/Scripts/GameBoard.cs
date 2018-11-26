@@ -196,7 +196,7 @@ public class GameBoard
         }
     }
 
-    public Place[] GetAllPositions(Pawn buildedPawn)
+    public Place[] GetAllPositions(Pawn buildedPawn, bool godmode = false)
     {
 
         //Spielfiguren selbst speichern und dann die möglichen bauplätze aus den eigenen spielfiguren ermitteln
