@@ -22,18 +22,27 @@ public class ClientButtonManager : MonoBehaviour {
     public GameObject TradeDecline;
     public GameObject Addresses;
     public GameObject WaitScreen;
+    public GameObject OrderDiceRoll;
+    public GameObject NewOrderDiceRoll;
     #endregion
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         Button rDice = rollDice.GetComponent<Button>();
         rDice.onClick.AddListener(RollTheDice);
 	}
-    private void RollTheDice() {
+    private void RollTheDice()
+    {
         GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("Roll Dice");
         DiceRoll.SetActive(false);
         ClientDefault.transform.Find("TradeButton").GetComponent<Button>().interactable = true;
         ClientDefault.transform.Find("BuildButton").GetComponent<Button>().interactable = true;
         ClientDefault.transform.Find("Next Player").GetComponent<Button>().interactable = true;
+    }
+
+    public void RollOrderDice()
+    {
+        GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("GetOrderRoll");
     }
 }

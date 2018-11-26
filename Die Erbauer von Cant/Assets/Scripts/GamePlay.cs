@@ -27,9 +27,14 @@ public class GamePlay : MonoBehaviour
         }
     }
 
+    public bool GameInitialised;
+
     public Player[] players;
+    public Player[] newPlayerOrder;
+
     public int currentPlayer;
     public int maxPlayer = 3;
+    public int orderNumber = 0;
 
     public GameObject VictoryWindow;
     
@@ -62,6 +67,252 @@ public class GamePlay : MonoBehaviour
         }
 
     }
+
+    public void SaveDiceRoll(int clientId, int DiceRolled)
+    {
+        for (int i = 0; i < maxPlayer; i++)
+        {
+            if (players[i].clientID == clientId)
+            {
+                players[i].beginningNumber = DiceRolled;
+            }
+            
+        }
+
+        if (players[0].beginningNumber != 0)
+        {
+            if (players[0].beginningNumber == players[1].beginningNumber)
+            {
+                players[0].beginningNumber = 0;
+                players[0].orderCheck = false;
+                players[1].beginningNumber = 0;
+                players[1].orderCheck = false;
+                RollAgain(players[0].clientID);
+                RollAgain(players[1].clientID);
+            }
+            else if (players[0].beginningNumber == players[2].beginningNumber)
+            {
+                players[0].beginningNumber = 0;
+                players[0].orderCheck = false;
+                players[2].beginningNumber = 0;
+                players[2].orderCheck = false;
+                RollAgain(players[0].clientID);
+                RollAgain(players[2].clientID);
+            }
+            else if (players[0].beginningNumber == players[3].beginningNumber)
+            {
+                players[0].beginningNumber = 0;
+                players[0].orderCheck = false;
+                players[3].beginningNumber = 0;
+                players[3].orderCheck = false;
+                RollAgain(players[0].clientID);
+                RollAgain(players[3].clientID);
+            }
+            else
+            {
+                players[0].orderCheck = true;
+            }
+        }
+        else if (players[1].beginningNumber != 0)
+        {
+            if (players[1].beginningNumber == players[0].beginningNumber)
+            {
+                players[0].beginningNumber = 0;
+                players[0].orderCheck = false;
+                players[1].beginningNumber = 0;
+                players[1].orderCheck = false;
+                RollAgain(players[0].clientID);
+                RollAgain(players[1].clientID);
+            }
+            else if (players[1].beginningNumber == players[2].beginningNumber)
+            {
+                players[1].beginningNumber = 0;
+                players[1].orderCheck = false;
+                players[2].beginningNumber = 0;
+                players[2].orderCheck = false;
+                RollAgain(players[1].clientID);
+                RollAgain(players[2].clientID);
+            }
+            else if (players[1].beginningNumber == players[3].beginningNumber)
+            {
+                players[1].beginningNumber = 0;
+                players[1].orderCheck = false;
+                players[3].beginningNumber = 0;
+                players[3].orderCheck = false;
+                RollAgain(players[1].clientID);
+                RollAgain(players[3].clientID);
+            }
+        }
+        else if (players[2].beginningNumber != 0)
+        {
+            if (players[2].beginningNumber == players[0].beginningNumber)
+            {
+                players[0].beginningNumber = 0;
+                players[0].orderCheck = false;
+                players[2].beginningNumber = 0;
+                players[2].orderCheck = false;
+                RollAgain(players[0].clientID);
+                RollAgain(players[2].clientID);
+            }
+            else if (players[2].beginningNumber == players[1].beginningNumber)
+            {
+                players[1].beginningNumber = 0;
+                players[1].orderCheck = false;
+                players[2].beginningNumber = 0;
+                players[2].orderCheck = false;
+                RollAgain(players[1].clientID);
+                RollAgain(players[2].clientID);
+            }
+            else if (players[2].beginningNumber == players[3].beginningNumber)
+            {
+                players[2].beginningNumber = 0;
+                players[2].orderCheck = false;
+                players[3].beginningNumber = 0;
+                players[3].orderCheck = false;
+                RollAgain(players[2].clientID);
+                RollAgain(players[3].clientID);
+            }
+            else
+            {
+                players[0].orderCheck = true;
+            }
+        }
+        else if (players[3].beginningNumber != 0)
+        {
+            if (players[3].beginningNumber == players[0].beginningNumber)
+            {
+                players[0].beginningNumber = 0;
+                players[0].orderCheck = false;
+                players[3].beginningNumber = 0;
+                players[3].orderCheck = false;
+                RollAgain(players[0].clientID);
+                RollAgain(players[3].clientID);
+            }
+            if (players[3].beginningNumber == players[1].beginningNumber)
+            {
+                players[1].beginningNumber = 0;
+                players[1].orderCheck = false;
+                players[3].beginningNumber = 0;
+                players[3].orderCheck = false;
+                RollAgain(players[1].clientID);
+                RollAgain(players[3].clientID);
+            }
+            if (players[3].beginningNumber == players[2].beginningNumber)
+            {
+                players[2].beginningNumber = 0;
+                players[2].orderCheck = false;
+                players[3].beginningNumber = 0;
+                players[3].orderCheck = false;
+                RollAgain(players[2].clientID);
+                RollAgain(players[3].clientID);
+            }
+            else
+            {
+                players[0].orderCheck = true;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < maxPlayer; i++)
+            {
+                if (players[i].clientID == clientId)
+                {
+                    players[i].orderCheck = true;
+                    GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(players[i].clientID, "Roll Waiting");
+                    // orderNumber im Textfenster unter Client ausgeben
+                }
+            }
+        }
+
+        if (maxPlayer == 4)
+        {
+            if (players[0].orderCheck && players[1].orderCheck && players[2].orderCheck && players[3].orderCheck )
+            {
+                InitializeNewPlayerOrder();
+            }
+        }
+        if (maxPlayer == 3)
+        {
+            if (players[0].orderCheck && players[1].orderCheck && players[2].orderCheck)
+            {
+                InitializeNewPlayerOrder();
+            }
+        }
+        if (maxPlayer == 2)
+        {
+            if (players[0].orderCheck && players[1].orderCheck)
+            {
+                InitializeNewPlayerOrder();
+            }
+        }
+        if (maxPlayer == 1)
+        {
+            if (players[0].orderCheck)
+            {
+                InitializeNewPlayerOrder();
+            }
+        }
+    }
+
+    public void RollAgain(int ClientId)
+    {
+        GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(ClientId, "Roll Again");
+    }
+
+    public void InitializeGame()
+    {
+        GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("PlayerOrder");
+    }
+
+    public void InitializeNewPlayerOrder()
+    {
+
+        newPlayerOrder = players;
+
+        for (int i = 12; i > 0; i--)
+        {
+            for (int j = 0; j < players.Length; j++)
+            {
+                if (players[j].beginningNumber == i)
+                {
+                    if (orderNumber == 0)
+                    {
+                        newPlayerOrder[orderNumber] = players[j];
+                        newPlayerOrder[orderNumber].color = "Orange";
+                        newPlayerOrder[orderNumber].name = "Player1";
+                    }
+                    if (orderNumber == 1)
+                    {
+                        newPlayerOrder[orderNumber] = players[j];
+                        newPlayerOrder[orderNumber].color = "Blue";
+                        newPlayerOrder[orderNumber].name = "Player2";
+                    }
+                    if (orderNumber == 2)
+                    {
+                        newPlayerOrder[orderNumber] = players[j];
+                        newPlayerOrder[orderNumber].color = "White";
+                        newPlayerOrder[orderNumber].name = "Player3";
+                    }
+                    if (orderNumber == 3)
+                    {
+                        newPlayerOrder[orderNumber] = players[j];
+                        newPlayerOrder[orderNumber].color = "Red";
+                        newPlayerOrder[orderNumber].name = "Player4";
+                    }
+
+                    orderNumber++;
+                }
+            }
+        }
+
+        players = newPlayerOrder;
+    }
+
+    public void BeginBuidling()
+    {
+        // begin building
+    }
+
 
     public void StartGame()
     {

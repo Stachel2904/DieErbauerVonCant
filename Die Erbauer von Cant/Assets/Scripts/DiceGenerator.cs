@@ -54,4 +54,19 @@ public class DiceGenerator
 
         return rolledNumber;
     }
+
+    public void GetOrderRoll(int clientId)
+    {
+        int result = 0;
+
+        for (int i = 0; i < 2; i++)
+        {
+            int number = GetNumber();
+
+            result += number;
+        }
+        
+        GamePlay.Main.SaveDiceRoll(clientId, result);
+
+    }
 }

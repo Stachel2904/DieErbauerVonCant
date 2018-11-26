@@ -14,6 +14,8 @@ public class Player
     public string avatar = "DEFAULT";
     public int victoryPoints = 0;
     public int hand = 0;
+    public int beginningNumber = 0;
+    public bool orderCheck = false;
 
     public Player(string _name, string _color)
     {

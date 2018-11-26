@@ -66,6 +66,9 @@ public class NetworkServerMessageHandler : MonoBehaviour {
             case "Player accepted Trading":
                 SendToClient(GamePlay.Main.GetCurrentPlayer().clientID, "Player accepted Trading");
                 break;
+            case "GetOrderRoll":
+                DiceGenerator.Main.GetOrderRoll(_message_.conn.connectionId);
+                break;
             default:
                 Debug.LogError("Can not read message from Client: " + _message_.conn.connectionId);
                 break;

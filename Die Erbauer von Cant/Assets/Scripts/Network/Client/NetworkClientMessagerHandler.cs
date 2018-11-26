@@ -128,6 +128,14 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().TradeAccept.SetActive(true);
                 //GameObject.Find("TradeWasAccepted").SetActive(true);
                 break;
+            case "PlayerOrder":
+                GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().OrderDiceRoll.SetActive(true);
+                break;
+            case "Roll Again":
+                GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().NewOrderDiceRoll.SetActive(true);
+                break;
+            case "Roll Waiting":
+                break;
             default:
                 Debug.LogError("Can not read message from Server!");
                 break;

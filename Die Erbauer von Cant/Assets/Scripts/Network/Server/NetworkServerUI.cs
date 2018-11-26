@@ -52,9 +52,12 @@ public class NetworkServerUI : MonoBehaviour {
         return t_serverPort;
     }
     //Handle
-    public void AddConnectedPlayer(int _clientID_) {
-        for (int i = 0; i < maxPlayer; i++) {
-            if (GamePlay.Main.players[i].clientID == -1) {
+    public void AddConnectedPlayer(int _clientID_)
+    {
+        for (int i = 0; i < maxPlayer; i++)
+        {
+            if (GamePlay.Main.players[i].clientID == -1)
+            {
                 GamePlay.Main.players[i].clientID = _clientID_;
                 GamePlay.Main.players[i].name = _clientID_.ToString(); //ToDo: Später Namen einfügen
                 GetComponent<NetworkServerMessageHandler>().SendToClient(_clientID_, GamePlay.Main.players[i].color);
@@ -62,15 +65,19 @@ public class NetworkServerUI : MonoBehaviour {
             }
         }
     }
-    public void RemoveConnectedPlayer(int _clientID_) {
-        for (int i = 0; i < maxPlayer; i++) {
-            if (GamePlay.Main.players[i].clientID == _clientID_) {
+    public void RemoveConnectedPlayer(int _clientID_)
+    {
+        for (int i = 0; i < maxPlayer; i++)
+        {
+            if (GamePlay.Main.players[i].clientID == _clientID_)
+            {
                 GamePlay.Main.players[i].clientID = -1;
                 break;
             }
         }
     }
-    public void UpdateClientInventoryGUI(int _ClientID_, string _Type_, int _Amount_) { //Nach Add !!!!! im Inventar für Type = Name des Rohstoffs und für Amount = Anzahl das Inventar für diesen Typ (Rohstoff) auslesen. Dies ist keine Addfunktion. 
+    public void UpdateClientInventoryGUI(int _ClientID_, string _Type_, int _Amount_)
+    { //Nach Add !!!!! im Inventar für Type = Name des Rohstoffs und für Amount = Anzahl das Inventar für diesen Typ (Rohstoff) auslesen. Dies ist keine Addfunktion. 
         string temp = _Type_ + "|" + _Amount_.ToString();
         GetComponent<NetworkServerMessageHandler>().SendInventoryToClient(_ClientID_, temp);
     }
