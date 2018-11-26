@@ -577,7 +577,7 @@ public class GamePlay : MonoBehaviour
         //first, delete all old Cards
         for (int i = 0; i < parent.childCount; i++)
         {
-            GameObject.Destroy(parent.GetChild(i));
+            GameObject.Destroy(parent.GetChild(i).gameObject);
         }
 
         for (int i = 0; i < player.hand; i++)
