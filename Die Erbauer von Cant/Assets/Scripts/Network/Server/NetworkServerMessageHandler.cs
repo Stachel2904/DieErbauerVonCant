@@ -47,9 +47,9 @@ public class NetworkServerMessageHandler : MonoBehaviour {
                         place[y + 2] = tempPawn.GetPosAtField()[y / 3];
                     }
                     SendFieldUpdateToClient(tempPawn.type, tempPawn.color, place);
-                    GamePlay.Main.UpdateInventory(_message_.conn.connectionId);
                 }
             }
+            GamePlay.Main.UpdateInventory(_message_.conn.connectionId);
             if (_message_.conn.connectionId == GamePlay.Main.GetCurrentPlayer().clientID) {
                 SendToClient(_message_.conn.connectionId, "Go");
             }
