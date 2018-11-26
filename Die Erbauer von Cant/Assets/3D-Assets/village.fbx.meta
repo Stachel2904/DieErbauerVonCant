@@ -18,8 +18,12 @@ ModelImporter:
     2100000: lambert1
     2100002: lambert2
     2300000: pCube3
+    2300002: //RootNode
     3300000: pCube3
+    3300002: //RootNode
     4300000: pCube3
+    4300002: village
+    4300004: town_LQ
   externalObjects: {}
   materials:
     importMaterials: 1

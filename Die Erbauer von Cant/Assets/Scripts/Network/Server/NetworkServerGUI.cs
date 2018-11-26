@@ -146,10 +146,10 @@ public class NetworkServerGUI : MonoBehaviour {
         _playerAvatar_.transform.Find("Playername").GetComponent<Text>().text = "Player";
         _playerAvatar_.GetComponent<Image>().color = Color.gray;
         GamePlay.Main.players[_player_].avatar = "DEFAULT";
-        GamePlay.Main.players[_player_].victoryPoints = 0;
-        _playerAvatar_.transform.Find("Victorypoints").GetComponent<Text>().text = "0";
-        GamePlay.Main.players[_player_].hand = 0;
-        _playerAvatar_.transform.Find("Hand").GetComponent<Text>().text = "0";
+        //GamePlay.Main.players[_player_].victoryPoints = 0;
+        //_playerAvatar_.transform.Find("Victorypoints").GetComponent<Text>().text = "0";
+        //GamePlay.Main.players[_player_].hand = 0;
+        //_playerAvatar_.transform.Find("Hand").GetComponent<Text>().text = "0";
         _playerAvatar_.gameObject.SetActive(false);
     }
 }
