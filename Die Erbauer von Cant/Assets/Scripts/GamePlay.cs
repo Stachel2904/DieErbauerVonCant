@@ -36,8 +36,12 @@ public class GamePlay : MonoBehaviour
     public int maxPlayer = 3;
     public int orderNumber = 0;
 
+    bool firstRoundFinished = false;
     bool firstRound = false;
+    bool secondRoundFinished = false;
     bool secondRound = false;
+    int tempPlayerFirstRound;
+    int tempPlayerSecondRound;
 
     public GameObject VictoryWindow;
     
@@ -291,6 +295,7 @@ public class GamePlay : MonoBehaviour
 
     public void BeginBuilding()
     {
+
         //if (maxPlayer == 0)
         //{
         //    GameObject.Find("Player1DiceText").SetActive(false);
@@ -307,10 +312,30 @@ public class GamePlay : MonoBehaviour
         //{
         //    GameObject.Find("Player4DiceText").SetActive(false);
         //}
+           
+        if (firstRoundFinished == false && secondRoundFinished == false)
+        {
+            tempPlayerFirstRound = currentPlayer;
 
 
-        // begin building
-        //if (secondRound)
+            if (firstRound && tempPlayerFirstRound == currentPlayer)
+            {
+                firstRoundFinished = true;
+            }
+        }
+
+        if (firstRoundFinished && secondRoundFinished == false)
+        {
+            tempPlayerSecondRound = currentPlayer;
+
+
+            if(secondRound && tempPlayerSecondRound == currentPlayer)
+            {
+                secondRoundFinished = true;
+            }
+        }
+
+        if (secondRoundFinished)
         {
             StartGame();
         }
@@ -363,13 +388,40 @@ public class GamePlay : MonoBehaviour
 
     public void NextPlayer()
     {
-        if (currentPlayer == maxPlayer)
+        if (firstRoundFinished == false && secondRoundFinished == false)
         {
-            currentPlayer = 0;
+            if (currentPlayer == maxPlayer)
+            {
+                currentPlayer = 0;
+                firstRound = true;
+            }
+            else
+            {
+                currentPlayer++;
+            }
+        }
+        else if (firstRoundFinished && secondRoundFinished == false)
+        {
+            if (currentPlayer == 0)
+            {
+                currentPlayer = maxPlayer;
+                secondRound = true;
+            }
+            else
+            {
+                currentPlayer--;
+            }
         }
         else
         {
-            currentPlayer++;
+            if (currentPlayer == maxPlayer)
+            {
+                currentPlayer = 0;
+            }
+            else
+            {
+                currentPlayer++;
+            }
         }
     }
 
