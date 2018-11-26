@@ -70,16 +70,15 @@ public class GamePlay : MonoBehaviour
 
     public void SaveDiceRoll(int clientId, int DiceRolled)
     {
-        for (int i = 0; i < maxPlayer; i++)
+        for (int i = 0; i < maxPlayer + 1; i++)
         {
             if (players[i].clientID == clientId)
             {
                 players[i].beginningNumber = DiceRolled;
             }
-            
-        }
 
-        if (players[0].beginningNumber != 0)
+        }
+        if (players[0].beginningNumber != 0 && players[0].clientID == clientId)
         {
             if (players[0].beginningNumber == players[1].beginningNumber)
             {
@@ -111,9 +110,11 @@ public class GamePlay : MonoBehaviour
             else
             {
                 players[0].orderCheck = true;
+                GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(clientId, "Roll Waiting");
+                GameObject.Find("TextManager").GetComponent<HostTextManager>().Player1DiceText.text = "Number " + players[0].beginningNumber.ToString();
             }
         }
-        else if (players[1].beginningNumber != 0)
+        else if (players[1].beginningNumber != 0 && players[1].clientID == clientId)
         {
             if (players[1].beginningNumber == players[0].beginningNumber)
             {
@@ -142,8 +143,14 @@ public class GamePlay : MonoBehaviour
                 RollAgain(players[1].clientID);
                 RollAgain(players[3].clientID);
             }
+            else
+            {
+                players[1].orderCheck = true;
+                GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(clientId, "Roll Waiting");
+                GameObject.Find("TextManager").GetComponent<HostTextManager>().Player2DiceText.text = "Number " + players[1].beginningNumber.ToString();
+            }
         }
-        else if (players[2].beginningNumber != 0)
+        else if (players[2].beginningNumber != 0 && players[2].clientID == clientId)
         {
             if (players[2].beginningNumber == players[0].beginningNumber)
             {
@@ -174,10 +181,12 @@ public class GamePlay : MonoBehaviour
             }
             else
             {
-                players[0].orderCheck = true;
+                players[2].orderCheck = true;
+                GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(clientId, "Roll Waiting");
+                GameObject.Find("TextManager").GetComponent<HostTextManager>().Player3DiceText.text = "Number " + players[2].beginningNumber.ToString();
             }
         }
-        else if (players[3].beginningNumber != 0)
+        else if (players[3].beginningNumber != 0 && players[3].clientID == clientId)
         {
             if (players[3].beginningNumber == players[0].beginningNumber)
             {
@@ -208,59 +217,36 @@ public class GamePlay : MonoBehaviour
             }
             else
             {
-                players[0].orderCheck = true;
+                players[3].orderCheck = true;
+                GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(clientId, "Roll Waiting");
+                GameObject.Find("TextManager").GetComponent<HostTextManager>().Player4DiceText.text = "Number " + players[3].beginningNumber.ToString();
             }
         }
-        else
-        {
-            for (int i = 0; i < maxPlayer; i++)
-            {
-                if (players[i].clientID == clientId)
-                {
-                    players[i].orderCheck = true;
-                    GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(players[i].clientID, "Roll Waiting");
-                    if (players[i].clientID == 1)
-                    {
-                        GameObject.Find("ClientTextManager").GetComponent<HostTextManager>().Player1DiceText.text = "Number " + players[i].beginningNumber.ToString();
-                    }
-                    if (players[i].clientID == 2)
-                    {
-                        GameObject.Find("ClientTextManager").GetComponent<HostTextManager>().Player2DiceText.text = "Number " + players[i].beginningNumber.ToString();
-                    }
-                    if (players[i].clientID == 3)
-                    {
-                        GameObject.Find("ClientTextManager").GetComponent<HostTextManager>().Player3DiceText.text = "Number " + players[i].beginningNumber.ToString();
-                    }
-                    if (players[i].clientID == 4)
-                    {
-                        GameObject.Find("ClientTextManager").GetComponent<HostTextManager>().Player4DiceText.text = "Number " + players[i].beginningNumber.ToString();
-                    }
-                }
-            }
-        }
+       
+        
 
-        if (maxPlayer == 4)
+        if (maxPlayer == 3)
         {
             if (players[0].orderCheck && players[1].orderCheck && players[2].orderCheck && players[3].orderCheck )
             {
                 InitializeNewPlayerOrder();
             }
         }
-        if (maxPlayer == 3)
+        if (maxPlayer == 2)
         {
             if (players[0].orderCheck && players[1].orderCheck && players[2].orderCheck)
             {
                 InitializeNewPlayerOrder();
             }
         }
-        if (maxPlayer == 2)
+        if (maxPlayer == 1)
         {
             if (players[0].orderCheck && players[1].orderCheck)
             {
                 InitializeNewPlayerOrder();
             }
         }
-        if (maxPlayer == 1)
+        if (maxPlayer == 0)
         {
             if (players[0].orderCheck)
             {
@@ -321,15 +307,28 @@ public class GamePlay : MonoBehaviour
         }
 
         players = newPlayerOrder;
-        BeginBuidling();
+        BeginBuilding();
+
     }
 
-    public void BeginBuidling()
+    public void BeginBuilding()
     {
-        GameObject.Find("Player1DiceText").SetActive(false);
-        GameObject.Find("Player2DiceText").SetActive(false);
-        GameObject.Find("Player3DiceText").SetActive(false);
-        GameObject.Find("Player4DiceText").SetActive(false);
+        if (maxPlayer == 0)
+        {
+            GameObject.Find("Player1DiceText").SetActive(false);
+        }
+        if (maxPlayer >= 1)
+        {
+            GameObject.Find("Player2DiceText").SetActive(false);
+        }
+        if (maxPlayer >= 2)
+        {
+            GameObject.Find("Player3DiceText").SetActive(false);
+        }
+        if (maxPlayer >= 3)
+        {
+            GameObject.Find("Player4DiceText").SetActive(false);
+        }
         // begin building
         StartGame();
     }
