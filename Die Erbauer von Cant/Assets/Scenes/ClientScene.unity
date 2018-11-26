@@ -4541,6 +4541,7 @@ MonoBehaviour:
   WaitScreen: {fileID: 459787455}
   OrderDiceRoll: {fileID: 48250829}
   NewOrderDiceRoll: {fileID: 2062358670}
+  WaitRollScreen: {fileID: 1885152378}
 --- !u!1 &356314353
 GameObject:
   m_ObjectHideFlags: 0

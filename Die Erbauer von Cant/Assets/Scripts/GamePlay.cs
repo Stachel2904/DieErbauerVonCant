@@ -267,12 +267,13 @@ public class GamePlay : MonoBehaviour
 
     public void InitializeNewPlayerOrder()
     {
+        GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("FinishOrderRoll");
 
         newPlayerOrder = players;
 
         for (int i = 12; i > 0; i--)
         {
-            for (int j = 0; j < players.Length; j++)
+            for (int j = 0; j < maxPlayer + 1; j++)
             {
                 if (players[j].beginningNumber == i)
                 {
@@ -281,24 +282,28 @@ public class GamePlay : MonoBehaviour
                         newPlayerOrder[orderNumber] = players[j];
                         newPlayerOrder[orderNumber].color = "Orange";
                         newPlayerOrder[orderNumber].name = "Player1";
+                        newPlayerOrder[orderNumber].avatar = "Player1";
                     }
                     if (orderNumber == 1)
                     {
                         newPlayerOrder[orderNumber] = players[j];
                         newPlayerOrder[orderNumber].color = "Blue";
                         newPlayerOrder[orderNumber].name = "Player2";
+                        newPlayerOrder[orderNumber].avatar = "Player2";
                     }
                     if (orderNumber == 2)
                     {
                         newPlayerOrder[orderNumber] = players[j];
                         newPlayerOrder[orderNumber].color = "White";
                         newPlayerOrder[orderNumber].name = "Player3";
+                        newPlayerOrder[orderNumber].avatar = "Player3";
                     }
                     if (orderNumber == 3)
                     {
                         newPlayerOrder[orderNumber] = players[j];
                         newPlayerOrder[orderNumber].color = "Red";
                         newPlayerOrder[orderNumber].name = "Player4";
+                        newPlayerOrder[orderNumber].avatar = "Player4";
                     }
 
                     orderNumber++;
@@ -313,22 +318,22 @@ public class GamePlay : MonoBehaviour
 
     public void BeginBuilding()
     {
-        if (maxPlayer == 0)
-        {
-            GameObject.Find("Player1DiceText").SetActive(false);
-        }
-        if (maxPlayer >= 1)
-        {
-            GameObject.Find("Player2DiceText").SetActive(false);
-        }
-        if (maxPlayer >= 2)
-        {
-            GameObject.Find("Player3DiceText").SetActive(false);
-        }
-        if (maxPlayer >= 3)
-        {
-            GameObject.Find("Player4DiceText").SetActive(false);
-        }
+        //if (maxPlayer == 0)
+        //{
+        //    GameObject.Find("Player1DiceText").SetActive(false);
+        //}
+        //if (maxPlayer >= 1)
+        //{
+        //    GameObject.Find("Player2DiceText").SetActive(false);
+        //}
+        //if (maxPlayer >= 2)
+        //{
+        //    GameObject.Find("Player3DiceText").SetActive(false);
+        //}
+        //if (maxPlayer >= 3)
+        //{
+        //    GameObject.Find("Player4DiceText").SetActive(false);
+        //}
         // begin building
         StartGame();
     }

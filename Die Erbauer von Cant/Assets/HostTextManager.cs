@@ -27,11 +27,6 @@ public class HostTextManager : MonoBehaviour {
         player2DiceText = Player2DiceText.GetComponent<Text>();
         player3DiceText = Player3DiceText.GetComponent<Text>();
         player4DiceText = Player4DiceText.GetComponent<Text>();
-
-        //player1DiceText.text = "0";
-        //player2DiceText.text = "0";
-        //player3DiceText.text = "0";
-        //player4DiceText.text = "0";
     }
 	
 	// Update is called once per frame

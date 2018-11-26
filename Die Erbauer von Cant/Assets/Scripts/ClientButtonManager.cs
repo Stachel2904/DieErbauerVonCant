@@ -24,6 +24,7 @@ public class ClientButtonManager : MonoBehaviour {
     public GameObject WaitScreen;
     public GameObject OrderDiceRoll;
     public GameObject NewOrderDiceRoll;
+    public GameObject WaitRollScreen;
     #endregion
 
     // Use this for initialization

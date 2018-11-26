@@ -133,8 +133,13 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
                 break;
             case "Roll Again":
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().NewOrderDiceRoll.SetActive(true);
+                GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().WaitRollScreen.SetActive(false);
                 break;
             case "Roll Waiting":
+                GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().WaitRollScreen.SetActive(true);
+                break;
+            case "FinishOrderRoll":
+                GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().WaitRollScreen.SetActive(false);
                 break;
             default:
                 Debug.LogError("Can not read message from Server!");
