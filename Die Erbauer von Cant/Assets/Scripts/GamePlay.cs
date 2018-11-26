@@ -542,11 +542,28 @@ public class GamePlay : MonoBehaviour
 
                 players[i].hand = players[i].inventory.inven["Brick"] + players[i].inventory.inven["Wheat"] + players[i].inventory.inven["Ore"] + players[i].inventory.inven["Wood"] + players[i].inventory.inven["Wool"];
                 GameObject.Find("ServerManager").GetComponent<NetworkServerGUI>().UpdateHand(players[i].clientID);
+                UpdateHand(players[i]);
+                break;
             }
+        }        
+       //ToDo: Straßen, Siedlungen, Städte updaten
+    }
+
+    //Handkarten Anzeige ändern
+    private void UpdateHand(Player player)
+    {
+        Transform parent = GameObject.Find("Handcards").transform.Find(player.color).transform;
+
+        //first, delete all old Cards
+        for (int i = 0; i < parent.childCount; i++)
+        {
+            GameObject.Destroy(parent.GetChild(i));
+        }
+
+        for (int i = 0; i < player.hand; i++)
+        {
 
         }
-        
-       //ToDo: Straßen, Siedlungen, Städte updaten
 
     }
     // TRADING //
