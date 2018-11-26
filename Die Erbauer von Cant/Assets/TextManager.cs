@@ -16,6 +16,7 @@ public class TextManager : MonoBehaviour {
     public Text text18;
     public Text text19;
     public Text text20;
+    
 
     Text showngivenBrickText;
     Text showngivenWheatText;
@@ -28,6 +29,8 @@ public class TextManager : MonoBehaviour {
     Text shownaskedOreText;
     Text shownaskedWoodText;
     Text shownaskedWoolText;
+
+    
 
     // Use this for initialization
     void Start () {
@@ -54,6 +57,8 @@ public class TextManager : MonoBehaviour {
         shownaskedOreText.text = "0";
         shownaskedWoodText.text = "0";
         shownaskedWoolText.text = "0";
+
+        
     }
 	
 	// Update is called once per frame

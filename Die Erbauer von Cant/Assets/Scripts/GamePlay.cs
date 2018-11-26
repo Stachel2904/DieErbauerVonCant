@@ -219,7 +219,22 @@ public class GamePlay : MonoBehaviour
                 {
                     players[i].orderCheck = true;
                     GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(players[i].clientID, "Roll Waiting");
-                    // orderNumber im Textfenster unter Client ausgeben
+                    if (players[i].clientID == 1)
+                    {
+                        GameObject.Find("ClientTextManager").GetComponent<HostTextManager>().Player1DiceText.text = "Number " + players[i].beginningNumber.ToString();
+                    }
+                    if (players[i].clientID == 2)
+                    {
+                        GameObject.Find("ClientTextManager").GetComponent<HostTextManager>().Player2DiceText.text = "Number " + players[i].beginningNumber.ToString();
+                    }
+                    if (players[i].clientID == 3)
+                    {
+                        GameObject.Find("ClientTextManager").GetComponent<HostTextManager>().Player3DiceText.text = "Number " + players[i].beginningNumber.ToString();
+                    }
+                    if (players[i].clientID == 4)
+                    {
+                        GameObject.Find("ClientTextManager").GetComponent<HostTextManager>().Player4DiceText.text = "Number " + players[i].beginningNumber.ToString();
+                    }
                 }
             }
         }
@@ -306,11 +321,17 @@ public class GamePlay : MonoBehaviour
         }
 
         players = newPlayerOrder;
+        BeginBuidling();
     }
 
     public void BeginBuidling()
     {
+        GameObject.Find("Player1DiceText").SetActive(false);
+        GameObject.Find("Player2DiceText").SetActive(false);
+        GameObject.Find("Player3DiceText").SetActive(false);
+        GameObject.Find("Player4DiceText").SetActive(false);
         // begin building
+        StartGame();
     }
 
 
