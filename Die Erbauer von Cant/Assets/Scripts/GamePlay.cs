@@ -36,6 +36,9 @@ public class GamePlay : MonoBehaviour
     public int maxPlayer = 3;
     public int orderNumber = 0;
 
+    bool firstRound = false;
+    bool secondRound = false;
+
     public GameObject VictoryWindow;
     
     // Trading Variables
@@ -268,51 +271,21 @@ public class GamePlay : MonoBehaviour
     public void InitializeNewPlayerOrder()
     {
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("FinishOrderRoll");
-
-        newPlayerOrder = players;
-
-        for (int i = 12; i > 0; i--)
+        
+        for (int i = 12; i > 1; i--)
         {
             for (int j = 0; j < maxPlayer + 1; j++)
             {
                 if (players[j].beginningNumber == i)
                 {
-                    if (orderNumber == 0)
-                    {
-                        newPlayerOrder[orderNumber] = players[j];
-                        newPlayerOrder[orderNumber].color = "Orange";
-                        newPlayerOrder[orderNumber].name = "Player1";
-                        newPlayerOrder[orderNumber].avatar = "Player1";
-                    }
-                    if (orderNumber == 1)
-                    {
-                        newPlayerOrder[orderNumber] = players[j];
-                        newPlayerOrder[orderNumber].color = "Blue";
-                        newPlayerOrder[orderNumber].name = "Player2";
-                        newPlayerOrder[orderNumber].avatar = "Player2";
-                    }
-                    if (orderNumber == 2)
-                    {
-                        newPlayerOrder[orderNumber] = players[j];
-                        newPlayerOrder[orderNumber].color = "White";
-                        newPlayerOrder[orderNumber].name = "Player3";
-                        newPlayerOrder[orderNumber].avatar = "Player3";
-                    }
-                    if (orderNumber == 3)
-                    {
-                        newPlayerOrder[orderNumber] = players[j];
-                        newPlayerOrder[orderNumber].color = "Red";
-                        newPlayerOrder[orderNumber].name = "Player4";
-                        newPlayerOrder[orderNumber].avatar = "Player4";
-                    }
-
-                    orderNumber++;
+                    currentPlayer = j;
+                    BeginBuilding();
+                    return;
                 }
             }
         }
 
-        players = newPlayerOrder;
-        BeginBuilding();
+        
 
     }
 
@@ -334,8 +307,14 @@ public class GamePlay : MonoBehaviour
         //{
         //    GameObject.Find("Player4DiceText").SetActive(false);
         //}
+
+
         // begin building
-        StartGame();
+        //if (secondRound)
+        {
+            StartGame();
+        }
+        
     }
 
 
@@ -531,6 +510,14 @@ public class GamePlay : MonoBehaviour
             default:
                 Debug.Log("Die zu bauende Spielfigur hat die undefinierte Farbe: " + color);
                 break;
+        }
+
+        for (int i = 0; i < maxPlayer + 1; i++)
+        {
+            if(color == players[i].color)
+            {
+                result = (PlayerColor)i;
+            }
         }
         return result;
     }
