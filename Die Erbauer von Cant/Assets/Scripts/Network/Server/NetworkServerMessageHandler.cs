@@ -9,10 +9,11 @@ public class NetworkServerMessageHandler : MonoBehaviour {
 
     private void Update() {
         if(init == true) {
-            if(blockedSlots == slots) {
+            if (blockedSlots == slots && NetworkServer.dontListen == false) {
                 NetworkServer.dontListen = true;
                 Debug.Log("Server Full! Server stops listening for new clients!");
-            }else if(blockedSlots < slots && NetworkServer.dontListen == true) {
+            }
+            else if (blockedSlots < slots && NetworkServer.dontListen == true) {
                 NetworkServer.dontListen = false;
                 Debug.Log("Server starts listening for new clients!");
             }
@@ -34,6 +35,9 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         GetComponent<NetworkServerUI>().AddConnectedPlayer(_message_.conn.connectionId);
         GetComponent<NetworkServerGUI>().AddConnectedPlayerAvatar(_message_.conn.connectionId);
         blockedSlots++;
+        if(GamePlay.Main.running == true) {
+            SendToClient(_message_.conn.connectionId, "Start");
+        }
     }
     private void ServerOnClientDisconnect(NetworkMessage _message_) {
         Debug.Log("[Client ID: " + _message_.conn.connectionId + "] Client disconnected!");

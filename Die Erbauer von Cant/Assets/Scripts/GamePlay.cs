@@ -317,7 +317,7 @@ public class GamePlay : MonoBehaviour
         
     }
 
-
+    public bool running = false;
     public void StartGame()
     {
         for (int i = 0; i < players.Length; i++)
@@ -335,6 +335,7 @@ public class GamePlay : MonoBehaviour
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(GamePlay.main.GetCurrentPlayer().clientID, "Go");
 
         GameBoard.MainBoard.Init();
+        running = true;
     }
 
     /// <summary>
