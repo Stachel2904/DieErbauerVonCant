@@ -240,8 +240,7 @@ public class GameBoard
             }
             return possiblePositions.ToArray();
         }
-
-        if (buildedPawn.type == "Street")
+        else if (buildedPawn.type == "Street")
         {
             if (godmode)
             {
@@ -426,8 +425,7 @@ public class GameBoard
                 }
             }
         }
-
-        if (buildedPawn.type == "Village")
+        else if (buildedPawn.type == "Village")
         {
             if (!godmode)
             {
@@ -677,12 +675,27 @@ public class GameBoard
                 {
                     for (int j = 0; j < tilesGrid[i].Length; j++)
                     {
+                        if (tilesGrid[i][j] == null || tilesGrid[i][j].chipNumber == 0)
+                        {
+                            continue;
+                        }
                         for (int k = 0; k < tilesGrid[i][j].pawns.Length; k++)
                         {
                             Pawn currentPawn = tilesGrid[i][j].pawns[k];
-                            if (currentPawn != null && k % 2 == 0)
+                            if (currentPawn == null && k % 2 == 0)
                             {
-                                Field[] currentFields = tilesGrid[i][j].GetConnectedFields(k);
+                                Field[] currentFields;
+                                {
+                                    List<Field> tmp = new List<Field>();
+                                    tmp.Add(tilesGrid[i][j]);
+                                    Field[] tmp2 = tilesGrid[i][j].GetConnectedFields(k);
+                                    for (int l = 0; l < tmp2.Length; l++)
+                                    {
+                                        tmp.Add(tmp2[l]);
+                                    }
+                                    currentFields = tmp.ToArray();
+                                    Debug.Log("Der Platz " + i.ToString() + "/" + j.ToString() + "/" + k.ToString() + " hat " + currentFields.Length.ToString() + " Felder.");
+                                }
                                 int[] currentPos = new int[currentFields.Length];
 
                                 currentPos[0] = k;
@@ -740,6 +753,10 @@ public class GameBoard
                     }
                 }
             }
+        }
+        else
+        {
+            Debug.Log("Du kannst keine " + buildedPawn.type + " bauen.");
         }
         return possiblePositions.ToArray();
     }
