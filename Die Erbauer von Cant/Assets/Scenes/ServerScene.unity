@@ -5531,7 +5531,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1023598918
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6946,7 +6946,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1338613109
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8636,10 +8636,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dc5227afa4dcdc44afd7760ce4079c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameInitialised: 0
+  gameStarted: 0
   currentPlayer: 0
   maxPlayer: 3
   orderNumber: 0
+  firstRoundFinished: 0
   VictoryWindow: {fileID: 938101458}
   dealAccepted: 0
   running: 0
