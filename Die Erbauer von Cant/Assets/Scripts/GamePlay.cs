@@ -319,7 +319,7 @@ public class GamePlay : MonoBehaviour
         //    GameObject.Find("Player4DiceText").SetActive(false);
         //}
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("Start");
-        GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(GamePlay.main.GetCurrentPlayer().clientID, "FirstGo");
+        GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(GamePlay.main.GetCurrentPlayer().clientID, "FirstRoundGo");
         GameBoard.MainBoard.Init();
         running = true;
 

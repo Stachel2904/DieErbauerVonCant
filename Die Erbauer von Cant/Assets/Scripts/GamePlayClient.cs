@@ -4,11 +4,27 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GamePlayClient : MonoBehaviour {
-    
+
+    //Singleton
+    private static GamePlayClient main;
+    public static GamePlayClient Main
+    {
+        get
+        {
+            if (main == null)
+            {
+                main = GameObject.Find("GamePlay").GetComponent<GamePlayClient>();
+            }
+            return main;
+        }
+    }
+
     public Player ownPlayer;
 
     public void InitClient(string color)
     {
+        main = GameObject.Find("GamePlay").GetComponent<GamePlayClient>();
+
         ownPlayer = new Player("", color);
 
         Color ownColor = Color.white;
@@ -33,7 +49,11 @@ public class GamePlayClient : MonoBehaviour {
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildSelection.transform.Find("Street").GetChild(0).gameObject.GetComponent<Image>().color = ownColor;
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildSelection.transform.Find("Village").GetChild(0).gameObject.GetComponent<Image>().color = ownColor;
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildSelection.transform.Find("Town").GetChild(0).gameObject.GetComponent<Image>().color = ownColor;
-        
+
+        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildSelection.transform.Find("Street").gameObject.GetComponent<Button>().onClick.AddListener(delegate { TryBuild("Street"); });
+        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildSelection.transform.Find("Village").gameObject.GetComponent<Button>().onClick.AddListener(delegate { TryBuild("Village"); });
+        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildSelection.transform.Find("Town").gameObject.GetComponent<Button>().onClick.AddListener(delegate { TryBuild("Town"); });
+
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("TradeButton").GetComponent<Button>().interactable = false;
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("BuildButton").GetComponent<Button>().interactable = false;
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("Next Player").GetComponent<Button>().interactable = false;
