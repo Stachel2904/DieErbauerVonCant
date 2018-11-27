@@ -103,6 +103,12 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("Next Player").GetComponent<Button>().interactable = true;
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().DiceRoll.SetActive(true);
                 break;
+            case "FirstGo":
+                GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("Next Player").GetComponent<Button>().interactable = true;
+                break;
+            case "FirstStart":
+                GameBoard.MainBoard.Init();
+                break;
             case "Orange":
                 GameObject.Find("GamePlay").GetComponent<GamePlayClient>().InitClient("Orange");
                 break;
@@ -118,7 +124,7 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
             case "Start":
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.SetActive(true);
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().WaitScreen.SetActive(false);
-                GameBoard.MainBoard.Init();
+                //GameBoard.MainBoard.Init();
                 break;
             case "Player declined Trading":
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().TradeDecline.SetActive(true);

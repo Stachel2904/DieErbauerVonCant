@@ -294,7 +294,7 @@ public class GamePlay : MonoBehaviour
         
 
     }
-
+    public bool running = false;
     public void BeginBuilding()
     {
 
@@ -314,46 +314,46 @@ public class GamePlay : MonoBehaviour
         //{
         //    GameObject.Find("Player4DiceText").SetActive(false);
         //}
-        //Debug.Log("START GAME");
-        //GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("Start");
-        //Debug.Log("START GAME 2");
-        //GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(GamePlay.main.GetCurrentPlayer().clientID, "Go");
-        //if (firstRoundFinished == false && secondRoundFinished == false)
-        //{
-        //    if (tempPlayerFirstRoundInitialised == false)
-        //    {
-        //        tempPlayerFirstRound = currentPlayer;
-        //        tempPlayerFirstRoundInitialised = true;
-        //    }
+        GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("FirstStart");
+        GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(GamePlay.main.GetCurrentPlayer().clientID, "FirstGo");
+        GameBoard.MainBoard.Init();
+        running = true;
+        if (firstRoundFinished == false && secondRoundFinished == false)
+        {
+            if (tempPlayerFirstRoundInitialised == false)
+            {
+                tempPlayerFirstRound = currentPlayer;
+                tempPlayerFirstRoundInitialised = true;
+            }
 
-        //    if (firstRound && tempPlayerFirstRound == currentPlayer)
-        //    {
-        //        firstRoundFinished = true;
-        //    }
-        //}
+            if (firstRound && tempPlayerFirstRound == currentPlayer )
+            {
+                firstRoundFinished = true;
+            }
+        }
 
-        //if (firstRoundFinished && secondRoundFinished == false)
-        //{
-        //    if (tempPlayerSecondRoundInitialised == false)
-        //    {
-        //        tempPlayerSecondRound = currentPlayer;
-        //        tempPlayerSecondRoundInitialised = true;
-        //    }
+        if (firstRoundFinished && secondRoundFinished == false)
+        {
+            if (tempPlayerSecondRoundInitialised == false)
+            {
+                tempPlayerSecondRound = currentPlayer;
+                tempPlayerSecondRoundInitialised = true;
+            }
 
-        //    if (secondRound && tempPlayerSecondRound == currentPlayer)
-        //    {
-        //        secondRoundFinished = true;
-        //    }
-        //}
+            if (secondRound && tempPlayerSecondRound == currentPlayer)
+            {
+                secondRoundFinished = true;
+            }
+        }
 
-        //if (secondRoundFinished)
-        //{
-        StartGame();
-        //}
+        if (secondRoundFinished)
+        {
+            StartGame();
+        }
 
     }
 
-    public bool running = false;
+    
     public void StartGame()
     {
         for (int i = 0; i < players.Length; i++)
@@ -370,8 +370,8 @@ public class GamePlay : MonoBehaviour
         Debug.Log("START GAME 2");
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(GamePlay.main.GetCurrentPlayer().clientID, "Go");
 
-        GameBoard.MainBoard.Init();
-        running = true;
+        //GameBoard.MainBoard.Init();
+        //running = true;
     }
 
     /// <summary>
