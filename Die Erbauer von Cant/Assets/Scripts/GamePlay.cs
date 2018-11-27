@@ -375,6 +375,7 @@ public class GamePlay : MonoBehaviour
 
     public void NextPlayer()
     {
+        Debug.Log("Called!");
         if (firstRoundFinished == false && secondRoundFinished == false)
         {
             if (currentPlayer == maxPlayer)

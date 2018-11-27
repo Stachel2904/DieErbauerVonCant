@@ -60,6 +60,7 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         Debug.Log("[Client ID: " + _message_.conn.connectionId + "] Client disconnected!");
         if (_message_.conn.connectionId == GamePlay.Main.GetCurrentPlayer().clientID) {
             GamePlay.Main.NextPlayer();
+            SendToClient(GamePlay.Main.GetCurrentPlayer().clientID, "Go");
         }
         GetComponent<NetworkServerGUI>().RemoveConnectedPlayerAvatar(_message_.conn.connectionId);
         GetComponent<NetworkServerUI>().RemoveConnectedPlayer(_message_.conn.connectionId);
