@@ -694,7 +694,7 @@ public class GameBoard
                                         tmp.Add(tmp2[l]);
                                     }
                                     currentFields = tmp.ToArray();
-                                    Debug.Log("Der Platz " + i.ToString() + "/" + j.ToString() + "/" + k.ToString() + " hat " + currentFields.Length.ToString() + " Felder.");
+
                                 }
                                 int[] currentPos = new int[currentFields.Length];
 
