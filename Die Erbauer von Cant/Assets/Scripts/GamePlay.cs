@@ -27,7 +27,8 @@ public class GamePlay : MonoBehaviour
         }
     }
     
-    bool gameStarted = false;
+    bool buildingStarted = false;
+    public bool gameStarted = false;
 
     public Player[] players;
     public Player[] newPlayerOrder;
@@ -36,7 +37,7 @@ public class GamePlay : MonoBehaviour
     public int maxPlayer = 3;
     public int orderNumber = 0;
 
-    bool firstRoundFinished = false;
+    public bool firstRoundFinished = false;
     bool firstRound = false;
     bool secondRoundFinished = false;
     bool secondRound = false;
@@ -44,6 +45,8 @@ public class GamePlay : MonoBehaviour
     bool tempPlayerFirstRoundInitialised = false;
     int tempPlayerSecondRound;
     bool tempPlayerSecondRoundInitialised = false;
+    bool specialStartingcase = false;
+    bool secondSpecialStartingcase = false;
 
     public GameObject VictoryWindow;
     
@@ -320,7 +323,7 @@ public class GamePlay : MonoBehaviour
         GameBoard.MainBoard.Init();
         running = true;
 
-        gameStarted = true;
+        buildingStarted = true;
 
     }
 
@@ -340,7 +343,7 @@ public class GamePlay : MonoBehaviour
         //GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("Start");
         Debug.Log("START GAME 2");
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(GamePlay.main.GetCurrentPlayer().clientID, "Go");
-
+        gameStarted = true;
         //GameBoard.MainBoard.Init();
         //running = true;
     }
@@ -367,6 +370,8 @@ public class GamePlay : MonoBehaviour
             GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().slots--;
         }
     }
+    bool secondRoundStarted = false;
+    bool realGameStarted = false;
 
     public void NextPlayer()
     {
@@ -376,6 +381,7 @@ public class GamePlay : MonoBehaviour
             {
                 currentPlayer = 0;
                 firstRound = true;
+                secondRoundStarted = true;
             }
             else
             {
@@ -384,10 +390,17 @@ public class GamePlay : MonoBehaviour
         }
         else if (firstRoundFinished && secondRoundFinished == false)
         {
-            if (currentPlayer == 0)
+            if (secondRoundStarted || specialStartingcase)
+            {
+                currentPlayer = tempPlayerFirstRound;
+                secondRoundStarted = false;
+                specialStartingcase = false;
+            }
+            else if (currentPlayer == 0)
             {
                 currentPlayer = maxPlayer;
                 secondRound = true;
+                realGameStarted = true;
             }
             else
             {
@@ -396,7 +409,14 @@ public class GamePlay : MonoBehaviour
         }
         else
         {
-            if (currentPlayer == maxPlayer)
+            if (realGameStarted || secondSpecialStartingcase)
+            {
+                currentPlayer = tempPlayerSecondRound;
+                realGameStarted = false;
+                secondSpecialStartingcase = false;
+                StartGame();
+            }
+            else if (currentPlayer == maxPlayer)
             {
                 currentPlayer = 0;
             }
@@ -414,37 +434,40 @@ public class GamePlay : MonoBehaviour
 
     public void DistributeRolledRessources(int number)
     {
-        for (int i = 0; i < GameBoard.MainBoard.tilesGrid.Length; i++)
+        if (gameStarted)
         {
-            for (int j = 0; j < GameBoard.MainBoard.tilesGrid[i].Length; j++)
+            for (int i = 0; i < GameBoard.MainBoard.tilesGrid.Length; i++)
             {
-                if (GameBoard.MainBoard.tilesGrid[i][j].chipNumber == number)
+                for (int j = 0; j < GameBoard.MainBoard.tilesGrid[i].Length; j++)
                 {
-                    for (int k = 0; k < GameBoard.MainBoard.tilesGrid[i][j].pawns.Length; k++)
+                    if (GameBoard.MainBoard.tilesGrid[i][j].chipNumber == number)
                     {
-                        if (GameBoard.MainBoard.tilesGrid[i][j].pawns[k] != null)
+                        for (int k = 0; k < GameBoard.MainBoard.tilesGrid[i][j].pawns.Length; k++)
                         {
-                            if (GameBoard.MainBoard.tilesGrid[i][j].pawns[k].type == "Village")
+                            if (GameBoard.MainBoard.tilesGrid[i][j].pawns[k] != null)
                             {
-                                for (int l = 0; l < players.Length; l++)
+                                if (GameBoard.MainBoard.tilesGrid[i][j].pawns[k].type == "Village")
                                 {
-                                    if (players[l].color == GameBoard.MainBoard.tilesGrid[i][j].pawns[k].color)
+                                    for (int l = 0; l < players.Length; l++)
                                     {
-                                        players[l].inventory.AddItem(GameBoard.MainBoard.tilesGrid[i][j].resourceName);
-                                        CreateAnimatedRessource(GameBoard.MainBoard.tilesGrid[i][j].resourceName, players[l].color);
-                                        UpdateInventory(players[l].clientID);
+                                        if (players[l].color == GameBoard.MainBoard.tilesGrid[i][j].pawns[k].color)
+                                        {
+                                            players[l].inventory.AddItem(GameBoard.MainBoard.tilesGrid[i][j].resourceName);
+                                            CreateAnimatedRessource(GameBoard.MainBoard.tilesGrid[i][j].resourceName, players[l].color);
+                                            UpdateInventory(players[l].clientID);
+                                        }
                                     }
                                 }
-                            }
-                            if (GameBoard.MainBoard.tilesGrid[i][j].pawns[k].type == "Town")
-                            {
-                                for (int l = 0; l < players.Length; l++)
+                                if (GameBoard.MainBoard.tilesGrid[i][j].pawns[k].type == "Town")
                                 {
-                                    if (players[l].color == GameBoard.MainBoard.tilesGrid[i][j].pawns[k].color)
+                                    for (int l = 0; l < players.Length; l++)
                                     {
-                                        players[l].inventory.AddItem(GameBoard.MainBoard.tilesGrid[i][j].resourceName, 2);
-                                        CreateAnimatedRessource(GameBoard.MainBoard.tilesGrid[i][j].resourceName, players[l].color);
-                                        UpdateInventory(players[l].clientID);
+                                        if (players[l].color == GameBoard.MainBoard.tilesGrid[i][j].pawns[k].color)
+                                        {
+                                            players[l].inventory.AddItem(GameBoard.MainBoard.tilesGrid[i][j].resourceName, 2);
+                                            CreateAnimatedRessource(GameBoard.MainBoard.tilesGrid[i][j].resourceName, players[l].color);
+                                            UpdateInventory(players[l].clientID);
+                                        }
                                     }
                                 }
                             }
@@ -453,6 +476,7 @@ public class GamePlay : MonoBehaviour
                 }
             }
         }
+        
     }
 
     public void CreateAnimatedRessource(string ressource, string playerColor)
@@ -719,13 +743,22 @@ public class GamePlay : MonoBehaviour
 
     private void Update()
     {
-        if (gameStarted)
+        if (buildingStarted)
         {
             if (firstRoundFinished == false && secondRoundFinished == false)
             {
                 if (tempPlayerFirstRoundInitialised == false)
                 {
-                    tempPlayerFirstRound = currentPlayer;
+                    if (currentPlayer != 0)
+                    {
+                        tempPlayerFirstRound = currentPlayer - 1;
+                    }
+                    else
+                    {
+                        tempPlayerFirstRound = maxPlayer;
+                        firstRound = true;
+                        specialStartingcase = true;
+                    }
                     tempPlayerFirstRoundInitialised = true;
                 }
 
@@ -739,7 +772,17 @@ public class GamePlay : MonoBehaviour
             {
                 if (tempPlayerSecondRoundInitialised == false)
                 {
-                    tempPlayerSecondRound = currentPlayer;
+                    currentPlayer = tempPlayerFirstRound;
+                    if (currentPlayer != maxPlayer)
+                    {
+                        tempPlayerSecondRound = currentPlayer + 1;
+                    }
+                    else
+                    {
+                        tempPlayerSecondRound = 0;
+                        secondRound = true;
+                        secondSpecialStartingcase = true;
+                    }
                     tempPlayerSecondRoundInitialised = true;
                 }
 
@@ -751,8 +794,7 @@ public class GamePlay : MonoBehaviour
 
             if (secondRoundFinished)
             {
-                StartGame();
-                gameStarted = false;
+                buildingStarted = false;
             }
         }
 

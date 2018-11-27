@@ -76,7 +76,18 @@ public class NetworkServerMessageHandler : MonoBehaviour {
                 break;
             case "Next Player":
                 GamePlay.Main.NextPlayer();
-                SendToClient(GamePlay.Main.GetCurrentPlayer().clientID, "Go");
+                if (GamePlay.Main.gameStarted)
+                {
+                    SendToClient(GamePlay.Main.GetCurrentPlayer().clientID, "Go");
+                }
+                else if (GamePlay.Main.firstRoundFinished)
+                {
+                    SendToClient(GamePlay.Main.GetCurrentPlayer().clientID, "FirstRoundGo");
+                }
+                else
+                {
+                    SendToClient(GamePlay.Main.GetCurrentPlayer().clientID, "SecondRoundGo");
+                }
                 break;
             case "Player started Trading":
                 GameObject.Find("Window").transform.Find("TradingMessage").gameObject.SetActive(true);
