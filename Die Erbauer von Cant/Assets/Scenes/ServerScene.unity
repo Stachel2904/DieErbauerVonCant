@@ -8192,6 +8192,7 @@ MonoBehaviour:
   Player2DiceText: {fileID: 819235882}
   Player3DiceText: {fileID: 1202689859}
   Player4DiceText: {fileID: 1250093028}
+  WinText: {fileID: 1867665666}
 --- !u!4 &1585728329
 Transform:
   m_ObjectHideFlags: 0
@@ -8422,7 +8423,6 @@ MonoBehaviour:
   maxPlayer: 3
   orderNumber: 0
   firstRoundFinished: 0
-  VictoryWindow: {fileID: 938101458}
   dealAccepted: 0
   running: 0
 --- !u!4 &1611320977

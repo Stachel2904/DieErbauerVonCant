@@ -11,6 +11,7 @@ public class HostTextManager : MonoBehaviour {
     public Text Player2DiceText;
     public Text Player3DiceText;
     public Text Player4DiceText;
+    public Text WinText;
 
     Text tPlayerNumber;
 
@@ -18,6 +19,8 @@ public class HostTextManager : MonoBehaviour {
     Text player2DiceText;
     Text player3DiceText;
     Text player4DiceText;
+
+    Text winText;
 
     // Use this for initialization
     void Start () {
@@ -27,6 +30,8 @@ public class HostTextManager : MonoBehaviour {
         player2DiceText = Player2DiceText.GetComponent<Text>();
         player3DiceText = Player3DiceText.GetComponent<Text>();
         player4DiceText = Player4DiceText.GetComponent<Text>();
+
+        winText = WinText.GetComponent<Text>();
     }
 	
 	// Update is called once per frame
