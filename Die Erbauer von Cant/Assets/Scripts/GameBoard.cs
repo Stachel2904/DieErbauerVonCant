@@ -243,205 +243,185 @@ public class GameBoard
 
         if (buildedPawn.type == "Street")
         {
-            for (int i = 0; i < pawns[(int)pawnColor].Count; i++)
+            if (godmode)
             {
-                Pawn currentPawn = pawns[(int)pawnColor][i];
-
-                if (currentPawn.type == "Street")
+                for (int i = 0; i < pawns[(int)pawnColor].Count; i++)
                 {
-                    Field[] currentFields = currentPawn.GetFields();
-                    int[] currentPosition = currentPawn.GetPosAtField();
-                    for (int j = 0; j < currentFields.Length; j++)
+                    Pawn currentPawn = pawns[(int)pawnColor][i];
+
+                    if (currentPawn.type == "Village")
                     {
-                        Place newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlace"), GameObject.Find("Places").transform);
-                        List<Field> newPlaceFields = new List<Field>();
-                        List<int> newPlacePos = new List<int>();
-
-                        //Abfrage, ob an der benachbarten position eine Straße ist
-                        //Wenn nicht, dann wird es dem possible Places hinzugefügt
-                        int newPos = currentPosition[j] + 2;
-                        if (newPos >= 12)
+                        Field[] currentFields = currentPawn.GetFields();
+                        int[] currentPosition = currentPawn.GetPosAtField();
+                        for (int j = 0; j < currentFields.Length; j++)
                         {
-                            newPos = newPos - 12;
-                        }
+                            Place newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlace"), GameObject.Find("Places").transform);
+                            List<Field> newPlaceFields = new List<Field>();
+                            List<int> newPlacePos = new List<int>();
 
-                        if (currentFields[j].pawns[newPos] == null)
-                        {
-                            //erstes Feld
-                            newPlaceFields.Add(currentFields[j]);
-                            newPlacePos.Add(newPos);
-
-                            //zweites Feld
-                            if (currentFields[j].GetConnectedFields(newPos).Length > 0)
+                            //Abfrage, ob an der benachbarten position eine Straße ist
+                            //Wenn nicht, dann wird es dem possible Places hinzugefügt
+                            int newPos = currentPosition[j] + 1;
+                            if (newPos >= 12)
                             {
-                                newPlaceFields.Add(currentFields[j].GetConnectedFields(newPos)[0]);
+                                newPos = newPos - 12;
                             }
 
-                            //position des zweiten feldes ermitteln
-                            int posAtSecondField = newPos + 6;
-                            if(posAtSecondField >= 12)
+                            if (currentFields[j].pawns[newPos] == null)
                             {
-                                posAtSecondField = posAtSecondField - 12;
+                                //erstes Feld
+                                newPlaceFields.Add(currentFields[j]);
+                                newPlacePos.Add(newPos);
+
+                                //zweites Feld
+                                if (currentFields[j].GetConnectedFields(newPos).Length > 0)
+                                {
+                                    newPlaceFields.Add(currentFields[j].GetConnectedFields(newPos)[0]);
+                                }
+
+                                //position des zweiten feldes ermitteln
+                                int posAtSecondField = newPos + 6;
+                                if (posAtSecondField >= 12)
+                                {
+                                    posAtSecondField = posAtSecondField - 12;
+                                }
+                                newPlacePos.Add(posAtSecondField);
+
+                                //werte zuweisen
+                                newPlace.usedFields = newPlaceFields.ToArray();
+                                newPlace.posAtField = newPlacePos.ToArray();
+                                possiblePositions.Add(newPlace);
                             }
-                            newPlacePos.Add(posAtSecondField);
 
-                            //werte zuweisen
-                            newPlace.usedFields = newPlaceFields.ToArray();
-                            newPlace.posAtField = newPlacePos.ToArray();
-                            possiblePositions.Add(newPlace);
+                            //zurücksetzen der werte
+                            newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlace"), GameObject.Find("Places").transform);
+                            newPlaceFields = new List<Field>();
+                            newPlacePos = new List<int>();
+
+                            //erstellen einer weiteren neuen platzes
+                            newPos = currentPosition[j] - 1;
+                            if (newPos < 0)
+                            {
+                                newPos = newPos + 12;
+                            }
+
+                            if (currentFields[j].pawns[newPos] == null)
+                            {
+                                //erstes Feld
+                                newPlaceFields.Add(currentFields[j]);
+                                newPlacePos.Add(newPos);
+
+                                //zweites Feld
+                                if (currentFields[j].GetConnectedFields(newPos).Length > 0)
+                                {
+                                    newPlaceFields.Add(currentFields[j].GetConnectedFields(newPos)[0]);
+                                }
+
+                                //position des zweiten feldes ermitteln
+                                int posAtSecondField = newPos + 6;
+                                if (posAtSecondField >= 12)
+                                {
+                                    posAtSecondField = posAtSecondField - 12;
+                                }
+                                newPlacePos.Add(posAtSecondField);
+
+                                //werte zuweisen
+                                newPlace.usedFields = newPlaceFields.ToArray();
+                                newPlace.posAtField = newPlacePos.ToArray();
+                                possiblePositions.Add(newPlace);
+                            }
                         }
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < pawns[(int)pawnColor].Count; i++)
+                {
+                    Pawn currentPawn = pawns[(int)pawnColor][i];
 
-                        //zurücksetzen der werte
-                        newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlace"), GameObject.Find("Places").transform);
-                        newPlaceFields = new List<Field>();
-                        newPlacePos = new List<int>();
-
-                        //erstellen einer weiteren neuen platzes
-                        newPos = currentPosition[j] - 2;
-                        if (newPos < 0)
+                    if (currentPawn.type == "Street")
+                    {
+                        Field[] currentFields = currentPawn.GetFields();
+                        int[] currentPosition = currentPawn.GetPosAtField();
+                        for (int j = 0; j < currentFields.Length; j++)
                         {
-                            newPos = newPos + 12;
-                        }
+                            Place newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlace"), GameObject.Find("Places").transform);
+                            List<Field> newPlaceFields = new List<Field>();
+                            List<int> newPlacePos = new List<int>();
 
-                        if (currentFields[j].pawns[newPos] == null)
-                        {
-                            //erstes Feld
-                            newPlaceFields.Add(currentFields[j]);
-                            newPlacePos.Add(newPos);
-
-                            //zweites Feld
-                            if(currentFields[j].GetConnectedFields(newPos).Length > 0)
+                            //Abfrage, ob an der benachbarten position eine Straße ist
+                            //Wenn nicht, dann wird es dem possible Places hinzugefügt
+                            int newPos = currentPosition[j] + 2;
+                            if (newPos >= 12)
                             {
-                                newPlaceFields.Add(currentFields[j].GetConnectedFields(newPos)[0]);
+                                newPos = newPos - 12;
                             }
 
-                            //position des zweiten feldes ermitteln
-                            int posAtSecondField = newPos + 6;
-                            if (posAtSecondField >= 12)
+                            if (currentFields[j].pawns[newPos] == null)
                             {
-                                posAtSecondField = posAtSecondField - 12;
+                                //erstes Feld
+                                newPlaceFields.Add(currentFields[j]);
+                                newPlacePos.Add(newPos);
+
+                                //zweites Feld
+                                if (currentFields[j].GetConnectedFields(newPos).Length > 0)
+                                {
+                                    newPlaceFields.Add(currentFields[j].GetConnectedFields(newPos)[0]);
+                                }
+
+                                //position des zweiten feldes ermitteln
+                                int posAtSecondField = newPos + 6;
+                                if (posAtSecondField >= 12)
+                                {
+                                    posAtSecondField = posAtSecondField - 12;
+                                }
+                                newPlacePos.Add(posAtSecondField);
+
+                                //werte zuweisen
+                                newPlace.usedFields = newPlaceFields.ToArray();
+                                newPlace.posAtField = newPlacePos.ToArray();
+                                possiblePositions.Add(newPlace);
                             }
-                            newPlacePos.Add(posAtSecondField);
 
-                            //werte zuweisen
-                            newPlace.usedFields = newPlaceFields.ToArray();
-                            newPlace.posAtField = newPlacePos.ToArray();
-                            possiblePositions.Add(newPlace);
+                            //zurücksetzen der werte
+                            newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlace"), GameObject.Find("Places").transform);
+                            newPlaceFields = new List<Field>();
+                            newPlacePos = new List<int>();
+
+                            //erstellen einer weiteren neuen platzes
+                            newPos = currentPosition[j] - 2;
+                            if (newPos < 0)
+                            {
+                                newPos = newPos + 12;
+                            }
+
+                            if (currentFields[j].pawns[newPos] == null)
+                            {
+                                //erstes Feld
+                                newPlaceFields.Add(currentFields[j]);
+                                newPlacePos.Add(newPos);
+
+                                //zweites Feld
+                                if (currentFields[j].GetConnectedFields(newPos).Length > 0)
+                                {
+                                    newPlaceFields.Add(currentFields[j].GetConnectedFields(newPos)[0]);
+                                }
+
+                                //position des zweiten feldes ermitteln
+                                int posAtSecondField = newPos + 6;
+                                if (posAtSecondField >= 12)
+                                {
+                                    posAtSecondField = posAtSecondField - 12;
+                                }
+                                newPlacePos.Add(posAtSecondField);
+
+                                //werte zuweisen
+                                newPlace.usedFields = newPlaceFields.ToArray();
+                                newPlace.posAtField = newPlacePos.ToArray();
+                                possiblePositions.Add(newPlace);
+                            }
                         }
-
-                        //if (currentFields[j].pawns[newPos] == null)
-                        //{
-                        //    //erstes Feld
-                        //    newPlaceFields.Add(currentFields[j]);
-                        //    newPlacePos.Add(newPos);
-
-                        //    //zweites Feld
-                        //    //Feld ermitteln
-                        //    Field secondField = newPlaceFields[0];
-
-                        //    //check if the place is on the water and may not have a second field
-                        //    bool fieldOnTop = (currentFields[j].row == 0 && (newPos == 1 || newPos == 11));
-                        //    bool fieldOnRight = ((currentFields[j].column == 7 || currentFields[j].column == 8) && newPos == 3);
-                        //    bool fieldOnBottom = (currentFields[j].row == 4 && (newPos == 5 || newPos == 7));
-                        //    bool fieldOnLeft = ((currentFields[j].column == 0 || currentFields[j].column == 1) && newPos == 9);
-
-                        //    //erlangen des zweiten feldes
-                        //    if (!(fieldOnTop && fieldOnRight && fieldOnBottom && fieldOnLeft))
-                        //    {
-                        //        if (newPos == 1)
-                        //        {
-                        //            int checkedRow = currentFields[j].row - 1;
-                        //            int checkedColumn = currentFields[j].column + 1;
-                        //            if (checkedRow < tilesGrid.Length)
-                        //            {
-                        //                if (checkedColumn < tilesGrid[checkedRow].Length)
-                        //                {
-
-                        //                }
-                        //            }
-                        //            secondField = tilesGrid[currentFields[j].row - 1][currentFields[j].column + 1];
-                        //        }
-                        //        else if (newPos == 3)
-                        //        {
-                        //            int checkedRow = currentFields[j].row - 1;
-                        //            int checkedColumn = currentFields[j].column + 1;
-                        //            if (checkedRow < tilesGrid.Length)
-                        //            {
-                        //                if (checkedColumn < tilesGrid[checkedRow].Length)
-                        //                {
-
-                        //                }
-                        //            }
-                        //            secondField = tilesGrid[currentFields[j].row][currentFields[j].column + 2];
-                        //        }
-                        //        else if (newPos == 5)
-                        //        {
-                        //            int checkedRow = currentFields[j].row - 1;
-                        //            int checkedColumn = currentFields[j].column + 1;
-                        //            if (checkedRow < tilesGrid.Length)
-                        //            {
-                        //                if (checkedColumn < tilesGrid[checkedRow].Length)
-                        //                {
-
-                        //                }
-                        //            }
-                        //            secondField = tilesGrid[currentFields[j].row + 1][currentFields[j].column + 1];
-                        //        }
-                        //        else if (newPos == 7)
-                        //        {
-                        //            int checkedRow = currentFields[j].row - 1;
-                        //            int checkedColumn = currentFields[j].column + 1;
-                        //            if (checkedRow < tilesGrid.Length)
-                        //            {
-                        //                if (checkedColumn < tilesGrid[checkedRow].Length)
-                        //                {
-
-                        //                }
-                        //            }
-                        //            secondField = tilesGrid[currentFields[j].row + 1][currentFields[j].column - 1];
-                        //        }
-                        //        else if (newPos == 9)
-                        //        {
-                        //            int checkedRow = currentFields[j].row - 1;
-                        //            int checkedColumn = currentFields[j].column + 1;
-                        //            if (checkedRow < tilesGrid.Length)
-                        //            {
-                        //                if (checkedColumn < tilesGrid[checkedRow].Length)
-                        //                {
-
-                        //                }
-                        //            }
-                        //            secondField = tilesGrid[currentFields[j].row][currentFields[j].column - 2];
-                        //        }
-                        //        else if (newPos == 11)
-                        //        {
-                        //            int checkedRow = currentFields[j].row - 1;
-                        //            int checkedColumn = currentFields[j].column + 1;
-                        //            if (checkedRow < tilesGrid.Length)
-                        //            {
-                        //                if (checkedColumn < tilesGrid[checkedRow].Length)
-                        //                {
-
-                        //                }
-                        //            }
-                        //            secondField = tilesGrid[currentFields[j].row - 1][currentFields[j].column - 1];
-                        //        }
-                        //    }
-                        //    newPlaceFields.Add(secondField);
-
-                        //    //position des zweiten feldes ermitteln
-                        //    int posAtSecondField = newPos + 6;
-                        //    if (posAtSecondField >= 12)
-                        //    {
-                        //        posAtSecondField = posAtSecondField - 12;
-                        //    }
-                        //    newPlacePos.Add(posAtSecondField);
-
-                        //    //werte zuweisen
-                        //    newPlace.usedFields = newPlaceFields.ToArray();
-                        //    newPlace.posAtField = newPlacePos.ToArray();
-                        //    possiblePositions.Add(newPlace);
-                        //}
                     }
                 }
             }
