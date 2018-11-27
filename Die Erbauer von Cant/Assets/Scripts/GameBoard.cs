@@ -565,7 +565,7 @@ public class GameBoard
                                 }
                                 if (currentFields[1].pawns[newPos] == null)
                                 {
-                                    Place newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlace"), GameObject.Find("Places").transform);
+                                    Place newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlaceVillage"), GameObject.Find("Places").transform);
                                     List<Field> newPlaceFields = new List<Field>();
                                     List<int> newPlacePos = new List<int>();
 
