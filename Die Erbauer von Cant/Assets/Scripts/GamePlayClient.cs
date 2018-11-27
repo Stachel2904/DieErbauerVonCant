@@ -53,7 +53,7 @@ public class GamePlayClient : MonoBehaviour {
     /// Check if you have enough Ressources and print possible Positions
     /// </summary>
     /// <param name="tryBuildedPawn">The pawn you wish to build</param>
-    public void TryBuild(string type)
+    public void TryBuild(string type, bool startRound = false)
     {
         //set buildedPawn back to null
         if (type == "")
@@ -62,7 +62,7 @@ public class GamePlayClient : MonoBehaviour {
         }
 
         //Ressourcen überprüfen
-        if (!ownPlayer.inventory.CheckInventory(type))
+        if (!ownPlayer.inventory.CheckInventory(type) && !startRound)
         {
             Debug.Log("You have not enough Ressources...");
             GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.SetActive(true);
@@ -72,7 +72,7 @@ public class GamePlayClient : MonoBehaviour {
         Pawn buildedPawn = new Pawn(type, ownPlayer.color);
 
         //Alle möglichen Positionen ausgeben
-        Place[] possiblePlaces = GameBoard.MainBoard.GetAllPositions(buildedPawn);
+        Place[] possiblePlaces = GameBoard.MainBoard.GetAllPositions(buildedPawn, startRound);
 
         if (possiblePlaces.Length == 0)
         {

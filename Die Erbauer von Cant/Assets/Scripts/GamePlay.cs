@@ -522,7 +522,10 @@ public class GamePlay : MonoBehaviour
         }
 
         //Ressourcen Updaten
-        GetCurrentPlayer().inventory.RemoveItem(buildedPawn.type);
+        if(firstRoundFinished && secondRoundFinished)
+        {
+            GetCurrentPlayer().inventory.RemoveItem(buildedPawn.type);
+        }
     }
 
     public PlayerColor ConvertColor(string color)
