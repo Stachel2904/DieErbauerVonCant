@@ -47,8 +47,9 @@ public class GamePlay : MonoBehaviour
     bool tempPlayerSecondRoundInitialised = false;
     bool specialStartingcase = false;
     bool secondSpecialStartingcase = false;
-    
-    
+
+    public GameObject VictoryWindow;
+
     // Trading Variables
     public bool dealAccepted = false;
     
@@ -732,7 +733,8 @@ public class GamePlay : MonoBehaviour
 
     public void GameWon(string color)
     {
-        GameObject.Find("Window").transform.Find("VictoryWindow").gameObject.SetActive(true);
+        VictoryWindow.SetActive(true);
+        //GameObject.Find("Window").transform.Find("VictoryWindow").gameObject.SetActive(true);
         GameObject.Find("TextManager").GetComponent<HostTextManager>().WinText.text = "Player " + color + "Won!";
     }
 
