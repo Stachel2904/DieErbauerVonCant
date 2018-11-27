@@ -47,8 +47,7 @@ public class GamePlay : MonoBehaviour
     bool tempPlayerSecondRoundInitialised = false;
     bool specialStartingcase = false;
     bool secondSpecialStartingcase = false;
-
-    public GameObject VictoryWindow;
+    
     
     // Trading Variables
     public bool dealAccepted = false;
@@ -339,13 +338,8 @@ public class GamePlay : MonoBehaviour
 
             UpdateInventory(players[i].clientID);
         }
-        //Debug.Log("START GAME");
-        //GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("Start");
-        Debug.Log("START GAME 2");
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(GamePlay.main.GetCurrentPlayer().clientID, "Go");
         gameStarted = true;
-        //GameBoard.MainBoard.Init();
-        //running = true;
     }
 
     /// <summary>
@@ -738,8 +732,8 @@ public class GamePlay : MonoBehaviour
 
     public void GameWon(string color)
     {
-        VictoryWindow.SetActive(true);
-        VictoryWindow.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = "Player " + color + " Won!";
+        GameObject.Find("Window").transform.Find("VictoryWindow").gameObject.SetActive(true);
+        GameObject.Find("TextManager").GetComponent<HostTextManager>().WinText.text = "Player " + color + "Won!";
     }
 
     private void Update()

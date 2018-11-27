@@ -81,7 +81,7 @@ public class NetworkServerMessageHandler : MonoBehaviour {
                 {
                     SendToClient(GamePlay.Main.GetCurrentPlayer().clientID, "Go");
                 }
-                else if (GamePlay.Main.firstRoundFinished)
+                else if (GamePlay.Main.firstRoundFinished == false)
                 {
                     SendToClient(GamePlay.Main.GetCurrentPlayer().clientID, "FirstRoundGo");
                 }
