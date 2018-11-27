@@ -148,29 +148,29 @@ public class GameBoard
         }
 
         //Set startPawns
-        tilesGrid[2][6].pawns[3] = new Pawn("Street", "Orange");
-        tilesGrid[2][8].pawns[9] = tilesGrid[2][6].pawns[3];
-        pawns[(int)PlayerColor.ORANGE].Add(tilesGrid[2][6].pawns[3]);
-        tilesGrid[1][7].pawns[6] = new Pawn("Village", "Orange");
-        tilesGrid[2][6].pawns[2] = tilesGrid[1][7].pawns[6];
-        tilesGrid[2][8].pawns[10] = tilesGrid[1][7].pawns[6];
-        pawns[(int)PlayerColor.ORANGE].Add(tilesGrid[1][7].pawns[6]);
+        //tilesGrid[2][6].pawns[3] = new Pawn("Street", "Orange");
+        //tilesGrid[2][8].pawns[9] = tilesGrid[2][6].pawns[3];
+        //pawns[(int)PlayerColor.ORANGE].Add(tilesGrid[2][6].pawns[3]);
+        //tilesGrid[1][7].pawns[6] = new Pawn("Village", "Orange");
+        //tilesGrid[2][6].pawns[2] = tilesGrid[1][7].pawns[6];
+        //tilesGrid[2][8].pawns[10] = tilesGrid[1][7].pawns[6];
+        //pawns[(int)PlayerColor.ORANGE].Add(tilesGrid[1][7].pawns[6]);
 
-        tilesGrid[0][2].pawns[5] = new Pawn("Street", "Blue");
-        tilesGrid[1][3].pawns[11] = tilesGrid[0][2].pawns[5];
-        pawns[(int)PlayerColor.BLUE].Add(tilesGrid[0][2].pawns[5]);
-        tilesGrid[0][2].pawns[4] = new Pawn("Village", "Blue");
-        tilesGrid[0][4].pawns[8] = tilesGrid[0][2].pawns[4];
-        tilesGrid[1][3].pawns[0] = tilesGrid[0][2].pawns[4];
-        pawns[(int)PlayerColor.BLUE].Add(tilesGrid[0][2].pawns[4]);
+        //tilesGrid[0][2].pawns[5] = new Pawn("Street", "Blue");
+        //tilesGrid[1][3].pawns[11] = tilesGrid[0][2].pawns[5];
+        //pawns[(int)PlayerColor.BLUE].Add(tilesGrid[0][2].pawns[5]);
+        //tilesGrid[0][2].pawns[4] = new Pawn("Village", "Blue");
+        //tilesGrid[0][4].pawns[8] = tilesGrid[0][2].pawns[4];
+        //tilesGrid[1][3].pawns[0] = tilesGrid[0][2].pawns[4];
+        //pawns[(int)PlayerColor.BLUE].Add(tilesGrid[0][2].pawns[4]);
 
-        tilesGrid[3][3].pawns[7] = new Pawn("Street", "White");
-        tilesGrid[4][2].pawns[1] = tilesGrid[3][3].pawns[7];
-        pawns[(int)PlayerColor.WHITE].Add(tilesGrid[3][3].pawns[7]);
-        tilesGrid[3][3].pawns[6] = new Pawn("Village", "White");
-        tilesGrid[4][2].pawns[2] = tilesGrid[3][3].pawns[6];
-        tilesGrid[4][4].pawns[10] = tilesGrid[3][3].pawns[6];
-        pawns[(int)PlayerColor.WHITE].Add(tilesGrid[3][3].pawns[6]);
+        //tilesGrid[3][3].pawns[7] = new Pawn("Street", "White");
+        //tilesGrid[4][2].pawns[1] = tilesGrid[3][3].pawns[7];
+        //pawns[(int)PlayerColor.WHITE].Add(tilesGrid[3][3].pawns[7]);
+        //tilesGrid[3][3].pawns[6] = new Pawn("Village", "White");
+        //tilesGrid[4][2].pawns[2] = tilesGrid[3][3].pawns[6];
+        //tilesGrid[4][4].pawns[10] = tilesGrid[3][3].pawns[6];
+        //pawns[(int)PlayerColor.WHITE].Add(tilesGrid[3][3].pawns[6]);
     }
 
     
@@ -240,14 +240,13 @@ public class GameBoard
             }
             return possiblePositions.ToArray();
         }
-
-        if (buildedPawn.type == "Street")
+        else if (buildedPawn.type == "Street")
         {
             if (godmode)
             {
-                for (int i = 0; i < pawns[(int)pawnColor].Count; i++)
+                //for (int i = 0; i < pawns[(int)pawnColor].Count; i++)
                 {
-                    Pawn currentPawn = pawns[(int)pawnColor][i];
+                    Pawn currentPawn = pawns[(int)pawnColor][pawns[(int)pawnColor].Count - 1];
 
                     if (currentPawn.type == "Village")
                     {
@@ -426,8 +425,7 @@ public class GameBoard
                 }
             }
         }
-
-        if (buildedPawn.type == "Village")
+        else if (buildedPawn.type == "Village")
         {
             if (!godmode)
             {
@@ -677,12 +675,27 @@ public class GameBoard
                 {
                     for (int j = 0; j < tilesGrid[i].Length; j++)
                     {
+                        if (tilesGrid[i][j] == null || tilesGrid[i][j].chipNumber == 0)
+                        {
+                            continue;
+                        }
                         for (int k = 0; k < tilesGrid[i][j].pawns.Length; k++)
                         {
                             Pawn currentPawn = tilesGrid[i][j].pawns[k];
-                            if (currentPawn != null && k % 2 == 0)
+                            if (currentPawn == null && k % 2 == 0)
                             {
-                                Field[] currentFields = tilesGrid[i][j].GetConnectedFields(k);
+                                Field[] currentFields;
+                                {
+                                    List<Field> tmp = new List<Field>();
+                                    tmp.Add(tilesGrid[i][j]);
+                                    Field[] tmp2 = tilesGrid[i][j].GetConnectedFields(k);
+                                    for (int l = 0; l < tmp2.Length; l++)
+                                    {
+                                        tmp.Add(tmp2[l]);
+                                    }
+                                    currentFields = tmp.ToArray();
+                                    Debug.Log("Der Platz " + i.ToString() + "/" + j.ToString() + "/" + k.ToString() + " hat " + currentFields.Length.ToString() + " Felder.");
+                                }
                                 int[] currentPos = new int[currentFields.Length];
 
                                 currentPos[0] = k;
@@ -705,22 +718,22 @@ public class GameBoard
                                 bool savespot = true;
                                 for (int l = 0; l < currentFields.Length; l++)
                                 {
-                                    int tmp = currentPos[i] + 2;
+                                    int tmp = currentPos[l] + 2;
                                     if (tmp >= 12)
                                     {
                                         tmp -= 12;
                                     }
-                                    if (currentFields[i].pawns[tmp] != null)
+                                    if (currentFields[l].pawns[tmp] != null)
                                     {
                                         savespot = false;
                                         break;
                                     }
-                                    tmp = currentPos[i] - 2;
+                                    tmp = currentPos[l] - 2;
                                     if (tmp < 0)
                                     {
                                         tmp += 12;
                                     }
-                                    if (currentFields[i].pawns[tmp] != null)
+                                    if (currentFields[l].pawns[tmp] != null)
                                     {
                                         savespot = false;
                                         break;
@@ -728,7 +741,8 @@ public class GameBoard
                                 }
                                 if (savespot)
                                 {
-                                    Place newPlace = new Place();
+                                    //Place newPlace = new Place();
+                                    Place newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlace"), GameObject.Find("Places").transform);
                                     newPlace.buildedPawn = buildedPawn;
                                     newPlace.usedFields = currentFields;
                                     newPlace.posAtField = currentPos;
@@ -739,6 +753,10 @@ public class GameBoard
                     }
                 }
             }
+        }
+        else
+        {
+            Debug.Log("Du kannst keine " + buildedPawn.type + " bauen.");
         }
         return possiblePositions.ToArray();
     }

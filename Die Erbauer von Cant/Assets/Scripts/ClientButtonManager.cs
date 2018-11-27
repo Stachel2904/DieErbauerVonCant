@@ -27,6 +27,10 @@ public class ClientButtonManager : MonoBehaviour {
     public GameObject WaitRollScreen;
     public GameObject FirstRoundBuild;
     public GameObject SecondRoundBuild;
+    public Button FirstRoundVillage;
+    public Button SecondRoundVillage;
+    public Button FirstRoundStreet;
+    public Button SecondRoundStreet;
     #endregion
 
     // Use this for initialization
@@ -34,7 +38,12 @@ public class ClientButtonManager : MonoBehaviour {
     {
         Button rDice = rollDice.GetComponent<Button>();
         rDice.onClick.AddListener(RollTheDice);
-	}
+
+        FirstRoundVillage.onClick.AddListener(delegate { GamePlayClient.Main.TryBuild("Village", true); });
+        SecondRoundVillage.onClick.AddListener(delegate { GamePlayClient.Main.TryBuild("Village", true); });
+        FirstRoundStreet.onClick.AddListener(delegate { GamePlayClient.Main.TryBuild("Street", true); });
+        SecondRoundStreet.onClick.AddListener(delegate { GamePlayClient.Main.TryBuild("Street", true); });
+    }
     private void RollTheDice()
     {
         GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("Roll Dice");
