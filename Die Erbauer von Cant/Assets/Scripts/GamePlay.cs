@@ -41,7 +41,9 @@ public class GamePlay : MonoBehaviour
     bool secondRoundFinished = false;
     bool secondRound = false;
     int tempPlayerFirstRound;
+    bool tempPlayerFirstRoundInitialised = false;
     int tempPlayerSecondRound;
+    bool tempPlayerSecondRoundInitialised = false;
 
     public GameObject VictoryWindow;
     
@@ -312,34 +314,43 @@ public class GamePlay : MonoBehaviour
         //{
         //    GameObject.Find("Player4DiceText").SetActive(false);
         //}
-           
-        if (firstRoundFinished == false && secondRoundFinished == false)
-        {
-            tempPlayerFirstRound = currentPlayer;
+        //Debug.Log("START GAME");
+        //GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("Start");
+        //Debug.Log("START GAME 2");
+        //GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(GamePlay.main.GetCurrentPlayer().clientID, "Go");
+        //if (firstRoundFinished == false && secondRoundFinished == false)
+        //{
+        //    if (tempPlayerFirstRoundInitialised == false)
+        //    {
+        //        tempPlayerFirstRound = currentPlayer;
+        //        tempPlayerFirstRoundInitialised = true;
+        //    }
 
+        //    if (firstRound && tempPlayerFirstRound == currentPlayer)
+        //    {
+        //        firstRoundFinished = true;
+        //    }
+        //}
 
-            if (firstRound && tempPlayerFirstRound == currentPlayer)
-            {
-                firstRoundFinished = true;
-            }
-        }
+        //if (firstRoundFinished && secondRoundFinished == false)
+        //{
+        //    if (tempPlayerSecondRoundInitialised == false)
+        //    {
+        //        tempPlayerSecondRound = currentPlayer;
+        //        tempPlayerSecondRoundInitialised = true;
+        //    }
 
-        if (firstRoundFinished && secondRoundFinished == false)
-        {
-            tempPlayerSecondRound = currentPlayer;
+        //    if (secondRound && tempPlayerSecondRound == currentPlayer)
+        //    {
+        //        secondRoundFinished = true;
+        //    }
+        //}
 
+        //if (secondRoundFinished)
+        //{
+        StartGame();
+        //}
 
-            if(secondRound && tempPlayerSecondRound == currentPlayer)
-            {
-                secondRoundFinished = true;
-            }
-        }
-
-        if (secondRoundFinished)
-        {
-            StartGame();
-        }
-        
     }
 
     public bool running = false;
