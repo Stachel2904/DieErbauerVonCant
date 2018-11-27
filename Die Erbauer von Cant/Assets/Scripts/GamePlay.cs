@@ -26,8 +26,8 @@ public class GamePlay : MonoBehaviour
             return main;
         }
     }
-
-    public bool GameInitialised;
+    
+    bool gameStarted = false;
 
     public Player[] players;
     public Player[] newPlayerOrder;
@@ -285,6 +285,7 @@ public class GamePlay : MonoBehaviour
                 if (players[j].beginningNumber == i)
                 {
                     currentPlayer = j;
+                    
                     BeginBuilding();
                     return;
                 }
@@ -314,42 +315,12 @@ public class GamePlay : MonoBehaviour
         //{
         //    GameObject.Find("Player4DiceText").SetActive(false);
         //}
-        GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("FirstStart");
+        GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("Start");
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(GamePlay.main.GetCurrentPlayer().clientID, "FirstGo");
         GameBoard.MainBoard.Init();
         running = true;
-        if (firstRoundFinished == false && secondRoundFinished == false)
-        {
-            if (tempPlayerFirstRoundInitialised == false)
-            {
-                tempPlayerFirstRound = currentPlayer;
-                tempPlayerFirstRoundInitialised = true;
-            }
 
-            if (firstRound && tempPlayerFirstRound == currentPlayer )
-            {
-                firstRoundFinished = true;
-            }
-        }
-
-        if (firstRoundFinished && secondRoundFinished == false)
-        {
-            if (tempPlayerSecondRoundInitialised == false)
-            {
-                tempPlayerSecondRound = currentPlayer;
-                tempPlayerSecondRoundInitialised = true;
-            }
-
-            if (secondRound && tempPlayerSecondRound == currentPlayer)
-            {
-                secondRoundFinished = true;
-            }
-        }
-
-        if (secondRoundFinished)
-        {
-            StartGame();
-        }
+        gameStarted = true;
 
     }
 
@@ -365,8 +336,8 @@ public class GamePlay : MonoBehaviour
 
             UpdateInventory(players[i].clientID);
         }
-        Debug.Log("START GAME");
-        GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("Start");
+        //Debug.Log("START GAME");
+        //GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("Start");
         Debug.Log("START GAME 2");
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(GamePlay.main.GetCurrentPlayer().clientID, "Go");
 
@@ -745,7 +716,47 @@ public class GamePlay : MonoBehaviour
 
     private void Update()
     {
-        if(GameObject.Find("Debugging") != null)
+        if (gameStarted)
+        {
+            if (firstRoundFinished == false && secondRoundFinished == false)
+            {
+                if (tempPlayerFirstRoundInitialised == false)
+                {
+                    tempPlayerFirstRound = currentPlayer;
+                    tempPlayerFirstRoundInitialised = true;
+                }
+
+                if (firstRound && tempPlayerFirstRound == currentPlayer)
+                {
+                    firstRoundFinished = true;
+                }
+            }
+
+            if (firstRoundFinished && secondRoundFinished == false)
+            {
+                if (tempPlayerSecondRoundInitialised == false)
+                {
+                    tempPlayerSecondRound = currentPlayer;
+                    tempPlayerSecondRoundInitialised = true;
+                }
+
+                if (secondRound && tempPlayerSecondRound == currentPlayer)
+                {
+                    secondRoundFinished = true;
+                }
+            }
+
+            if (secondRoundFinished)
+            {
+                StartGame();
+                gameStarted = false;
+            }
+        }
+
+
+
+
+        if (GameObject.Find("Debugging") != null)
         {
             for (int i = 0; i < GameBoard.MainBoard.tilesGrid.Length; i++)
             {
