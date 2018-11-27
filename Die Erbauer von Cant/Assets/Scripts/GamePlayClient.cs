@@ -104,7 +104,7 @@ public class GamePlayClient : MonoBehaviour {
         {
             Vector3 placePosition = GetPosInWorld(possiblePlaces[i].usedFields[0], possiblePlaces[i].posAtField[0], buildedPawn.type);
 
-            possiblePlaces[i].gameObject.transform.position = placePosition;
+            possiblePlaces[i].gameObject.transform.position = new Vector3(placePosition.x, possiblePlaces[i].gameObject.transform.position.y, placePosition.z);
             possiblePlaces[i].buildedPawn = buildedPawn;
 
             for (int j = 0; j < GameObject.Find("Places").transform.childCount; j++)
@@ -137,73 +137,6 @@ public class GamePlayClient : MonoBehaviour {
         return result;
     }
 
-    public void buildPawn(Place destination)
-    {
-        Debug.Log("Huch, die funktion wird trotzdem aufgerufen...");
-        /*
-        if (buildedPawn == null)
-        {
-            Debug.Log("Which pawn do you want to build?");
-            return;
-        }
-
-        //Ressourcenmanagement/Rohstoffe abziehen etc.
-        ownPlayer.inventory.RemoveItem(buildedPawn.type);
-
-        //An die richtige Position setzen und die angrenzenden Tiles updaten
-        for (int i = 0; i < GameBoard.MainBoard.tilesGrid.Length; i++)
-        {
-            for (int j = 0; j < GameBoard.MainBoard.tilesGrid[i].Length; j++)
-            {
-                for (int k = 0; k < destination.usedFields.Length; k++)
-                {
-                    if (GameBoard.MainBoard.tilesGrid[i][j].Equals(destination.usedFields[k]))
-                    {
-                        GameBoard.MainBoard.tilesGrid[i][j].pawns[destination.posAtField[k]] = buildedPawn;
-                    }
-                }
-            }
-        }
-
-        GameBoard.MainBoard.pawns[(int) ConvertColor(buildedPawn.color)].Add(buildedPawn);
-
-        //Pawn kreieren (erst nur mesh, dann Farbe, dann position)
-        Transform createdPawn = Instantiate(Resources.Load<Transform>("Prefabs/" + buildedPawn.type), GameObject.Find("Board").transform);
-        createdPawn.gameObject.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/" + buildedPawn.color);
-        createdPawn.position = destination.gameObject.transform.position;
-
-        //Wenn eine Stadt platziert wird, wird die Siedlung gelöscht
-        if (buildedPawn.type == "Town")
-        {
-            for (int i = 0; i < GameObject.Find("Board").transform.childCount; i++)
-            {
-                GameObject currentPawn = GameObject.Find("Board").transform.GetChild(i).gameObject;
-
-                if (currentPawn.name == "Village(Clone)")
-                {
-                    if (Vector3.Distance(destination.gameObject.transform.position, currentPawn.transform.position) < 0.5f)
-                    {
-                        GameObject.Destroy(currentPawn);
-                    }
-                }
-            }
-        }
-        else if (buildedPawn.type == "Street")
-        {
-            createdPawn.Rotate(0.0f, 30.0f * destination.posAtField[0], 0.0f);
-        }
-
-        //Places löschen
-        for (int i = 0; i < GameObject.Find("Places").transform.childCount; i++)
-        {
-            GameObject.Destroy(GameObject.Find("Places").transform.GetChild(i).gameObject);
-        }
-
-        //Sag Server, dass du etwas gebaut hast
-        //GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendFieldUpdateToServer(buildedPawn.type, destination);
-        */
-    }
-
     public void UpdateBoard(Pawn buildedPawn, int[] place)
     {
         Field[] usedFields = new Field[place.Length / 3];
@@ -219,7 +152,7 @@ public class GamePlayClient : MonoBehaviour {
         //Pawn kreieren (erst nur mesh, dann Farbe, dann position)
         Transform createdPawn = Instantiate(Resources.Load<Transform>("Prefabs/" + buildedPawn.type), GameObject.Find("Board").transform);
         createdPawn.gameObject.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/" + buildedPawn.color);
-        createdPawn.position = pos;
+        createdPawn.position = new Vector3(pos.x, createdPawn.position.y, pos.z);
 
         GameBoard.MainBoard.pawns[(int)ConvertColor(buildedPawn.color)].Add(buildedPawn);
         for (int i = 0; i < usedFields.Length; i++)

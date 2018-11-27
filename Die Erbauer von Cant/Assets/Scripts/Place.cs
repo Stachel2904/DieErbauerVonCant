@@ -14,19 +14,12 @@ public class Place : MonoBehaviour{
     {
         for (int i = 0; i < GameObject.Find("Places").transform.childCount; i++)
         {
-            GameObject.Find("Places").transform.GetChild(i).gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
+            GameObject.Find("Places").transform.GetChild(i).GetChild(0).gameObject.SetActive(false);
         }
-        this.gameObject.GetComponent<MeshRenderer>().material.color = Color.green;
+        this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
         GameObject buildAcceptionInterface = GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildAcception;
         buildAcceptionInterface.SetActive(true);
         buildAcceptionInterface.transform.Find("Accept").gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
-
-        //Debug.Log("You startet building a " + buildedPawn.color + " " + buildedPawn.type);
-        //Debug.Log("At following positions:");
-        //for (int i = 0; i < usedFields.Length * 3; i += 3)
-        //{
-        //    Debug.Log(usedFields[i / 3].row.ToString() + " / " + usedFields[i / 3].column.ToString() + " at position " + posAtField[i / 3].ToString());
-        //}
 
         //make int[] from Place
         int[] place = new int[usedFields.Length * 3];

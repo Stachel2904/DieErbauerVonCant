@@ -514,7 +514,7 @@ public class GamePlay : MonoBehaviour
         //Pawn kreieren (erst nur mesh, dann Farbe, dann position)
         Transform createdPawn = Instantiate(Resources.Load<Transform>("Prefabs/" + buildedPawn.type + "_HQ"), GameObject.Find("Board").transform);
         createdPawn.gameObject.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/" + buildedPawn.color);
-        createdPawn.position = pos;
+        createdPawn.position = new Vector3(pos.x, createdPawn.position.y, pos.z);
 
         //Variablen Updaten
         GameBoard.MainBoard.pawns[(int)ConvertColor(buildedPawn.color)].Add(buildedPawn);
@@ -547,7 +547,7 @@ public class GamePlay : MonoBehaviour
         }
 
         //Ressourcen Updaten
-        if(firstRoundFinished && secondRoundFinished)
+        if(gameStarted)
         {
             GetCurrentPlayer().inventory.RemoveItem(buildedPawn.type);
         }

@@ -146,31 +146,6 @@ public class GameBoard
                 
             }
         }
-
-        //Set startPawns
-        //tilesGrid[2][6].pawns[3] = new Pawn("Street", "Orange");
-        //tilesGrid[2][8].pawns[9] = tilesGrid[2][6].pawns[3];
-        //pawns[(int)PlayerColor.ORANGE].Add(tilesGrid[2][6].pawns[3]);
-        //tilesGrid[1][7].pawns[6] = new Pawn("Village", "Orange");
-        //tilesGrid[2][6].pawns[2] = tilesGrid[1][7].pawns[6];
-        //tilesGrid[2][8].pawns[10] = tilesGrid[1][7].pawns[6];
-        //pawns[(int)PlayerColor.ORANGE].Add(tilesGrid[1][7].pawns[6]);
-
-        //tilesGrid[0][2].pawns[5] = new Pawn("Street", "Blue");
-        //tilesGrid[1][3].pawns[11] = tilesGrid[0][2].pawns[5];
-        //pawns[(int)PlayerColor.BLUE].Add(tilesGrid[0][2].pawns[5]);
-        //tilesGrid[0][2].pawns[4] = new Pawn("Village", "Blue");
-        //tilesGrid[0][4].pawns[8] = tilesGrid[0][2].pawns[4];
-        //tilesGrid[1][3].pawns[0] = tilesGrid[0][2].pawns[4];
-        //pawns[(int)PlayerColor.BLUE].Add(tilesGrid[0][2].pawns[4]);
-
-        //tilesGrid[3][3].pawns[7] = new Pawn("Street", "White");
-        //tilesGrid[4][2].pawns[1] = tilesGrid[3][3].pawns[7];
-        //pawns[(int)PlayerColor.WHITE].Add(tilesGrid[3][3].pawns[7]);
-        //tilesGrid[3][3].pawns[6] = new Pawn("Village", "White");
-        //tilesGrid[4][2].pawns[2] = tilesGrid[3][3].pawns[6];
-        //tilesGrid[4][4].pawns[10] = tilesGrid[3][3].pawns[6];
-        //pawns[(int)PlayerColor.WHITE].Add(tilesGrid[3][3].pawns[6]);
     }
 
     
@@ -232,7 +207,7 @@ public class GameBoard
                 
                 if (currentPawn.type == "Village")
                 {
-                    Place newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlace"), GameObject.Find("Places").transform);
+                    Place newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlaceTown"), GameObject.Find("Places").transform);
                     newPlace.usedFields = currentPawn.GetFields();
                     newPlace.posAtField = currentPawn.GetPosAtField();
                     possiblePositions.Add(newPlace);
@@ -254,7 +229,7 @@ public class GameBoard
                         int[] currentPosition = currentPawn.GetPosAtField();
                         for (int j = 0; j < currentFields.Length; j++)
                         {
-                            Place newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlace"), GameObject.Find("Places").transform);
+                            Place newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlaceStreet"), GameObject.Find("Places").transform);
                             List<Field> newPlaceFields = new List<Field>();
                             List<int> newPlacePos = new List<int>();
 
@@ -293,7 +268,7 @@ public class GameBoard
                             }
 
                             //zurücksetzen der werte
-                            newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlace"), GameObject.Find("Places").transform);
+                            newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlaceStreet"), GameObject.Find("Places").transform);
                             newPlaceFields = new List<Field>();
                             newPlacePos = new List<int>();
 
@@ -345,7 +320,7 @@ public class GameBoard
                         int[] currentPosition = currentPawn.GetPosAtField();
                         for (int j = 0; j < currentFields.Length; j++)
                         {
-                            Place newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlace"), GameObject.Find("Places").transform);
+                            Place newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlaceStreet"), GameObject.Find("Places").transform);
                             List<Field> newPlaceFields = new List<Field>();
                             List<int> newPlacePos = new List<int>();
 
@@ -384,7 +359,7 @@ public class GameBoard
                             }
 
                             //zurücksetzen der werte
-                            newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlace"), GameObject.Find("Places").transform);
+                            newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlaceStreet"), GameObject.Find("Places").transform);
                             newPlaceFields = new List<Field>();
                             newPlacePos = new List<int>();
 
@@ -475,7 +450,7 @@ public class GameBoard
                                 }
                                 if (currentFields[1].pawns[newPos] == null)
                                 {
-                                    Place newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlace"), GameObject.Find("Places").transform);
+                                    Place newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlaceVillage"), GameObject.Find("Places").transform);
                                     List<Field> newPlaceFields = new List<Field>();
                                     List<int> newPlacePos = new List<int>();
 
@@ -694,7 +669,6 @@ public class GameBoard
                                         tmp.Add(tmp2[l]);
                                     }
                                     currentFields = tmp.ToArray();
-                                    Debug.Log("Der Platz " + i.ToString() + "/" + j.ToString() + "/" + k.ToString() + " hat " + currentFields.Length.ToString() + " Felder.");
                                 }
                                 int[] currentPos = new int[currentFields.Length];
 
@@ -742,7 +716,7 @@ public class GameBoard
                                 if (savespot)
                                 {
                                     //Place newPlace = new Place();
-                                    Place newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlace"), GameObject.Find("Places").transform);
+                                    Place newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlaceVillage"), GameObject.Find("Places").transform);
                                     newPlace.buildedPawn = buildedPawn;
                                     newPlace.usedFields = currentFields;
                                     newPlace.posAtField = currentPos;
@@ -756,7 +730,7 @@ public class GameBoard
         }
         else
         {
-            Debug.Log("Du kannst keine " + buildedPawn.type + " bauen.");
+            Debug.LogError("Du kannst keine " + buildedPawn.type + " bauen.");
         }
         return possiblePositions.ToArray();
     }
