@@ -204,7 +204,7 @@ public class GameBoard
             for (int i = 0; i < pawns[(int) pawnColor].Count; i++)
             {
                 Pawn currentPawn = pawns[(int)pawnColor][i];
-                
+
                 if (currentPawn.type == "Village")
                 {
                     Place newPlace = GameObject.Instantiate(Resources.Load<Place>("Prefabs/PossiblePlaceTown"), GameObject.Find("Places").transform);

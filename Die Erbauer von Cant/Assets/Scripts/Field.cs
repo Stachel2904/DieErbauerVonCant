@@ -78,7 +78,7 @@ public class Field
             {
                 if (this.row >= 0 && this.row < GameBoard.MainBoard.tilesGrid.Length)
                 {
-                    if (this.column - 2 >= 0 && this.column - 2 < GameBoard.MainBoard.tilesGrid[this.row - 1].Length)
+                    if (this.column - 2 >= 0 && this.column - 2 < GameBoard.MainBoard.tilesGrid[this.row].Length)
                     {
                         result.Add(GameBoard.MainBoard.tilesGrid[this.row][this.column - 2]);
                     }
