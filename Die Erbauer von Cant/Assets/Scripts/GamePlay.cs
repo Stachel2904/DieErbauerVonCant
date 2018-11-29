@@ -37,6 +37,7 @@ public class GamePlay : MonoBehaviour
     public int maxPlayer = 3;
     public int orderNumber = 0;
 
+    // for Gamestart Rule
     public bool firstRoundFinished = false;
     bool firstRound = false;
     bool secondRoundFinished = false;
@@ -79,7 +80,11 @@ public class GamePlay : MonoBehaviour
         }
 
     }
-
+    /// <summary>
+    /// Save the Starting Player Dice Roll and compares if other players have rolled the same
+    /// </summary>
+    /// <param name="clientId"> the id of the player that Rolled his Dice </param>
+    /// <param name="DiceRolled"> The number of the DiceRoll </param>
     public void SaveDiceRoll(int clientId, int DiceRolled)
     {
         for (int i = 0; i < maxPlayer + 1; i++)
@@ -266,17 +271,24 @@ public class GamePlay : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// Opens the Roll again Window on the Clients
+    /// </summary>
+    /// <param name="ClientId"> Id of the player that have the same Dice numbers </param>
     public void RollAgain(int ClientId)
     {
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(ClientId, "Roll Again");
     }
-
+    /// <summary>
+    /// Opens the Rolling Window on the Clients to determine startPlayer
+    /// </summary>
     public void InitializeGame()
     {
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("PlayerOrder");
     }
-
+    /// <summary>
+    /// Determine Starting Player from Client Dice Rolls
+    /// </summary>
     public void InitializeNewPlayerOrder()
     {
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("FinishOrderRoll");
@@ -294,11 +306,11 @@ public class GamePlay : MonoBehaviour
                 }
             }
         }
-
-        
-
     }
     public bool running = false;
+    /// <summary>
+    /// Initiate the game with the first 2 Building round before the actual game Starts
+    /// </summary>
     public void BeginBuilding()
     {
 
@@ -330,15 +342,15 @@ public class GamePlay : MonoBehaviour
     
     public void StartGame()
     {
-        for (int i = 0; i < players.Length; i++)
-        {
-            //players[i].inventory.AddItem("Brick", 4);
-            //players[i].inventory.AddItem("Wheat", 2);
-            //players[i].inventory.AddItem("Wood", 4);
-            //players[i].inventory.AddItem("Wool", 2);
+        //for (int i = 0; i < players.Length; i++)
+        //{
+        //    players[i].inventory.AddItem("Brick", 4);
+        //    players[i].inventory.AddItem("Wheat", 2);
+        //    players[i].inventory.AddItem("Wood", 4);
+        //    players[i].inventory.AddItem("Wool", 2);
 
-            //UpdateInventory(players[i].clientID);
-        }
+        //    //UpdateInventory(players[i].clientID);
+        //}
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(GamePlay.main.GetCurrentPlayer().clientID, "Go");
         gameStarted = true;
     }
@@ -367,7 +379,9 @@ public class GamePlay : MonoBehaviour
     }
     bool secondRoundStarted = false;
     bool realGameStarted = false;
-
+    /// <summary>
+    /// changes the current Player to the next number
+    /// </summary>
     public void NextPlayer()
     {
         Debug.Log("Called!");
@@ -422,7 +436,10 @@ public class GamePlay : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// Return the Player who is actually Playing
+    /// </summary>
+    /// <returns></returns>
     public Player GetCurrentPlayer()
     {
         return players[currentPlayer];
@@ -435,6 +452,10 @@ public class GamePlay : MonoBehaviour
 
         CreateAnimatedRessource(ressourceName, color);
     }
+    /// <summary>
+    /// Give the players the Ressource of the Rolled Ressourcenumber
+    /// </summary>
+    /// <param name="number"> Dice Rolled Number </param>
     public void DistributeRolledRessources(int number)
     {
         if (gameStarted)
@@ -485,41 +506,28 @@ public class GamePlay : MonoBehaviour
             }
         }
     }
-
+    /// <summary>
+    /// Give the players Ressources for their second build Village
+    /// </summary>
     public void DistributeSecondVillageRessources()
     {
-        //for (int i = 0; i < GameBoard.MainBoard.tilesGrid.Length; i++)
-        //{
-        //    for (int j = 0; j < GameBoard.MainBoard.tilesGrid[i].Length; j++)
-        //    {
-        //        for (int k = 0; k < GameBoard.MainBoard.tilesGrid[i][j].pawns.Length; k++)
-        //        {
-        //            if (GameBoard.MainBoard.tilesGrid[i][j].pawns[k] != null)
-        //            {
-        //                if (GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2] != null)
-        //                {
+        
         int counter = 0;
         for (int l = 0; l < GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2].GetFields().Length; l++)
 
-        {
-            
+        { 
             GetCurrentPlayer().inventory.AddItem(GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2].GetFields()[l].resourceName);
-
-            //CreateAnimatedRessource(GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2].GetFields()[l].resourceName, GetCurrentPlayer().color);
-
             StartCoroutine(WaitTimer(counter, GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2].GetFields()[l].resourceName, GetCurrentPlayer().color));
             UpdateInventory(GetCurrentPlayer().clientID);
 
             counter++;
         }
-        //                }
-
-        //            }
-        //        }
-        //    }
-        //}
     }
-
+    /// <summary>
+    /// Given Ressource fly to the handcard of the designated Color
+    /// </summary>
+    /// <param name="ressource"> The name of the Ressource </param>
+    /// <param name="playerColor"> The Color of the Player </param>
     public void CreateAnimatedRessource(string ressource, string playerColor)
     {
         
@@ -642,7 +650,10 @@ public class GamePlay : MonoBehaviour
 
         return result;
     }
-
+    /// <summary>
+    /// Updates the Inventory of the given Player
+    /// </summary>
+    /// <param name="clientID"> The Player which inventory should be updated </param>
     public void UpdateInventory(int clientID)
     {
         //string stringTemp;
@@ -782,11 +793,13 @@ public class GamePlay : MonoBehaviour
         }
     }
     
-
+    /// <summary>
+    /// What happens when Victory conditions are met, called in Player atm
+    /// </summary>
+    /// <param name="color"> The color of the Player who Won </param>
     public void GameWon(string color)
     {
         VictoryWindow.SetActive(true);
-        //GameObject.Find("Window").transform.Find("VictoryWindow").gameObject.SetActive(true);
         GameObject.Find("TextManager").GetComponent<HostTextManager>().WinText.text = "Player " + color + " Won!";
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("ServerFull");
 

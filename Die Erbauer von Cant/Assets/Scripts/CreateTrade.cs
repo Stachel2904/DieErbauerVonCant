@@ -81,7 +81,9 @@ public class CreateTrade : MonoBehaviour {
 
         
     }
-
+    /// <summary>
+    /// Updates the Text of the Playertrading Ressources texts
+    /// </summary>
     public void UpdateTradingRessources()
     {
         GameObject.Find("ClientTextManager").GetComponent<TextManager>().text11.text = createdTrade.givenRessources[0].ToString();
@@ -96,7 +98,9 @@ public class CreateTrade : MonoBehaviour {
         GameObject.Find("ClientTextManager").GetComponent<TextManager>().text19.text = createdTrade.askedRessources[3].ToString();
         GameObject.Find("ClientTextManager").GetComponent<TextManager>().text20.text = createdTrade.askedRessources[4].ToString();
     }
-
+    /// <summary>
+    /// Determines what happens when the Player starts Trading
+    /// </summary>
     public void StartedTrading()
     {
         createdTrade.giver = GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.color;
@@ -105,46 +109,67 @@ public class CreateTrade : MonoBehaviour {
 
         GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("Player started Trading");
     }
-
+    /// <summary>
+    /// Determines what happens when the Player stops Trading
+    /// </summary>
     public void StoppedTrading()
     {
         GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("Player stopped Trading");
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.SetActive(true);
     }
-
+    /// <summary>
+    /// Saves the Color of the Player that gets the offer
+    /// </summary>
+    /// <param name="color"> Color of the Player that gets the offer </param>
     public void createAskedPlayer(string color)
     {
         createdTrade.taker = color;
     }
 
-
+    /// <summary>
+    /// Increase the Ressource the current Player wants to Trade
+    /// </summary>
+    /// <param name="name"> The name of the Ressource </param>
     public void inkrementGivenRessource(string name)
     {
         createdTrade.AddGivenRessource(name);
     }
-
+    /// <summary>
+    /// Decrease the Ressource the current Player wants to Trade
+    /// </summary>
+    /// <param name="name"> The name of the Ressource </param>
     public void dekrementGivenRessource(string name)
     {
         createdTrade.RemoveGivenRessource(name);
     }
-
+    /// <summary>
+    /// Increase the Ressource the current Player wants to get
+    /// </summary>
+    /// <param name="name"> the name of the Ressource </param>
     public void inkrementAskedRessource(string name)
     {
         createdTrade.AddAskedRessource(name);
     }
-
+    /// <summary>
+    /// Decrease the Ressource the current Player wants to get
+    /// </summary>
+    /// <param name="name"> the name of the Ressource </param>
     public void dekrementAskedRessource(string name)
     {
         createdTrade.RemoveAskedRessource(name);
     }
-
+    /// <summary>
+    /// Determines what happens if the Trade ends
+    /// </summary>
     public void FinishPlayerTrade()
     {
         GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendTradeToServer(createdTrade);
         GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("Player accepted Trading");
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.SetActive(true);
     }
-
+    /// <summary>
+    /// sends the saved Trade to the asked Player
+    /// </summary>
     public void tradeAsking()
     {
         GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendTradeToServer(createdTrade);
