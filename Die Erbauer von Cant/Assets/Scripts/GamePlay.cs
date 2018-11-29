@@ -428,16 +428,25 @@ public class GamePlay : MonoBehaviour
         return players[currentPlayer];
     }
 
+    IEnumerator WaitTimer(float time, string ressourceName, string color)
+    {
+
+        yield return new WaitForSeconds(time);
+
+        CreateAnimatedRessource(ressourceName, color);
+    }
     public void DistributeRolledRessources(int number)
     {
         if (gameStarted)
         {
             for (int i = 0; i < GameBoard.MainBoard.tilesGrid.Length; i++)
             {
+                int counter = 0;
                 for (int j = 0; j < GameBoard.MainBoard.tilesGrid[i].Length; j++)
                 {
                     if (GameBoard.MainBoard.tilesGrid[i][j].chipNumber == number)
                     {
+                        counter++;
                         for (int k = 0; k < GameBoard.MainBoard.tilesGrid[i][j].pawns.Length; k++)
                         {
                             if (GameBoard.MainBoard.tilesGrid[i][j].pawns[k] != null)
@@ -449,7 +458,8 @@ public class GamePlay : MonoBehaviour
                                         if (players[l].color == GameBoard.MainBoard.tilesGrid[i][j].pawns[k].color)
                                         {
                                             players[l].inventory.AddItem(GameBoard.MainBoard.tilesGrid[i][j].resourceName);
-                                            CreateAnimatedRessource(GameBoard.MainBoard.tilesGrid[i][j].resourceName, players[l].color);
+                                            WaitTimer(0.5f * l + (counter * players.Length * 0.5f), GameBoard.MainBoard.tilesGrid[i][j].resourceName, players[l].color);
+                                            //CreateAnimatedRessource(GameBoard.MainBoard.tilesGrid[i][j].resourceName, players[l].color);
                                             UpdateInventory(players[l].clientID);
                                         }
                                     }
@@ -461,7 +471,8 @@ public class GamePlay : MonoBehaviour
                                         if (players[l].color == GameBoard.MainBoard.tilesGrid[i][j].pawns[k].color)
                                         {
                                             players[l].inventory.AddItem(GameBoard.MainBoard.tilesGrid[i][j].resourceName, 2);
-                                            CreateAnimatedRessource(GameBoard.MainBoard.tilesGrid[i][j].resourceName, players[l].color);
+                                            WaitTimer(0.5f * l + (counter * players.Length * 0.5f), GameBoard.MainBoard.tilesGrid[i][j].resourceName, players[l].color);
+                                            //CreateAnimatedRessource(GameBoard.MainBoard.tilesGrid[i][j].resourceName, players[l].color);
                                             UpdateInventory(players[l].clientID);
                                         }
                                     }
@@ -476,51 +487,36 @@ public class GamePlay : MonoBehaviour
 
     public void DistributeSecondVillageRessources()
     {
-        for (int i = 0; i < GameBoard.MainBoard.tilesGrid.Length; i++)
+        //for (int i = 0; i < GameBoard.MainBoard.tilesGrid.Length; i++)
+        //{
+        //    for (int j = 0; j < GameBoard.MainBoard.tilesGrid[i].Length; j++)
+        //    {
+        //        for (int k = 0; k < GameBoard.MainBoard.tilesGrid[i][j].pawns.Length; k++)
+        //        {
+        //            if (GameBoard.MainBoard.tilesGrid[i][j].pawns[k] != null)
+        //            {
+        //                if (GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2] != null)
+        //                {
+        int counter = 0;
+        for (int l = 0; l < GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2].GetFields().Length; l++)
+
         {
-            for (int j = 0; j < GameBoard.MainBoard.tilesGrid[i].Length; j++)
-            {
-                for (int k = 0; k < GameBoard.MainBoard.tilesGrid[i][j].pawns.Length; k++)
-                {
-                    if (GameBoard.MainBoard.tilesGrid[i][j].pawns[k] != null)
-                    {
-                        if (GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2] != null)
-                        {
-                            for (int l = 0; l < GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2].GetFields().Length; l++)
-                            {
-                                GetCurrentPlayer().inventory.AddItem(GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2].GetFields()[l].resourceName);
-                                CreateAnimatedRessource(GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2].GetFields()[l].resourceName, GetCurrentPlayer().color);
-                                UpdateInventory(GetCurrentPlayer().clientID);
+            
+            GetCurrentPlayer().inventory.AddItem(GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2].GetFields()[l].resourceName);
 
+            CreateAnimatedRessource(GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2].GetFields()[l].resourceName, GetCurrentPlayer().color);
 
-                                //switch (GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2].GetFields()[l].resourceName)
-                                //{
-                                //    case "Brick":
+            WaitTimer(0.5f * l + (counter * GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2].GetFields().Length * 0.5f), GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2].GetFields()[l].resourceName, GetCurrentPlayer().color);
+            UpdateInventory(GetCurrentPlayer().clientID);
 
-                                //        break;
-                                //    case "Wheat":
-
-                                //        break;
-                                //    case "Ore":
-
-                                //        break;
-                                //    case "Wood":
-
-                                //        break;
-                                //    case "Wool":
-
-                                //        break;
-                                //    default:
-                                //        break;
-                                //}
-                                
-                            }
-                        }
-                        
-                    }
-                }
-            }
+            counter++;
         }
+        //                }
+
+        //            }
+        //        }
+        //    }
+        //}
     }
 
     public void CreateAnimatedRessource(string ressource, string playerColor)
@@ -790,7 +786,9 @@ public class GamePlay : MonoBehaviour
     {
         VictoryWindow.SetActive(true);
         //GameObject.Find("Window").transform.Find("VictoryWindow").gameObject.SetActive(true);
-        GameObject.Find("TextManager").GetComponent<HostTextManager>().WinText.text = "Player " + color + "Won!";
+        GameObject.Find("TextManager").GetComponent<HostTextManager>().WinText.text = "Player " + color + " Won!";
+        GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("ServerFull");
+
     }
 
     private void Update()
