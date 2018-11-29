@@ -175,8 +175,14 @@ public class GamePlayClient : MonoBehaviour {
         GameBoard.MainBoard.pawns[(int)ConvertColor(buildedPawn.color)].Add(buildedPawn);
         for (int i = 0; i < usedFields.Length; i++)
         {
-            if (usedFields[i] != null) {
+            if (usedFields[i] != null)
+            {
+                Pawn oldPawn = GameBoard.MainBoard.tilesGrid[usedFields[i].row][usedFields[i].column].pawns[posAtField[i]];
                 GameBoard.MainBoard.tilesGrid[usedFields[i].row][usedFields[i].column].pawns[posAtField[i]] = buildedPawn;
+                if (oldPawn != null)
+                {
+                    GameBoard.MainBoard.pawns[(int)ConvertColor(oldPawn.color)].Remove(oldPawn);
+                }
             }
         }
 
