@@ -261,5 +261,6 @@ public class CreateTrade : MonoBehaviour {
         
         GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendCreateTradeToServer(temp4to1Ressource, ressource);
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.SetActive(true);
+        GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("Player stopped Trading");
     }    
 }
