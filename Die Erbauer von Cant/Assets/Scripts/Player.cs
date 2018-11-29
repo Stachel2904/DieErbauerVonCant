@@ -29,7 +29,7 @@ public class Player
 	public void AddVictoryPoints()
     {
         victoryPoints++;
-        GameObject.Find("NetworkServerManager").GetComponent<NetworkServerGUI>().UpdateVictoryPoints(color);
+        GameObject.Find("ServerManager").GetComponent<NetworkServerGUI>().UpdateVictoryPoints(color);
         if (victoryPoints == 4)
         {
             GamePlay.Main.GameWon(color);
