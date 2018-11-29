@@ -12,6 +12,7 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         NetworkServer.RegisterHandler(892, ReciveFieldUpdateMessage);
         NetworkServer.RegisterHandler(894, ReciveFieldUpdateMessage2);
         NetworkServer.RegisterHandler(893, ReciveCreateTradeMessage);
+        NetworkServer.RegisterHandler(895, ReciveNameMessage);
         NetworkServer.RegisterHandler(MsgType.Connect, ServerOnClientConnect);
         NetworkServer.RegisterHandler(MsgType.Disconnect, ServerOnClientDisconnect);
     }
@@ -104,6 +105,15 @@ public class NetworkServerMessageHandler : MonoBehaviour {
                 break;
         }
     }
+    private void ReciveNameMessage(NetworkMessage _message_) {
+        _message_.reader.SeekZero();
+        for (int i = 0; i < 4; i++) {
+            if (_message_.conn.connectionId == GamePlay.Main.players[i].clientID) {
+                GamePlay.Main.players[i].name = _message_.ReadMessage<NetMessage>().command;
+                GetComponent<NetworkServerGUI>().AddConnectedPlayerAvatar(_message_.conn.connectionId);
+            }
+        }
+    }
     //Recieve trade message from Client
     private void ReciveTradeMessage(NetworkMessage _message_) {
         Debug.Log("RECIVED A TRADEMESSAGE!");
@@ -144,26 +154,20 @@ public class NetworkServerMessageHandler : MonoBehaviour {
     string tempPawn;
     string tempColor;
     private void ReciveFieldUpdateMessage(NetworkMessage _message_) {
-        Debug.Log("[[RECIVE]Server FIELD UPDATE] Recived a Message.. start..");
         FieldMessage fieldMSG = new FieldMessage();
         _message_.reader.SeekZero();
         fieldMSG.pawn = _message_.ReadMessage<FieldMessage>().pawn;
         string[] deltas = fieldMSG.pawn.Split('|');
         tempPawn = deltas[0];
         tempColor = deltas[1];
-        Debug.Log("[[RECIVE]Server FIELD UPDATE] Recived a Message.. end..");
     }
     private void ReciveFieldUpdateMessage2(NetworkMessage _message_) {
-        Debug.Log("[[RECIVE]Server FIELD UPDATE 2] Recived a Message.. start..");
         FieldMessage2 fieldMSG2 = new FieldMessage2();
         _message_.reader.SeekZero();
         fieldMSG2.place = _message_.ReadMessage<FieldMessage2>().place;
-        GamePlay.Main.UpdateBoard(new Pawn(tempPawn, tempColor), fieldMSG2.place); //ToDo: In GamePlay eine UpdateBoardFunktion, die Gebüde setzt und die Rohstoffe vom betreffenden Spieler entfernt!
+        GamePlay.Main.UpdateBoard(new Pawn(tempPawn, tempColor), fieldMSG2.place);
         SendFieldUpdateToClient(tempPawn, tempColor, fieldMSG2.place);
         GameObject.Find("GamePlay").GetComponent<GamePlay>().UpdateInventory(_message_.conn.connectionId);
-        Debug.Log("[RECIVE] PAWN:" + tempPawn + " / " + tempColor);
-        Debug.Log("[RECIVE] PLACE:" + fieldMSG2.place);
-        Debug.Log("[[RECIVE]Server FIELD UPDATE 2] Recived a Message.. end..");
     }
     //Send to Client
     public void SendToClient(int _ClientID_, string _command_) {

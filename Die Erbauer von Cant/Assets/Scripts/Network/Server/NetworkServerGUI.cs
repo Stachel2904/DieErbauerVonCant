@@ -137,7 +137,9 @@ public class NetworkServerGUI : MonoBehaviour {
     //
     //
     private void AddAvatar(int _player_, Image _playerAvatar_) {
-        _playerAvatar_.gameObject.SetActive(true);
+        if (_playerAvatar_.gameObject.activeSelf == false) {
+            _playerAvatar_.gameObject.SetActive(true);
+        }
         _playerAvatar_.transform.Find("Playername").GetComponent<Text>().text = GamePlay.Main.players[_player_].name;
         GamePlay.Main.players[_player_].avatar = "Player" + (_player_ + 1).ToString();
         _playerAvatar_.GetComponent<Image>().color = ctemp;
@@ -146,10 +148,6 @@ public class NetworkServerGUI : MonoBehaviour {
         _playerAvatar_.transform.Find("Playername").GetComponent<Text>().text = "Player";
         _playerAvatar_.GetComponent<Image>().color = Color.gray;
         GamePlay.Main.players[_player_].avatar = "DEFAULT";
-        //GamePlay.Main.players[_player_].victoryPoints = 0;
-        //_playerAvatar_.transform.Find("Victorypoints").GetComponent<Text>().text = "0";
-        //GamePlay.Main.players[_player_].hand = 0;
-        //_playerAvatar_.transform.Find("Hand").GetComponent<Text>().text = "0";
         _playerAvatar_.gameObject.SetActive(false);
     }
 }
