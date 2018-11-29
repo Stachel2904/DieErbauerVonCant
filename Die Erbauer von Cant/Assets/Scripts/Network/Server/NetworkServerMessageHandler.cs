@@ -3,22 +3,9 @@ using UnityEngine.Networking;
 
 public class NetworkServerMessageHandler : MonoBehaviour {
 
-    bool init = false;
     public int slots = 4;
     public int blockedSlots = 0;
 
-    private void Update() {
-        if(init == true) {
-            if (blockedSlots == slots && NetworkServer.dontListen == false) {
-                NetworkServer.dontListen = true;
-                Debug.Log("Server Full! Server stops listening for new clients!");
-            }
-            else if (blockedSlots < slots && NetworkServer.dontListen == true) {
-                NetworkServer.dontListen = false;
-                Debug.Log("Server starts listening for new clients!");
-            }
-        }
-    }
     public void InitRecivingMessages() {
         NetworkServer.RegisterHandler(888, ServerReciveMessage);
         NetworkServer.RegisterHandler(889, ReciveTradeMessage);
@@ -27,33 +14,37 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         NetworkServer.RegisterHandler(893, ReciveCreateTradeMessage);
         NetworkServer.RegisterHandler(MsgType.Connect, ServerOnClientConnect);
         NetworkServer.RegisterHandler(MsgType.Disconnect, ServerOnClientDisconnect);
-        init = true;
     }
     //Connect from Client
     private void ServerOnClientConnect(NetworkMessage _message_) {
         Debug.Log("[Client ID: " + _message_.conn.connectionId + "] Client connected!");
-        GetComponent<NetworkServerUI>().AddConnectedPlayer(_message_.conn.connectionId);
-        GetComponent<NetworkServerGUI>().AddConnectedPlayerAvatar(_message_.conn.connectionId);
-        blockedSlots++;
-        if(GamePlay.Main.running == true) {
-            SendToClient(_message_.conn.connectionId, "Start");
-            for (int i = 0; i < GameBoard.MainBoard.pawns.Length; i++) {
-                for (int j = 0; j < GameBoard.MainBoard.pawns[i].Count; j++) {
-                    Pawn tempPawn = GameBoard.MainBoard.pawns[i][j];
-                    int[] place = new int[tempPawn.GetFields().Length * 3];
-                    for (int y = 0; y < place.Length; y += 3) {
-                        place[y] = tempPawn.GetFields()[y / 3].row;
-                        place[y + 1] = tempPawn.GetFields()[y / 3].column;
-                        place[y + 2] = tempPawn.GetPosAtField()[y / 3];
+        if (blockedSlots == slots) {
+            SendToClient(_message_.conn.connectionId, "ServerFull");
+        }
+        else {
+            GetComponent<NetworkServerUI>().AddConnectedPlayer(_message_.conn.connectionId);
+            GetComponent<NetworkServerGUI>().AddConnectedPlayerAvatar(_message_.conn.connectionId);
+            blockedSlots++;
+            if (GamePlay.Main.running == true) {
+                SendToClient(_message_.conn.connectionId, "Start");
+                for (int i = 0; i < GameBoard.MainBoard.pawns.Length; i++) {
+                    for (int j = 0; j < GameBoard.MainBoard.pawns[i].Count; j++) {
+                        Pawn tempPawn = GameBoard.MainBoard.pawns[i][j];
+                        int[] place = new int[tempPawn.GetFields().Length * 3];
+                        for (int y = 0; y < place.Length; y += 3) {
+                            place[y] = tempPawn.GetFields()[y / 3].row;
+                            place[y + 1] = tempPawn.GetFields()[y / 3].column;
+                            place[y + 2] = tempPawn.GetPosAtField()[y / 3];
+                        }
+                        SendFieldUpdateToClient(tempPawn.type, tempPawn.color, place);
                     }
-                    SendFieldUpdateToClient(tempPawn.type, tempPawn.color, place);
                 }
-            }
-            GamePlay.Main.UpdateInventory(_message_.conn.connectionId);
-            if (_message_.conn.connectionId == GamePlay.Main.GetCurrentPlayer().clientID) {
-                SendToClient(_message_.conn.connectionId, "Go");
-            }
+                GamePlay.Main.UpdateInventory(_message_.conn.connectionId);
+                if (_message_.conn.connectionId == GamePlay.Main.GetCurrentPlayer().clientID) {
+                    SendToClient(_message_.conn.connectionId, "Go");
+                }
 
+            }
         }
     }
     private void ServerOnClientDisconnect(NetworkMessage _message_) {

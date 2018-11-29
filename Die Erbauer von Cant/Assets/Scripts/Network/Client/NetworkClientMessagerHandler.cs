@@ -97,7 +97,6 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         _message_.reader.SeekZero();
         switch (_message_.ReadMessage<NetMessage>().command) {
             case "Go":
-                //AskForReadyHere (Send AcceptMessage)
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("TradeButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("BuildButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("Next Player").GetComponent<Button>().interactable = true;
@@ -149,6 +148,9 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
                 break;
             case "FinishOrderRoll":
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().WaitRollScreen.SetActive(false);
+                break;
+            case "ServerFull":
+                SceneManager.LoadScene("main");
                 break;
             default:
                 Debug.LogError("Can not read message from Server!");
