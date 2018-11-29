@@ -446,7 +446,7 @@ public class GamePlay : MonoBehaviour
                 {
                     if (GameBoard.MainBoard.tilesGrid[i][j].chipNumber == number)
                     {
-                        counter++;
+                        
                         for (int k = 0; k < GameBoard.MainBoard.tilesGrid[i][j].pawns.Length; k++)
                         {
                             if (GameBoard.MainBoard.tilesGrid[i][j].pawns[k] != null)
@@ -458,7 +458,7 @@ public class GamePlay : MonoBehaviour
                                         if (players[l].color == GameBoard.MainBoard.tilesGrid[i][j].pawns[k].color)
                                         {
                                             players[l].inventory.AddItem(GameBoard.MainBoard.tilesGrid[i][j].resourceName);
-                                            WaitTimer(0.5f * l + (counter * players.Length * 0.5f), GameBoard.MainBoard.tilesGrid[i][j].resourceName, players[l].color);
+                                            StartCoroutine(WaitTimer(0.5f * l + (counter * players.Length * 0.5f), GameBoard.MainBoard.tilesGrid[i][j].resourceName, players[l].color));
                                             //CreateAnimatedRessource(GameBoard.MainBoard.tilesGrid[i][j].resourceName, players[l].color);
                                             UpdateInventory(players[l].clientID);
                                         }
@@ -471,7 +471,7 @@ public class GamePlay : MonoBehaviour
                                         if (players[l].color == GameBoard.MainBoard.tilesGrid[i][j].pawns[k].color)
                                         {
                                             players[l].inventory.AddItem(GameBoard.MainBoard.tilesGrid[i][j].resourceName, 2);
-                                            WaitTimer(0.5f * l + (counter * players.Length * 0.5f), GameBoard.MainBoard.tilesGrid[i][j].resourceName, players[l].color);
+                                            StartCoroutine(WaitTimer(0.5f * l + (counter * players.Length * 0.5f), GameBoard.MainBoard.tilesGrid[i][j].resourceName, players[l].color));
                                             //CreateAnimatedRessource(GameBoard.MainBoard.tilesGrid[i][j].resourceName, players[l].color);
                                             UpdateInventory(players[l].clientID);
                                         }
@@ -479,6 +479,7 @@ public class GamePlay : MonoBehaviour
                                 }
                             }
                         }
+                        counter++;
                     }
                 }
             }
@@ -504,9 +505,9 @@ public class GamePlay : MonoBehaviour
             
             GetCurrentPlayer().inventory.AddItem(GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2].GetFields()[l].resourceName);
 
-            CreateAnimatedRessource(GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2].GetFields()[l].resourceName, GetCurrentPlayer().color);
+            //CreateAnimatedRessource(GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2].GetFields()[l].resourceName, GetCurrentPlayer().color);
 
-            WaitTimer(0.5f * l + (counter * GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2].GetFields().Length * 0.5f), GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2].GetFields()[l].resourceName, GetCurrentPlayer().color);
+            StartCoroutine(WaitTimer(counter, GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2].GetFields()[l].resourceName, GetCurrentPlayer().color));
             UpdateInventory(GetCurrentPlayer().clientID);
 
             counter++;
