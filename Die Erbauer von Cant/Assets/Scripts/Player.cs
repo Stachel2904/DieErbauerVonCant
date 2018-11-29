@@ -30,11 +30,11 @@ public class Player
     {
         victoryPoints++;
         GameObject.Find("NetworkServerManager").GetComponent<NetworkServerGUI>().UpdateVictoryPoints(color);
-        if (victoryPoints == 3)
+        if (victoryPoints == 4)
         {
             GamePlay.Main.GameWon(color);
         }
-       
+        
     }
 	
 }

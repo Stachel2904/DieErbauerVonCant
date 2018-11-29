@@ -332,12 +332,12 @@ public class GamePlay : MonoBehaviour
     {
         for (int i = 0; i < players.Length; i++)
         {
-            players[i].inventory.AddItem("Brick", 4);
-            players[i].inventory.AddItem("Wheat", 2);
-            players[i].inventory.AddItem("Wood", 4);
-            players[i].inventory.AddItem("Wool", 2);
+            //players[i].inventory.AddItem("Brick", 4);
+            //players[i].inventory.AddItem("Wheat", 2);
+            //players[i].inventory.AddItem("Wood", 4);
+            //players[i].inventory.AddItem("Wool", 2);
 
-            UpdateInventory(players[i].clientID);
+            //UpdateInventory(players[i].clientID);
         }
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(GamePlay.main.GetCurrentPlayer().clientID, "Go");
         gameStarted = true;
@@ -472,7 +472,55 @@ public class GamePlay : MonoBehaviour
                 }
             }
         }
-        
+    }
+
+    public void DistributeSecondVillageRessources()
+    {
+        for (int i = 0; i < GameBoard.MainBoard.tilesGrid.Length; i++)
+        {
+            for (int j = 0; j < GameBoard.MainBoard.tilesGrid[i].Length; j++)
+            {
+                for (int k = 0; k < GameBoard.MainBoard.tilesGrid[i][j].pawns.Length; k++)
+                {
+                    if (GameBoard.MainBoard.tilesGrid[i][j].pawns[k] != null)
+                    {
+                        if (GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2] != null)
+                        {
+                            for (int l = 0; l < GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2].GetFields().Length; l++)
+                            {
+                                GetCurrentPlayer().inventory.AddItem(GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2].GetFields()[l].resourceName);
+                                CreateAnimatedRessource(GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2].GetFields()[l].resourceName, GetCurrentPlayer().color);
+                                UpdateInventory(GetCurrentPlayer().clientID);
+
+
+                                //switch (GameBoard.MainBoard.pawns[(int)ConvertColor(GetCurrentPlayer().color)][2].GetFields()[l].resourceName)
+                                //{
+                                //    case "Brick":
+
+                                //        break;
+                                //    case "Wheat":
+
+                                //        break;
+                                //    case "Ore":
+
+                                //        break;
+                                //    case "Wood":
+
+                                //        break;
+                                //    case "Wool":
+
+                                //        break;
+                                //    default:
+                                //        break;
+                                //}
+                                
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        }
     }
 
     public void CreateAnimatedRessource(string ressource, string playerColor)
@@ -506,8 +554,7 @@ public class GamePlay : MonoBehaviour
 
         if (buildedPawn.type != "Street")
         {
-            GetCurrentPlayer().victoryPoints++;
-            GameObject.Find("ServerManager").GetComponent<NetworkServerGUI>().UpdateVictoryPoints(buildedPawn.color);
+            GetCurrentPlayer().AddVictoryPoints();
         }
 
         //Pawn kreieren (erst nur mesh, dann Farbe, dann position)

@@ -69,6 +69,11 @@ public class GamePlayClient : MonoBehaviour {
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("Next Player").GetComponent<Button>().interactable = false;
     }
 
+    public void RequestSecondVillageRessources()
+    {
+        GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("Get Second Village Ressources");
+    }
+
     #region Build
     /// <summary>
     /// Check if you have enough Ressources and print possible Positions

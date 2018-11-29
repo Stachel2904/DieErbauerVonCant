@@ -96,6 +96,9 @@ public class NetworkServerMessageHandler : MonoBehaviour {
             case "GetOrderRoll":
                 DiceGenerator.Main.GetOrderRoll(_message_.conn.connectionId);
                 break;
+            case "Get Second Village Ressources":
+                GamePlay.Main.DistributeSecondVillageRessources();
+                break;
             default:
                 Debug.LogError("Can not read message from Client: " + _message_.conn.connectionId);
                 break;

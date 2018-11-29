@@ -149,27 +149,28 @@ public class GameBoard
     }
 
     
-    public void SpreadResources(int rolledNumber)
-    {
-        for (int i = 0; i < tiles.Length; i++)
-        {
-            if (rolledNumber == tiles[i].chipNumber)
-            {
-                foreach (var element in tiles[i].pawns)
-                {
-                    if (element.type == "village")
-                    {
-                        GamePlay.Main.GetCurrentPlayer().inventory.AddItem(tiles[i].resourceName, 1);
-                    }
-                    if (element.type == "Town")
-                    {
-                        GamePlay.Main.GetCurrentPlayer().inventory.AddItem(tiles[i].resourceName, 2);
-                    }
+    //public void SpreadResources(int rolledNumber)
+    //{
+    //    for (int i = 0; i < tiles.Length; i++)
+    //    {
+    //        if (rolledNumber == tiles[i].chipNumber)
+    //        {
+    //            foreach (var element in tiles[i].pawns)
+    //            {
+    //                if (element.type == "village")
+    //                {
+    //                    GamePlay.Main.GetCurrentPlayer().inventory.AddItem(tiles[i].resourceName, 1);
+    //                }
+    //                if (element.type == "Town")
+    //                {
+    //                    GamePlay.Main.GetCurrentPlayer().inventory.AddItem(tiles[i].resourceName, 2);
+    //                }
                     
-                }
-            }
-        }
-    }
+    //            }
+    //        }
+    //    }
+    //}
+
 
     public Place[] GetAllPositions(Pawn buildedPawn, bool godmode = false)
     {
@@ -721,6 +722,7 @@ public class GameBoard
                                     newPlace.usedFields = currentFields;
                                     newPlace.posAtField = currentPos;
                                     possiblePositions.Add(newPlace);
+                                    
                                 }
                             }
                         }
