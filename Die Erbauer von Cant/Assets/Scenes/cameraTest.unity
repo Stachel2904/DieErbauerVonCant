@@ -221,17 +221,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1e4cbca25e5594a983844872844fe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diceOutputImage:
-  - {fileID: 1334547632}
-  - {fileID: 1205208804}
-  diceSprites:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  rolledNumber: 0
 --- !u!1001 &387596737
 Prefab:
   m_ObjectHideFlags: 0

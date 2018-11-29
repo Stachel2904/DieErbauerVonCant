@@ -46,9 +46,10 @@ public class GamePlayClient : MonoBehaviour {
         }
 
         GameObject.Find("OwnColor").GetComponent<Image>().color = ownColor;
-        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildSelection.transform.Find("Street").GetChild(0).gameObject.GetComponent<Image>().color = ownColor;
-        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildSelection.transform.Find("Village").GetChild(0).gameObject.GetComponent<Image>().color = ownColor;
-        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildSelection.transform.Find("Town").GetChild(0).gameObject.GetComponent<Image>().color = ownColor;
+        for (int i = 0; i < GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().PawnSprites.Length; i++)
+        {
+            GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().PawnSprites[i].color = ownColor;
+        }
 
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildSelection.transform.Find("Street").gameObject.GetComponent<Button>().onClick.AddListener(delegate { TryBuild("Street"); });
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().BuildSelection.transform.Find("Village").gameObject.GetComponent<Button>().onClick.AddListener(delegate { TryBuild("Village"); });
@@ -98,10 +99,17 @@ public class GamePlayClient : MonoBehaviour {
         {
             Debug.Log("Du kannst nirgendwo ein" + ((buildedPawn.type == "Village") ? " Dorf" : ((buildedPawn.type == "Street") ? "e Straße" : "e Stadt")) + " bauen...");
             GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.SetActive(true);
+            return;
         }
 
         for (int i = 0; i < possiblePlaces.Length; i++)
         {
+            if (possiblePlaces[i].usedFields.Length == 0 || possiblePlaces[i].posAtField.Length == 0)
+            {
+                GameObject.Destroy(possiblePlaces[i].gameObject);
+                continue;
+            }
+
             Vector3 placePosition = GetPosInWorld(possiblePlaces[i].usedFields[0], possiblePlaces[i].posAtField[0], buildedPawn.type);
 
             possiblePlaces[i].gameObject.transform.position = new Vector3(placePosition.x, possiblePlaces[i].gameObject.transform.position.y, placePosition.z);
@@ -115,7 +123,7 @@ public class GamePlayClient : MonoBehaviour {
                 }
             }
 
-            if (Vector3.Distance(placePosition, Vector3.zero) < 0.5f)
+            if (Vector3.Distance(placePosition, Vector3.zero) < 2.5f)
             {
                 GameObject.Destroy(possiblePlaces[i].gameObject);
             }
@@ -147,6 +155,11 @@ public class GamePlayClient : MonoBehaviour {
             posAtField[i / 3] = place[i + 2];
         }
 
+        if(usedFields.Length == 0 || posAtField.Length == 0)
+        {
+            Debug.LogError("Irgendwas ist bei Bauen eines Pawns fehlgeschlagen...");
+            return;
+        }
 
         Vector3 pos = GetPosInWorld(usedFields[0], posAtField[0], buildedPawn.type);
         //Pawn kreieren (erst nur mesh, dann Farbe, dann position)
@@ -170,9 +183,9 @@ public class GamePlayClient : MonoBehaviour {
 
                 if (currentPawn.name == "Village(Clone)")
                 {
-                    if (Vector3.Distance(pos, currentPawn.transform.position) < 0.5f)
+                    if (Vector3.Distance(pos, currentPawn.transform.position) < 2.5f)
                     {
-                        GameObject.Destroy(currentPawn);
+                        GameObject.Destroy(currentPawn.gameObject);
                     }
                 }
             }

@@ -494,8 +494,12 @@ public class GamePlay : MonoBehaviour
             usedFields[i / 3] = GameBoard.MainBoard.tilesGrid[place[i]][place[i + 1]];
 
             posAtField[i / 3] = place[i + 2];
+        }
 
-            Debug.Log(usedFields[i / 3].row.ToString() + " / " + usedFields[i / 3].column.ToString() + " at position " + posAtField[i / 3].ToString());
+        if (usedFields.Length == 0 || posAtField.Length == 0)
+        {
+            Debug.LogError("Irgendwas ist bei Bauen eines Pawns fehlgeschlagen...");
+            return;
         }
 
         Vector3 pos = GetPosInWorld(usedFields[0], posAtField[0], buildedPawn.type);
@@ -529,7 +533,7 @@ public class GamePlay : MonoBehaviour
 
                 if (currentPawn.name == "Village_HQ(Clone)")
                 {
-                    if (Vector3.Distance(pos, currentPawn.transform.position) < 0.5f)
+                    if (Vector3.Distance(pos, currentPawn.transform.position) < 1.0f)
                     {
                         GameObject.Destroy(currentPawn);
                     }
@@ -609,6 +613,10 @@ public class GamePlay : MonoBehaviour
                 GameObject.Find("ServerManager").GetComponent<NetworkServerUI>().UpdateClientInventoryGUI(clientID, "Ore", players[i].inventory.inven["Ore"]);
                 GameObject.Find("ServerManager").GetComponent<NetworkServerUI>().UpdateClientInventoryGUI(clientID, "Wood", players[i].inventory.inven["Wood"]);
                 GameObject.Find("ServerManager").GetComponent<NetworkServerUI>().UpdateClientInventoryGUI(clientID, "Wool", players[i].inventory.inven["Wool"]);
+
+                GameObject.Find("ServerManager").GetComponent<NetworkServerUI>().UpdateClientInventoryGUI(clientID, "Street", players[i].inventory.inven["Street"]);
+                GameObject.Find("ServerManager").GetComponent<NetworkServerUI>().UpdateClientInventoryGUI(clientID, "Village", players[i].inventory.inven["Village"]);
+                GameObject.Find("ServerManager").GetComponent<NetworkServerUI>().UpdateClientInventoryGUI(clientID, "Town", players[i].inventory.inven["Town"]);
 
                 players[i].hand = players[i].inventory.inven["Brick"] + players[i].inventory.inven["Wheat"] + players[i].inventory.inven["Ore"] + players[i].inventory.inven["Wood"] + players[i].inventory.inven["Wool"];
                 GameObject.Find("ServerManager").GetComponent<NetworkServerGUI>().UpdateHand(players[i].clientID);
