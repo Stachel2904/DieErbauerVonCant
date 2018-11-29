@@ -44,19 +44,17 @@ public class Pawn
 
         Field[] fields = GetFields();
 
-        for (int i = 0; i < GameBoard.MainBoard.tilesGrid.Length; i++)
+        for (int i = 0; i < fields.Length; i++)
         {
-            for (int j = 0; j < GameBoard.MainBoard.tilesGrid[i].Length; j++)
+            for (int k = 0; k < fields[i].pawns.Length; k++)
             {
-                for (int k = 0; k < GameBoard.MainBoard.tilesGrid[i][j].pawns.Length; k++)
+                if (fields[i].pawns[k] != null && fields[i].pawns[k].Equals(this))
                 {
-                    if (GameBoard.MainBoard.tilesGrid[i][j].pawns[k] != null && GameBoard.MainBoard.tilesGrid[i][j].pawns[k].Equals(this))
-                    {
-                        result.Add(k);
-                    }
+                    result.Add(k);
                 }
             }
         }
+        
 
         return result.ToArray();
     }

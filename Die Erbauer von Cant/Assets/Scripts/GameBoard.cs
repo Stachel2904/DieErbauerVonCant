@@ -411,6 +411,12 @@ public class GameBoard
                     Field[] currentFields = currentPawn.GetFields();
                     int[] currentPos = currentPawn.GetPosAtField();
 
+                    if(currentFields.Length == 0 || currentPos.Length == 0)
+                    {
+                        Debug.LogError("Hier ist eine Spielfigur ohne Felder");
+                        continue;
+                    }
+
                     if (currentPawn.type == "Street")
                     {
                         /////////////////////////////////
