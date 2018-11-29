@@ -74,6 +74,11 @@ public class GamePlayClient : MonoBehaviour {
         GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("Get Second Village Ressources");
     }
 
+    public void SendCustomName()
+    {
+        GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendNameToServer(GameObject.Find("CustomNameInputField").transform.Find("Text").gameObject.GetComponent<Text>().text);
+    }
+
     #region Build
     /// <summary>
     /// Check if you have enough Ressources and print possible Positions
@@ -175,8 +180,14 @@ public class GamePlayClient : MonoBehaviour {
         GameBoard.MainBoard.pawns[(int)ConvertColor(buildedPawn.color)].Add(buildedPawn);
         for (int i = 0; i < usedFields.Length; i++)
         {
-            if (usedFields[i] != null) {
+            if (usedFields[i] != null)
+            {
+                Pawn oldPawn = GameBoard.MainBoard.tilesGrid[usedFields[i].row][usedFields[i].column].pawns[posAtField[i]];
                 GameBoard.MainBoard.tilesGrid[usedFields[i].row][usedFields[i].column].pawns[posAtField[i]] = buildedPawn;
+                if (oldPawn != null)
+                {
+                    GameBoard.MainBoard.pawns[(int)ConvertColor(oldPawn.color)].Remove(oldPawn);
+                }
             }
         }
 

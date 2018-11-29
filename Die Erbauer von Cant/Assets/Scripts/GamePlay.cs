@@ -565,7 +565,12 @@ public class GamePlay : MonoBehaviour
         {
             if (usedFields[i] != null)
             {
+                Pawn oldPawn = GameBoard.MainBoard.tilesGrid[usedFields[i].row][usedFields[i].column].pawns[posAtField[i]];
                 GameBoard.MainBoard.tilesGrid[usedFields[i].row][usedFields[i].column].pawns[posAtField[i]] = buildedPawn;
+                if(oldPawn != null)
+                {
+                    GameBoard.MainBoard.pawns[(int)ConvertColor(oldPawn.color)].Remove(oldPawn);
+                }
             }
         }
 
