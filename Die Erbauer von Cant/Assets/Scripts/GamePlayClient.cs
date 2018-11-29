@@ -74,6 +74,11 @@ public class GamePlayClient : MonoBehaviour {
         GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("Get Second Village Ressources");
     }
 
+    public void SendCustomName()
+    {
+        GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendNameToServer(GameObject.Find("CustomNameInputField").transform.Find("Text").gameObject.GetComponent<Text>().text);
+    }
+
     #region Build
     /// <summary>
     /// Check if you have enough Ressources and print possible Positions

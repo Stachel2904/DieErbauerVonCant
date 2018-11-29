@@ -91,6 +91,19 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
             Debug.LogError("Client is not connected! Failed to send fieldupdatemessage!");
         }
     }
+    public void SendNameToServer(string _name_) {
+        if (client.isConnected) {
+            NetMessage netMSG = new NetMessage();
+            netMSG.command = _name_;
+            bool success = client.Send(895, netMSG);
+            if (!success) {
+                Debug.LogError("Failed to send namemessage!");
+            }
+        }
+        else {
+            Debug.LogError("Client is not connected! Failed to send namemessage!");
+        }
+    }
     //Recive from Server
     private void ReciveMessageFromServer(NetworkMessage _message_) {
         Debug.Log("RECIVED A MESSAGE!");
