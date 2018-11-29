@@ -3,22 +3,9 @@ using UnityEngine.Networking;
 
 public class NetworkServerMessageHandler : MonoBehaviour {
 
-    bool init = false;
     public int slots = 4;
     public int blockedSlots = 0;
 
-    private void Update() {
-        if(init == true) {
-            if (blockedSlots == slots && NetworkServer.dontListen == false) {
-                NetworkServer.dontListen = true;
-                Debug.Log("Server Full! Server stops listening for new clients!");
-            }
-            else if (blockedSlots < slots && NetworkServer.dontListen == true) {
-                NetworkServer.dontListen = false;
-                Debug.Log("Server starts listening for new clients!");
-            }
-        }
-    }
     public void InitRecivingMessages() {
         NetworkServer.RegisterHandler(888, ServerReciveMessage);
         NetworkServer.RegisterHandler(889, ReciveTradeMessage);
@@ -27,11 +14,13 @@ public class NetworkServerMessageHandler : MonoBehaviour {
         NetworkServer.RegisterHandler(893, ReciveCreateTradeMessage);
         NetworkServer.RegisterHandler(MsgType.Connect, ServerOnClientConnect);
         NetworkServer.RegisterHandler(MsgType.Disconnect, ServerOnClientDisconnect);
-        init = true;
     }
     //Connect from Client
     private void ServerOnClientConnect(NetworkMessage _message_) {
         Debug.Log("[Client ID: " + _message_.conn.connectionId + "] Client connected!");
+        if(blockedSlots == slots) {
+            SendToClient(_message_.conn.connectionId, "ServerFull");
+        }
         GetComponent<NetworkServerUI>().AddConnectedPlayer(_message_.conn.connectionId);
         GetComponent<NetworkServerGUI>().AddConnectedPlayerAvatar(_message_.conn.connectionId);
         blockedSlots++;
