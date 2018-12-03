@@ -58,7 +58,6 @@ public class GamePlayClient : MonoBehaviour {
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("TradeButton").GetComponent<Button>().interactable = false;
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("BuildButton").GetComponent<Button>().interactable = false;
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("Next Player").GetComponent<Button>().interactable = false;
-        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ChooseTradePlayer.transform.Find("Player4Button").GetComponent<Button>().interactable = false;
     }
 
     public void NextPlayer()
