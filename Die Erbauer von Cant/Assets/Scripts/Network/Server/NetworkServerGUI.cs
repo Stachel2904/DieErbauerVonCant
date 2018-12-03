@@ -22,9 +22,10 @@ public class NetworkServerGUI : MonoBehaviour {
     public void AddConnectedPlayerAvatar(int _clientID_) {
         for (int i = 0; i < GamePlay.Main.players.Length ; i++) {
             if (GamePlay.Main.players[i].clientID == _clientID_ && GamePlay.Main.players[i].clientID != -1) {
-                switch (GamePlay.Main.players[i].color) {
+                switch (GamePlay.Main.players[i].color)
+                {
                     case "Orange":
-                        ctemp = new Color(249,166,2);
+                        ctemp = new Color(249, 166, 2);
                         break;
                     case "White":
                         ctemp = Color.white;
@@ -142,7 +143,7 @@ public class NetworkServerGUI : MonoBehaviour {
         }
         _playerAvatar_.transform.Find("Playername").GetComponent<Text>().text = GamePlay.Main.players[_player_].name;
         GamePlay.Main.players[_player_].avatar = "Player" + (_player_ + 1).ToString();
-        _playerAvatar_.GetComponent<Image>().color = ctemp;
+        //_playerAvatar_.GetComponent<Image>().color = ctemp;
     }
     private void RemoveAvatar(int _player_, Image _playerAvatar_) {
         _playerAvatar_.transform.Find("Playername").GetComponent<Text>().text = "Player";
