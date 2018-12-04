@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class DiceGenerator
 {
     int mogelZähler1 = 0;
-    int[] schummelArray = new int[] {-1, 6,3, 1,4, 4,5, 4,4, 1,3, 3,3, 1,2, 3,1, 2,2, 4,1    };
+    int[] schummelArray = new int[] {-1, 6,3, 1,4, 4,5, 4,4, 1,3, 3,3, 1,2, 3,1, 2,5, 5,3, 2,3   };
 
     private static DiceGenerator main;
     public static DiceGenerator Main
