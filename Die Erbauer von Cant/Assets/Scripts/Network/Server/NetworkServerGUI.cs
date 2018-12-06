@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class NetworkServerGUI : MonoBehaviour {
 
@@ -150,5 +151,8 @@ public class NetworkServerGUI : MonoBehaviour {
         _playerAvatar_.GetComponent<Image>().color = Color.gray;
         GamePlay.Main.players[_player_].avatar = "DEFAULT";
         _playerAvatar_.gameObject.SetActive(false);
+    }
+    public void BackToMenu() {
+        SceneManager.LoadScene("main");
     }
 }
