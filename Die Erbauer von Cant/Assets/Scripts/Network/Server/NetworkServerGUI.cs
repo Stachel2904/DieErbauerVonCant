@@ -148,7 +148,7 @@ public class NetworkServerGUI : MonoBehaviour {
     }
     private void RemoveAvatar(int _player_, Image _playerAvatar_) {
         _playerAvatar_.transform.Find("Playername").GetComponent<Text>().text = "Player";
-        _playerAvatar_.GetComponent<Image>().color = Color.gray;
+        //_playerAvatar_.GetComponent<Image>().color = Color.gray;
         GamePlay.Main.players[_player_].avatar = "DEFAULT";
         _playerAvatar_.gameObject.SetActive(false);
     }
