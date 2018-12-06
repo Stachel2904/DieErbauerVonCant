@@ -804,7 +804,8 @@ public class GamePlay : MonoBehaviour
         GameObject.Find("ServerManager").GetComponent<NetworkServerUI>().KillServer();
     }
 
-    public void BackToMenu() {
+    public void BackToMenu()
+    {
         SceneManager.LoadScene("main");
     }
 
@@ -892,7 +893,7 @@ public class GamePlay : MonoBehaviour
             }
         }
 
-        if (GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().slots == maxPlayer)
+        if (GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().slots == maxPlayer + 1)
         {
             StartGameButton.SetActive(true);
         }
