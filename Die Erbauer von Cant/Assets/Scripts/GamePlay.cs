@@ -893,9 +893,13 @@ public class GamePlay : MonoBehaviour
             }
         }
 
-        if (GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().slots == maxPlayer + 1)
+        if (GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().blockedSlots == maxPlayer + 1)
         {
             StartGameButton.SetActive(true);
+        }
+        else
+        {
+            StartGameButton.SetActive(false);
         }
     }
 
