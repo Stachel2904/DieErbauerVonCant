@@ -9835,7 +9835,7 @@ MonoBehaviour:
   orderNumber: 0
   firstRoundFinished: 0
   VictoryWindow: {fileID: 938101458}
-  StartGameButton: {fileID: 0}
+  StartGameButton: {fileID: 1827348357}
   dealAccepted: 0
   running: 0
 --- !u!4 &1611320977
