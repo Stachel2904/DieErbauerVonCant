@@ -165,6 +165,18 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
             case "ServerFull":
                 SceneManager.LoadScene("main");
                 break;
+            case "maxPlayer0":
+                GamePlayClient.Main.maxPlayer = 0;
+                break;
+            case "maxPlayer1":
+                GamePlayClient.Main.maxPlayer = 1;
+                break;
+            case "maxPlayer2":
+                GamePlayClient.Main.maxPlayer = 2;
+                break;
+            case "maxPlayer3":
+                GamePlayClient.Main.maxPlayer = 3;
+                break;
             default:
                 Debug.LogError("Can not read message from Server!");
                 break;

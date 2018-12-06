@@ -820,6 +820,10 @@ MonoBehaviour:
   text8: {fileID: 1177760102}
   text9: {fileID: 1872197331}
   text10: {fileID: 267573686}
+  playerOneButton: {fileID: 334483008}
+  playerTwoButton: {fileID: 1636871471}
+  playerThreeButton: {fileID: 84148143}
+  playerFourButton: {fileID: 387422734}
 --- !u!1 &75399352
 GameObject:
   m_ObjectHideFlags: 0
@@ -9576,6 +9580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3903c290e2a8f2941967c0705adf4d73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxPlayer: 0
 --- !u!4 &833994327
 Transform:
   m_ObjectHideFlags: 0
@@ -22168,6 +22173,17 @@ MonoBehaviour:
       - m_Target: {fileID: 1626468592}
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 50889543}
+        m_MethodName: enableActivePlayerButtons
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

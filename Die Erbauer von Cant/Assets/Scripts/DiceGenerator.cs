@@ -3,9 +3,7 @@ using UnityEngine.UI;
 
 public class DiceGenerator
 {
-    int mogelZähler1 = 0;
-    int[] schummelArray = new int[] {-1, 6,3, 1,4, 4,5, 4,4, 1,3, 3,3, 1,2, 3,1, 2,5, 5,3, 2,3   };
-
+    
     private static DiceGenerator main;
     public static DiceGenerator Main
     {
@@ -54,22 +52,11 @@ public class DiceGenerator
     //Get rolled Number
     private int GetNumber()
     {
-        mogelZähler1++;
-        if (GamePlay.Main.maxPlayer == 2 && mogelZähler1 < schummelArray.Length)
-        {
-           
-            return schummelArray[mogelZähler1];
-            
-        }
-        else
-        {
-            int rolledNumber = 0;
+        int rolledNumber = 0;
 
-            rolledNumber = Random.Range(1, 6);
+        rolledNumber = Random.Range(1, 6);
 
-            return rolledNumber;
-        }
-        
+        return rolledNumber;
     }
 
     public void GetOrderRoll(int clientId)
@@ -82,8 +69,6 @@ public class DiceGenerator
 
             result += number;
         }
-        
         GamePlay.Main.SaveDiceRoll(clientId, result);
-
     }
 }

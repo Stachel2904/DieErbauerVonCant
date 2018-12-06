@@ -50,6 +50,7 @@ public class GamePlay : MonoBehaviour
     bool secondSpecialStartingcase = false;
 
     public GameObject VictoryWindow;
+    public GameObject StartGameButton;
 
     // Trading Variables
     public bool dealAccepted = false;
@@ -342,16 +343,8 @@ public class GamePlay : MonoBehaviour
     
     public void StartGame()
     {
-        //for (int i = 0; i < players.Length; i++)
-        //{
-        //    players[i].inventory.AddItem("Brick", 4);
-        //    players[i].inventory.AddItem("Wheat", 2);
-        //    players[i].inventory.AddItem("Wood", 4);
-        //    players[i].inventory.AddItem("Wool", 2);
-
-        //    //UpdateInventory(players[i].clientID);
-        //}
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(GamePlay.main.GetCurrentPlayer().clientID, "Go");
+        GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("maxPlayer"+maxPlayer);
         gameStarted = true;
     }
 
@@ -893,5 +886,12 @@ public class GamePlay : MonoBehaviour
                 }
             }
         }
+
+        if (GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().slots == maxPlayer)
+        {
+            StartGameButton.SetActive(true);
+        }
     }
+
+    
 }
