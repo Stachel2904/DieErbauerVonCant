@@ -20,6 +20,7 @@ public class GamePlayClient : MonoBehaviour {
     }
 
     public Player ownPlayer;
+    public int maxPlayer;
 
     public void InitClient(string color)
     {

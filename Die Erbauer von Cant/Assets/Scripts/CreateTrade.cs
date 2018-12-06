@@ -37,6 +37,11 @@ public class CreateTrade : MonoBehaviour {
     [SerializeField]
     GameObject text10;
 
+    public GameObject playerOneButton;
+    public GameObject playerTwoButton;
+    public GameObject playerThreeButton;
+    public GameObject playerFourButton;
+
     Text givenBrickText;
     Text givenWheatText;
     Text givenOreText;
@@ -126,6 +131,32 @@ public class CreateTrade : MonoBehaviour {
         createdTrade.taker = color;
     }
 
+    public void enableActivePlayerButtons()
+    {
+        playerOneButton.SetActive(true);
+        playerTwoButton.SetActive(true);
+        playerThreeButton.SetActive(true);
+        playerFourButton.SetActive(true);
+
+        if (GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.color == "Orange")
+        {
+            playerOneButton.SetActive(false);
+        }
+        if (GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.color == "Blue" || GamePlayClient.Main.maxPlayer == 0)
+        {
+            playerTwoButton.SetActive(false);
+        }
+        if (GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.color == "White" || GamePlayClient.Main.maxPlayer <= 1)
+        {
+            playerThreeButton.SetActive(false);
+        }
+        if (GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.color == "Red" || GamePlayClient.Main.maxPlayer <= 2)
+        {
+            playerFourButton.SetActive(false);
+        }
+        
+    }
+
     /// <summary>
     /// Increase the Ressource the current Player wants to Trade
     /// </summary>
@@ -196,6 +227,8 @@ public class CreateTrade : MonoBehaviour {
         createdTrade.askedRessources[2] = 0;
         createdTrade.askedRessources[3] = 0;
         createdTrade.askedRessources[4] = 0;
+
+
     }
 
 
