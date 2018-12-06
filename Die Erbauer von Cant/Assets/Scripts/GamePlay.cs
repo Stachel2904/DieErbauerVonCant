@@ -38,6 +38,8 @@ public class GamePlay : MonoBehaviour
     public int maxPlayer = 3;
     public int orderNumber = 0;
 
+    public bool sound = true;
+
     // for Gamestart Rule
     public bool firstRoundFinished = false;
     bool firstRound = false;
@@ -903,5 +905,17 @@ public class GamePlay : MonoBehaviour
         }
     }
 
-    
+    public void switchSound(bool soundStatus)
+    {
+        if (soundStatus)
+        {
+            sound = true;
+            GameObject.Find("TextManager").GetComponent<HostTextManager>().SoundText.text = "ON";
+        }
+        else
+        {
+            sound = false;
+            GameObject.Find("TextManager").GetComponent<HostTextManager>().SoundText.text = "OFF";
+        }
+    }
 }
