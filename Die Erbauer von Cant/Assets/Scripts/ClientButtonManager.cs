@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ClientButtonManager : MonoBehaviour {
 
     [SerializeField]
     Button rollDice;
+    [SerializeField]
+    Button backMenu;
 
     #region cachedInterfacers
     public GameObject ClientDefault;
@@ -39,6 +42,8 @@ public class ClientButtonManager : MonoBehaviour {
     {
         Button rDice = rollDice.GetComponent<Button>();
         rDice.onClick.AddListener(RollTheDice);
+        Button bMenu = backMenu.GetComponent<Button>();
+        bMenu.onClick.AddListener(BackToMenu);
 
         FirstRoundVillage.onClick.AddListener(delegate { GamePlayClient.Main.TryBuild("Village", true); });
         SecondRoundVillage.onClick.AddListener(delegate { GamePlayClient.Main.TryBuild("Village", true); });
@@ -57,5 +62,8 @@ public class ClientButtonManager : MonoBehaviour {
     public void RollOrderDice()
     {
         GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("GetOrderRoll");
+    }
+    public void BackToMenu() {
+        SceneManager.LoadScene("main");
     }
 }

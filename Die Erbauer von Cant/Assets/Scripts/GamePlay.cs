@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public enum Players
 {
@@ -807,7 +808,11 @@ public class GamePlay : MonoBehaviour
         VictoryWindow.SetActive(true);
         GameObject.Find("TextManager").GetComponent<HostTextManager>().WinText.text = "Player " + color + " Won!";
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("ServerFull");
+        GameObject.Find("ServerManager").GetComponent<NetworkServerUI>().KillServer();
+    }
 
+    public void BackToMenu() {
+        SceneManager.LoadScene("main");
     }
 
     private void Update()
