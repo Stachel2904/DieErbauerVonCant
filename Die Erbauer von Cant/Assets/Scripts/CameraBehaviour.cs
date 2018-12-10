@@ -45,6 +45,13 @@ public class CameraBehaviour : MonoBehaviour {
                 zoom *= 1 + ((float)distanceOfFingersThisFrame - (float)distanceOfFingersLastFrame) / 1000f;
             }
         }
+        else if(Input.GetAxis("Mouse ScrollWheel") != 0)
+        {
+            if(zoom + Input.GetAxis("Mouse ScrollWheel") > 0.5f && zoom + Input.GetAxis("Mouse ScrollWheel") < 2.0f)
+            {
+                zoom += Input.GetAxis("Mouse ScrollWheel");
+            }
+        }
 
 
         if (Vector3.Distance(camera.position, this.gameObject.transform.position) != 150 * 1 / zoom)

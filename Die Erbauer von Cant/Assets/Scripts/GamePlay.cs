@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public enum Players
 {
@@ -37,6 +38,8 @@ public class GamePlay : MonoBehaviour
     public int maxPlayer = 3;
     public int orderNumber = 0;
 
+    public bool sound = true;
+
     // for Gamestart Rule
     public bool firstRoundFinished = false;
     bool firstRound = false;
@@ -50,6 +53,7 @@ public class GamePlay : MonoBehaviour
     bool secondSpecialStartingcase = false;
 
     public GameObject VictoryWindow;
+    public GameObject StartGameButton;
 
     // Trading Variables
     public bool dealAccepted = false;
@@ -342,16 +346,8 @@ public class GamePlay : MonoBehaviour
     
     public void StartGame()
     {
-        //for (int i = 0; i < players.Length; i++)
-        //{
-        //    players[i].inventory.AddItem("Brick", 4);
-        //    players[i].inventory.AddItem("Wheat", 2);
-        //    players[i].inventory.AddItem("Wood", 4);
-        //    players[i].inventory.AddItem("Wool", 2);
-
-        //    //UpdateInventory(players[i].clientID);
-        //}
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(GamePlay.main.GetCurrentPlayer().clientID, "Go");
+        GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("maxPlayer"+maxPlayer);
         gameStarted = true;
     }
 
@@ -807,7 +803,12 @@ public class GamePlay : MonoBehaviour
         VictoryWindow.SetActive(true);
         GameObject.Find("TextManager").GetComponent<HostTextManager>().WinText.text = "Player " + color + " Won!";
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("ServerFull");
+        GameObject.Find("ServerManager").GetComponent<NetworkServerUI>().KillServer();
+    }
 
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene("main");
     }
 
     private void Update()
@@ -892,6 +893,29 @@ public class GamePlay : MonoBehaviour
                     GameObject.Find("Debugging").transform.GetChild(i).GetChild(j).gameObject.GetComponent<Text>().text = pawns.ToString();
                 }
             }
+        }
+
+        if (GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().blockedSlots == maxPlayer + 1)
+        {
+            StartGameButton.SetActive(true);
+        }
+        else
+        {
+            StartGameButton.SetActive(false);
+        }
+    }
+
+    public void switchSound(bool soundStatus)
+    {
+        if (soundStatus)
+        {
+            sound = true;
+            GameObject.Find("TextManager").GetComponent<HostTextManager>().SoundText.text = "ON";
+        }
+        else
+        {
+            sound = false;
+            GameObject.Find("TextManager").GetComponent<HostTextManager>().SoundText.text = "OFF";
         }
     }
 }

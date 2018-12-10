@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Place : MonoBehaviour{
@@ -12,6 +13,11 @@ public class Place : MonoBehaviour{
 
     private void OnMouseDown()
     {
+        if(EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         for (int i = 0; i < GameObject.Find("Places").transform.childCount; i++)
         {
             GameObject.Find("Places").transform.GetChild(i).GetChild(0).gameObject.SetActive(false);
