@@ -1,8 +1,7 @@
 fileFormatVersion: 2
-guid: 2aa8ccad696a81c4f95850ed44615151
+guid: 944eb7df169975445aa0e2e4aa1a2a50
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: Logo
+  fileIDToRecycleName: {}
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -94,31 +93,11 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: Logo
-      rect:
-        serializedVersion: 2
-        x: 417
-        y: 17
-        width: 284
-        height: 339
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0747036f064a9f643a65b917c8212fd6
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 0747036f064a9f643a65b917c8212fd6
+    spriteID: 
     vertices: []
     indices: 
     edges: []

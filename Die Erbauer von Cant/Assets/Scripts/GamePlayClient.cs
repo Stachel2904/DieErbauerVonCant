@@ -20,6 +20,7 @@ public class GamePlayClient : MonoBehaviour {
     }
 
     public Player ownPlayer;
+    Color ownColor;
     public int maxPlayer;
 
     public void InitClient(string color)
@@ -28,12 +29,12 @@ public class GamePlayClient : MonoBehaviour {
 
         ownPlayer = new Player("", color);
 
-        Color ownColor = Color.white;
+        ownColor = Color.white;
 
         switch (color)
         {
             case "Orange":
-                ownColor = new Color(255, 150, 0, 255);
+                ownColor = new Color(255f / 255f, 150f / 255f, 0f / 255f, 255f / 255f);
                 break;
             case "Blue":
                 ownColor = Color.blue;
@@ -80,6 +81,21 @@ public class GamePlayClient : MonoBehaviour {
     }
 
     #region Build
+    /// <summary>
+    /// Checks if you can build the pawns and (dis-)ables the buttons
+    /// </summary>
+    public void CheckBuildings(Transform buildSelectionParent)
+    {
+        bool isPossible;
+        string[] parameter = new string[] { "Street", "Village", "Town" };
+        for (int i = 0; i < 3; i++)
+        {
+            isPossible = ownPlayer.inventory.CheckInventory(parameter[i]);
+            buildSelectionParent.GetChild(i + 2).GetComponent<Button>().interactable = isPossible;
+            buildSelectionParent.GetChild(i + 2).GetChild(0).GetComponent<Image>().color = (isPossible) ? ownColor : Color.grey;
+        }
+    }
+
     /// <summary>
     /// Check if you have enough Ressources and print possible Positions
     /// </summary>
