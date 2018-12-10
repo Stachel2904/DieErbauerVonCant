@@ -45,6 +45,7 @@ public class DiceGenerator
         for (int i = 1; i <= 2; i++)
         {
             GameObject.Find("Window").transform.Find("Dice").Find("Image").Find(i.ToString()).gameObject.GetComponent<Image>().sprite = Resources.LoadAll<Sprite>("Sprites/Würfel")[(numbers[i - 1] - 1)];
+            GameObject.Find("SoundManager").GetComponent<HostSoundManager>().PlaySound("diceRoll");
         }
 
     }

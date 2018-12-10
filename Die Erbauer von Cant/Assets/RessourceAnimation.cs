@@ -20,6 +20,7 @@ public class RessourceAnimation : MonoBehaviour {
         {
             Transform createdPlusOne = Instantiate(Resources.Load<Transform>("Prefabs/" + animatedRessource + "PlusOne"), GameObject.Find("Window").transform);
             createdPlusOne.gameObject.GetComponent<animatePlusOne>().direction = direction;
+            GameObject.Find("SoundManager").GetComponent<HostSoundManager>().PlaySound("ressourceGain");
             Destroy(gameObject);
         }
         

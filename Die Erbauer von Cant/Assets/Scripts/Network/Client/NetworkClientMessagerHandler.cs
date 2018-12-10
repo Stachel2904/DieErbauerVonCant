@@ -114,6 +114,7 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("BuildButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("Next Player").GetComponent<Button>().interactable = true;
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().DiceRoll.SetActive(true);
+                GameObject.Find("ClientSoundManager").GetComponent<ClientSoundManager>().PlaySound("popUp");
                 break;
             case "FirstRoundGo":
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().FirstRoundBuild.SetActive(true);
@@ -143,11 +144,11 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
                 break;
             case "Player declined Trading":
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().TradeDecline.SetActive(true);
-                //GameObject.Find("TradeWasDeclined").SetActive(true);
+                GameObject.Find("ClientSoundManager").GetComponent<ClientSoundManager>().PlaySound("popUp");
                 break;
             case "Player accepted Trading":
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().TradeAccept.SetActive(true);
-                //GameObject.Find("TradeWasAccepted").SetActive(true);
+                GameObject.Find("ClientSoundManager").GetComponent<ClientSoundManager>().PlaySound("popUp");
                 break;
             case "PlayerOrder":
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().OrderDiceRoll.SetActive(true);
@@ -155,6 +156,7 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
             case "Roll Again":
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().NewOrderDiceRoll.SetActive(true);
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().WaitRollScreen.SetActive(false);
+                GameObject.Find("ClientSoundManager").GetComponent<ClientSoundManager>().PlaySound("popUp");
                 break;
             case "Roll Waiting":
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().WaitRollScreen.SetActive(true);
