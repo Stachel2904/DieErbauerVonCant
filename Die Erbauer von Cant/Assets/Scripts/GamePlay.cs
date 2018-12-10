@@ -563,6 +563,19 @@ public class GamePlay : MonoBehaviour
         createdPawn.gameObject.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/" + buildedPawn.color);
         createdPawn.position = new Vector3(pos.x, createdPawn.position.y, pos.z);
 
+        if (buildedPawn.type == "Street")
+        {
+            GameObject.Find("SoundManager").GetComponent<HostSoundManager>().PlaySound("buildingStreet");
+        }
+        if (buildedPawn.type == "Village")
+        {
+            GameObject.Find("SoundManager").GetComponent<HostSoundManager>().PlaySound("buildingVillage");
+        }
+        if (buildedPawn.type == "Town")
+        {
+            GameObject.Find("SoundManager").GetComponent<HostSoundManager>().PlaySound("buildingCity");
+        }
+
         //Variablen Updaten
         GameBoard.MainBoard.pawns[(int)ConvertColor(buildedPawn.color)].Add(buildedPawn);
         for (int i = 0; i < usedFields.Length; i++)
@@ -588,6 +601,7 @@ public class GamePlay : MonoBehaviour
                 {
                     if (Vector3.Distance(pos, currentPawn.transform.position) < 1.0f)
                     {
+                        
                         GameObject.Destroy(currentPawn);
                     }
                 }
@@ -804,6 +818,7 @@ public class GamePlay : MonoBehaviour
         GameObject.Find("TextManager").GetComponent<HostTextManager>().WinText.text = "Player " + color + " Won!";
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("ServerFull");
         GameObject.Find("ServerManager").GetComponent<NetworkServerUI>().KillServer();
+        GameObject.Find("SoundManager").GetComponent<HostSoundManager>().PlaySound("victory");
     }
 
     public void BackToMenu()
