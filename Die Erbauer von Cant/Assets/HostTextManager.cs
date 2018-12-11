@@ -13,6 +13,7 @@ public class HostTextManager : MonoBehaviour {
     public Text Player4DiceText;
     public Text WinText;
     public Text SoundText;
+    public Text VictoryPointText;
 
     Text tPlayerNumber;
 
@@ -23,6 +24,7 @@ public class HostTextManager : MonoBehaviour {
 
     Text winText;
     Text soundText;
+    Text vpText;
 
     // Use this for initialization
     void Start ()
@@ -36,6 +38,7 @@ public class HostTextManager : MonoBehaviour {
 
         winText = WinText.GetComponent<Text>();
         soundText = SoundText.GetComponent<Text>();
+        vpText = VictoryPointText.GetComponent<Text>();
     }
 	
 	// Update is called once per frame

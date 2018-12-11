@@ -37,6 +37,7 @@ public class GamePlay : MonoBehaviour
     public int currentPlayer;
     public int maxPlayer = 3;
     public int orderNumber = 0;
+    public int victoryPoints = 5;
 
     public bool sound = true;
 
@@ -317,30 +318,29 @@ public class GamePlay : MonoBehaviour
     /// </summary>
     public void BeginBuilding()
     {
+        if (maxPlayer == 0)
+        {
+            GameObject.Find("Player1DiceText").SetActive(false);
+        }
+        if (maxPlayer == 1)
+        {
+            GameObject.Find("Player2DiceText").SetActive(false);
+        }
+        if (maxPlayer == 2)
+        {
+            GameObject.Find("Player3DiceText").SetActive(false);
+        }
+        if (maxPlayer == 3)
+        {
+            GameObject.Find("Player4DiceText").SetActive(false);
+        }
 
-        //if (maxPlayer == 0)
-        //{
-        //    GameObject.Find("Player1DiceText").SetActive(false);
-        //}
-        //if (maxPlayer >= 1)
-        //{
-        //    GameObject.Find("Player2DiceText").SetActive(false);
-        //}
-        //if (maxPlayer >= 2)
-        //{
-        //    GameObject.Find("Player3DiceText").SetActive(false);
-        //}
-        //if (maxPlayer >= 3)
-        //{
-        //    GameObject.Find("Player4DiceText").SetActive(false);
-        //}
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("Start");
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(GamePlay.main.GetCurrentPlayer().clientID, "FirstRoundGo");
         GameBoard.MainBoard.Init();
         running = true;
 
         buildingStarted = true;
-
     }
 
     
@@ -373,6 +373,26 @@ public class GamePlay : MonoBehaviour
             GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().slots--;
         }
     }
+
+    public void IncreaseVictoryPointsToWin()
+    {
+        if (victoryPoints <= 10)
+        {
+            victoryPoints++;
+            GameObject.Find("TextManager").GetComponent<HostTextManager>().VictoryPointText.text = victoryPoints.ToString();
+        }
+        
+    }
+    public void DecreaseVictoryPointsToWin()
+    {
+        if (victoryPoints >= 3)
+        {
+            victoryPoints--;
+            GameObject.Find("TextManager").GetComponent<HostTextManager>().VictoryPointText.text = victoryPoints.ToString();
+        }
+        
+    }
+
     bool secondRoundStarted = false;
     bool realGameStarted = false;
     /// <summary>
