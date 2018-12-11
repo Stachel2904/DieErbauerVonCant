@@ -110,7 +110,6 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
         _message_.reader.SeekZero();
         switch (_message_.ReadMessage<NetMessage>().command) {
             case "Go":
-                GamePlayClient.Main.secondRound = false;
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("TradeButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("BuildButton").GetComponent<Button>().interactable = true;
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("Next Player").GetComponent<Button>().interactable = true;
@@ -118,12 +117,9 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
                 GameObject.Find("ClientSoundManager").GetComponent<ClientSoundManager>().PlaySound("popUp");
                 break;
             case "FirstRoundGo":
-                GamePlayClient.Main.firstRound = true;
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().FirstRoundBuild.SetActive(true);
                 break;
             case "SecondRoundGo":
-                GamePlayClient.Main.firstRound = false;
-                GamePlayClient.Main.secondRound = true;
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().SecondRoundBuild.SetActive(true);
                 break;
             case "FirstGo":
