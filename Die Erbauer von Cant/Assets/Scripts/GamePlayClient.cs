@@ -210,15 +210,15 @@ public class GamePlayClient : MonoBehaviour {
 
         if (buildedPawn.color == ownPlayer.color)
         {
-            Transform parent = GameObject.Find("FirstRoundBuild").transform;
+            GameObject parent = GameObject.Find("FirstRoundBuild");
             if (parent != null)
             {
-                parent.Find("Street").gameObject.SetActive(true);
+                parent.transform.Find("Street").gameObject.SetActive(true);
             }
-            parent = GameObject.Find("SecondRoundBuild").transform;
+            parent = GameObject.Find("SecondRoundBuild");
             if (parent != null)
             {
-                parent.Find("Street").gameObject.SetActive(true);
+                parent.transform.Find("Street").gameObject.SetActive(true);
             }
         }
 
