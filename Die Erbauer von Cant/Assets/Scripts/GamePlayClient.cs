@@ -213,12 +213,19 @@ public class GamePlayClient : MonoBehaviour {
             GameObject parent = GameObject.Find("FirstRoundBuild");
             if (parent != null)
             {
-                parent.transform.Find("Street").gameObject.SetActive(true);
+                if (buildedPawn.type != "Street")
+                {
+                    parent.transform.Find("Street").gameObject.SetActive(true);
+                }
             }
             parent = GameObject.Find("SecondRoundBuild");
             if (parent != null)
             {
-                parent.transform.Find("Street").gameObject.SetActive(true);
+                if (buildedPawn.type != "Street")
+                {
+                    parent.transform.Find("Street").gameObject.SetActive(true);
+                }
+                
             }
         }
 
