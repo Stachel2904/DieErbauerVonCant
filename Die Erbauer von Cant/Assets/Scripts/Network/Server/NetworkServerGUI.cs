@@ -153,6 +153,9 @@ public class NetworkServerGUI : MonoBehaviour {
         _playerAvatar_.gameObject.SetActive(false);
     }
     public void BackToMenu() {
+        if (GetComponent<NetworkServerUI>().serverOn == true) {
+            GetComponent<NetworkServerUI>().KillServer();
+        }
         SceneManager.LoadScene("main");
     }
 }

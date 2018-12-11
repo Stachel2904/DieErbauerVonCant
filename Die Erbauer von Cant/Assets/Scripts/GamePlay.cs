@@ -834,9 +834,15 @@ public class GamePlay : MonoBehaviour
     /// <param name="color"> The color of the Player who Won </param>
     public void GameWon(string color)
     {
+        string pName = "";
+        for (int i = 0; i < players.Length; i++) {
+           if(players[i].color == color) {
+                pName = players[i].name;
+           }
+        }
         GameObject.Find("SoundManager").GetComponent<HostSoundManager>().PlaySound("victory");
         VictoryWindow.SetActive(true);
-        GameObject.Find("TextManager").GetComponent<HostTextManager>().WinText.text = "Player " + color + " Won!";
+        GameObject.Find("TextManager").GetComponent<HostTextManager>().WinText.text = "Player " + pName + " Won!";
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("ServerFull");
         GameObject.Find("ServerManager").GetComponent<NetworkServerUI>().KillServer();
     }
