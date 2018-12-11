@@ -3919,7 +3919,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &652252479
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9048,6 +9048,7 @@ MonoBehaviour:
   ressourceGain: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
   diceRoll: {fileID: 8300000, guid: 9786a57d4654cae45be7d90fc90d7d63, type: 3}
   popUp: {fileID: 8300000, guid: 79180f511d89441b9aa23ccae1992fe0, type: 3}
+  victorySound: {fileID: 0}
   audioSource: {fileID: 1402880485}
   ambienteAudio: {fileID: 1309858860}
 --- !u!4 &1402880487
