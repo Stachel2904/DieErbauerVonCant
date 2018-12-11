@@ -9452,7 +9452,7 @@ Prefab:
     - target: {fileID: 2300000, guid: 0f895646f394dd04e8eaad9753c0dd1e, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 4192f6d66354e6742b7325fbe8af924b, type: 2}
+      objectReference: {fileID: 2100000, guid: 58f7d043ad4986046b9a6d9d2c340b6a, type: 2}
     - target: {fileID: 400000, guid: 0f895646f394dd04e8eaad9753c0dd1e, type: 3}
       propertyPath: m_LocalScale.x
       value: 3500
@@ -9975,8 +9975,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxPlayer: 0
-  firstRound: 1
-  secondRound: 1
 --- !u!4 &833994327
 Transform:
   m_ObjectHideFlags: 0
