@@ -109,9 +109,7 @@ public class CreateTrade : MonoBehaviour {
     public void StartedTrading()
     {
         createdTrade.giver = GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.color;
-
         ResetTrade();
-
         GameObject.Find("ClientManager").GetComponent<NetworkClientMessagerHandler>().SendToServer("Player started Trading");
     }
     /// <summary>
@@ -246,11 +244,11 @@ public class CreateTrade : MonoBehaviour {
         bool checkWood = GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.CheckInventory("Wood", createdTrade.askedRessources[3]);
         bool checkWool = GameObject.Find("GamePlay").GetComponent<GamePlayClient>().ownPlayer.inventory.CheckInventory("Wool", createdTrade.askedRessources[4]);
 
-        
+        GameObject.Find("ClientSoundManager").GetComponent<ClientSoundManager>().PlaySound("popUp");
 
         GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().TradeAcception.SetActive(true);
+
         UpdateTradingRessources();
-        //GameObject.Find("TradeAcception").SetActive(true);
         GameObject.Find("TradeAcception").transform.Find("Accept").gameObject.SetActive(false);
 
         if (checkBrick && checkWheat && checkOre && checkWood && checkWool)

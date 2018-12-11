@@ -1955,7 +1955,6 @@ GameObject:
   - component: {fileID: 163281794}
   - component: {fileID: 163281793}
   - component: {fileID: 163281792}
-  - component: {fileID: 163281795}
   m_Layer: 5
   m_Name: BuildButton
   m_TagString: Untagged
@@ -2113,17 +2112,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 163281790}
   m_CullTransparentMesh: 0
---- !u!114 &163281795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 163281790}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67915c805f825694088ab5eda14ce4d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &170454559
 GameObject:
   m_ObjectHideFlags: 0
@@ -6213,6 +6201,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1465098957}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &501896224
@@ -9998,6 +9997,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxPlayer: 0
+  firstRound: 1
+  secondRound: 1
 --- !u!4 &833994327
 Transform:
   m_ObjectHideFlags: 0
@@ -10594,7 +10595,6 @@ GameObject:
   - component: {fileID: 923199047}
   - component: {fileID: 923199046}
   - component: {fileID: 923199045}
-  - component: {fileID: 923199048}
   m_Layer: 5
   m_Name: TradeButton
   m_TagString: Untagged
@@ -10752,17 +10752,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 923199043}
   m_CullTransparentMesh: 0
---- !u!114 &923199048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 923199043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67915c805f825694088ab5eda14ce4d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &923266439
 GameObject:
   m_ObjectHideFlags: 0
@@ -10874,6 +10863,17 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1987474801}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 323568611}
         m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:
@@ -19728,6 +19728,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 323568611}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1658520338
@@ -20199,6 +20210,17 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1987474801}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1465098957}
         m_MethodName: SetActive
         m_Mode: 6
         m_Arguments:

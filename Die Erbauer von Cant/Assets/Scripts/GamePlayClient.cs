@@ -23,6 +23,9 @@ public class GamePlayClient : MonoBehaviour {
     Color ownColor;
     public int maxPlayer;
 
+    public bool firstRound = true;
+    public bool secondRound = true;
+
     public void InitClient(string color)
     {
         main = GameObject.Find("GamePlay").GetComponent<GamePlayClient>();
@@ -203,6 +206,32 @@ public class GamePlayClient : MonoBehaviour {
                 if (oldPawn != null)
                 {
                     GameBoard.MainBoard.pawns[(int)ConvertColor(oldPawn.color)].Remove(oldPawn);
+                }
+            }
+        }
+
+        if (buildedPawn.color == ownPlayer.color)
+        {
+            if (firstRound)
+            {
+                if (buildedPawn.type == "Village")
+                {
+                    GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().FirstRoundBuild.SetActive(true);
+                }
+                if (buildedPawn.type == "Street")
+                {
+                    GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().FirstRoundBuild.SetActive(true);
+                }
+            }
+            if (secondRound)
+            {
+                if (buildedPawn.type == "Village")
+                {
+                    GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().SecondRoundBuild.SetActive(true);
+                }
+                if (buildedPawn.type == "Street")
+                {
+                    GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().SecondRoundBuild.SetActive(true);
                 }
             }
         }

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -65,5 +66,27 @@ public class ClientButtonManager : MonoBehaviour {
     }
     public void BackToMenu() {
         SceneManager.LoadScene("main");
+    }
+
+    public void ShowHand(bool show = true)
+    {
+        if(Hand.activeSelf == show)
+        {
+            return;
+        }
+        else
+        {
+            Hand.SetActive(show);
+            if (show)
+            {
+                StartCoroutine(HideHand());
+            }
+        }
+    }
+
+    public IEnumerator HideHand()
+    {
+        yield return new WaitForSeconds(0.1f);
+        ShowHand(false);
     }
 }
