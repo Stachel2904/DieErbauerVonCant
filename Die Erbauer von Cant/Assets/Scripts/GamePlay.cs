@@ -37,6 +37,7 @@ public class GamePlay : MonoBehaviour
     public int currentPlayer;
     public int maxPlayer = 3;
     public int orderNumber = 0;
+    public int victoryPoints = 5;
 
     public bool sound = true;
 
@@ -317,30 +318,29 @@ public class GamePlay : MonoBehaviour
     /// </summary>
     public void BeginBuilding()
     {
+        if (maxPlayer == 0)
+        {
+            GameObject.Find("Player1DiceText").SetActive(false);
+        }
+        if (maxPlayer == 1)
+        {
+            GameObject.Find("Player2DiceText").SetActive(false);
+        }
+        if (maxPlayer == 2)
+        {
+            GameObject.Find("Player3DiceText").SetActive(false);
+        }
+        if (maxPlayer == 3)
+        {
+            GameObject.Find("Player4DiceText").SetActive(false);
+        }
 
-        //if (maxPlayer == 0)
-        //{
-        //    GameObject.Find("Player1DiceText").SetActive(false);
-        //}
-        //if (maxPlayer >= 1)
-        //{
-        //    GameObject.Find("Player2DiceText").SetActive(false);
-        //}
-        //if (maxPlayer >= 2)
-        //{
-        //    GameObject.Find("Player3DiceText").SetActive(false);
-        //}
-        //if (maxPlayer >= 3)
-        //{
-        //    GameObject.Find("Player4DiceText").SetActive(false);
-        //}
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("Start");
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToClient(GamePlay.main.GetCurrentPlayer().clientID, "FirstRoundGo");
         GameBoard.MainBoard.Init();
         running = true;
 
         buildingStarted = true;
-
     }
 
     
@@ -373,6 +373,26 @@ public class GamePlay : MonoBehaviour
             GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().slots--;
         }
     }
+
+    public void IncreaseVictoryPointsToWin()
+    {
+        if (victoryPoints <= 10)
+        {
+            victoryPoints++;
+            GameObject.Find("TextManager").GetComponent<HostTextManager>().VictoryPointText.text = victoryPoints.ToString();
+        }
+        
+    }
+    public void DecreaseVictoryPointsToWin()
+    {
+        if (victoryPoints >= 3)
+        {
+            victoryPoints--;
+            GameObject.Find("TextManager").GetComponent<HostTextManager>().VictoryPointText.text = victoryPoints.ToString();
+        }
+        
+    }
+
     bool secondRoundStarted = false;
     bool realGameStarted = false;
     /// <summary>
@@ -814,9 +834,15 @@ public class GamePlay : MonoBehaviour
     /// <param name="color"> The color of the Player who Won </param>
     public void GameWon(string color)
     {
+        string pName = "";
+        for (int i = 0; i < players.Length; i++) {
+           if(players[i].color == color) {
+                pName = players[i].name;
+           }
+        }
         GameObject.Find("SoundManager").GetComponent<HostSoundManager>().PlaySound("victory");
         VictoryWindow.SetActive(true);
-        GameObject.Find("TextManager").GetComponent<HostTextManager>().WinText.text = "Player " + color + " Won!";
+        GameObject.Find("TextManager").GetComponent<HostTextManager>().WinText.text = "Player " + pName + " Won!";
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("ServerFull");
         GameObject.Find("ServerManager").GetComponent<NetworkServerUI>().KillServer();
     }

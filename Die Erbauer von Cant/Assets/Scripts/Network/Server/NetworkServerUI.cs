@@ -8,6 +8,7 @@ public class NetworkServerUI : MonoBehaviour {
     int defaultPort = 5555;
     public int serverPort = -1;
     int maxPlayer = 4;
+    public bool serverOn = false;
 
     //private void Start(){
     //    StartServer();
@@ -19,12 +20,14 @@ public class NetworkServerUI : MonoBehaviour {
             GetComponent<NetworkServerMessageHandler>().InitRecivingMessages();
             GetComponent<NetworkServerDiscovery>().StartServerDiscovery(serverPort);
             Debug.Log("Server initialisation complete!");
+            serverOn = true;
         }
 	}
     public void KillServer() {
         NetworkServer.Shutdown();
         Debug.Log("Server successfully killed... :(");
         GetComponent<NetworkServerDiscovery>().StopServerDiscovery();
+        serverOn = false;
     }
     //Init
     private int InitServer() {

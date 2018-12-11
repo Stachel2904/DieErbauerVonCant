@@ -22,7 +22,6 @@ public class GamePlayClient : MonoBehaviour {
     public Player ownPlayer;
     Color ownColor;
     public int maxPlayer;
-    
 
     public void InitClient(string color)
     {
@@ -217,6 +216,10 @@ public class GamePlayClient : MonoBehaviour {
                 {
                     parent.transform.Find("Street").gameObject.SetActive(true);
                 }
+                else
+                {
+                    GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().PrepareGameNextPlayer.SetActive(true);
+                }
             }
             parent = GameObject.Find("SecondRoundBuild");
             if (parent != null)
@@ -224,6 +227,11 @@ public class GamePlayClient : MonoBehaviour {
                 if (buildedPawn.type != "Street")
                 {
                     parent.transform.Find("Street").gameObject.SetActive(true);
+                    RequestSecondVillageRessources();
+                }
+                else
+                {
+                    GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().PrepareGameNextPlayer.SetActive(true);
                 }
                 
             }

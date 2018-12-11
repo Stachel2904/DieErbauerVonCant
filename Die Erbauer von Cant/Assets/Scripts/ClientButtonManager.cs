@@ -31,6 +31,7 @@ public class ClientButtonManager : MonoBehaviour {
     public GameObject WaitRollScreen;
     public GameObject FirstRoundBuild;
     public GameObject SecondRoundBuild;
+    public GameObject PrepareGameNextPlayer;
     public Image[] PawnSprites;
     public Button FirstRoundVillage;
     public Button SecondRoundVillage;
