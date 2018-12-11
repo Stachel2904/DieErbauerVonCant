@@ -41,7 +41,7 @@ public class GamePlayClient : MonoBehaviour {
                 ownColor = Color.blue;
                 break;
             case "White":
-                ownColor = Color.white;
+                ownColor = new Color(150f / 255f, 80f / 255f, 200f / 255f, 255f / 255f);
                 break;
             case "Red":
                 ownColor = Color.red;
