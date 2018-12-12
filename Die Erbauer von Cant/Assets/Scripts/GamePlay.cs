@@ -56,6 +56,8 @@ public class GamePlay : MonoBehaviour
     public GameObject VictoryWindow;
     public GameObject StartGameButton;
 
+    float handcardsYPosition;
+
     // Trading Variables
     public bool dealAccepted = false;
     
@@ -83,6 +85,8 @@ public class GamePlay : MonoBehaviour
                 GameBoard.MainBoard.tilesGrid[i][j].column = j;
             }
         }
+
+        handcardsYPosition = GameObject.Find("Handcards").transform.GetChild(0).position.y;
 
     }
     /// <summary>
@@ -400,7 +404,7 @@ public class GamePlay : MonoBehaviour
     /// </summary>
     public void NextPlayer()
     {
-        if(GameObject.Find("Handcards").transform.Find(GetCurrentPlayer().color).gameObject.GetComponent<RectTransform>().localPosition.y >= 0)
+        if(GameObject.Find("Handcards").transform.Find(GetCurrentPlayer().color).gameObject.GetComponent<RectTransform>().localPosition.y >= handcardsYPosition)
         {
             StartCoroutine(MoveCurrentHand(-1, GetCurrentPlayer().color));
         }
