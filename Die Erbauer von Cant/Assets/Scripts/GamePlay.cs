@@ -400,7 +400,10 @@ public class GamePlay : MonoBehaviour
     /// </summary>
     public void NextPlayer()
     {
-        StartCoroutine(MoveCurrentHand(-1));
+        if(GameObject.Find("Handcards").transform.Find(GetCurrentPlayer().color).localPosition.y != 0)
+        {
+            StartCoroutine(MoveCurrentHand(-1, GetCurrentPlayer().color));
+        }
         if (firstRoundFinished == false && secondRoundFinished == false)
         {
             if (currentPlayer == maxPlayer)
@@ -451,14 +454,13 @@ public class GamePlay : MonoBehaviour
                 currentPlayer++;
             }
         }
-        StartCoroutine(MoveCurrentHand(1));
+        StartCoroutine(MoveCurrentHand(1, GetCurrentPlayer().color));
     }
-    IEnumerator MoveCurrentHand(int direction)
+    IEnumerator MoveCurrentHand(int direction, string color)
     {
-        string lastPlayer = GetCurrentPlayer().color;
         for (int i = 0; i < 30 * direction; i += direction)
         {
-            GameObject.Find("Handcards").transform.Find(lastPlayer).Translate(0, direction * 3, 0);
+            GameObject.Find("Handcards").transform.Find(color).Translate(0, direction * 3, 0);
             yield return new WaitForSeconds(0.02f);
         }
     }
