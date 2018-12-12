@@ -318,15 +318,15 @@ public class GamePlay : MonoBehaviour
     /// </summary>
     public void BeginBuilding()
     {
-        if (maxPlayer == 0)
+        if (maxPlayer >= 0)
         {
             GameObject.Find("Player1DiceText").SetActive(false);
         }
-        if (maxPlayer == 1)
+        if (maxPlayer >= 1)
         {
             GameObject.Find("Player2DiceText").SetActive(false);
         }
-        if (maxPlayer == 2)
+        if (maxPlayer >= 2)
         {
             GameObject.Find("Player3DiceText").SetActive(false);
         }
@@ -376,7 +376,7 @@ public class GamePlay : MonoBehaviour
 
     public void IncreaseVictoryPointsToWin()
     {
-        if (victoryPoints <= 10)
+        if (victoryPoints <= 9)
         {
             victoryPoints++;
             GameObject.Find("TextManager").GetComponent<HostTextManager>().VictoryPointText.text = victoryPoints.ToString();
@@ -385,7 +385,7 @@ public class GamePlay : MonoBehaviour
     }
     public void DecreaseVictoryPointsToWin()
     {
-        if (victoryPoints >= 3)
+        if (victoryPoints >= 4)
         {
             victoryPoints--;
             GameObject.Find("TextManager").GetComponent<HostTextManager>().VictoryPointText.text = victoryPoints.ToString();
@@ -835,8 +835,10 @@ public class GamePlay : MonoBehaviour
     public void GameWon(string color)
     {
         string pName = "";
-        for (int i = 0; i < players.Length; i++) {
-           if(players[i].color == color) {
+        for (int i = 0; i < players.Length; i++)
+        {
+           if(players[i].color == color)
+           {
                 pName = players[i].name;
            }
         }
