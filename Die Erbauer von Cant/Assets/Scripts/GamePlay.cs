@@ -87,7 +87,7 @@ public class GamePlay : MonoBehaviour
             }
         }
 
-        handcardsYPosition = GameObject.Find("Handcards").transform.GetChild(0).position.y;
+        handcardsYPosition = GameObject.Find("Handcards").transform.GetChild(0).localPosition.y;
 
     }
     /// <summary>
@@ -405,7 +405,7 @@ public class GamePlay : MonoBehaviour
     /// </summary>
     public void NextPlayer()
     {
-        if(GameObject.Find("Handcards").transform.Find(GetCurrentPlayer().color).gameObject.GetComponent<RectTransform>().localPosition.y >= handcardsYPosition)
+        if(GameObject.Find("Handcards").transform.Find(GetCurrentPlayer().color).gameObject.GetComponent<RectTransform>().localPosition.y > handcardsYPosition)
         {
             StartCoroutine(MoveCurrentHand(-1, GetCurrentPlayer().color));
         }
