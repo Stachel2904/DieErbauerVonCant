@@ -318,15 +318,15 @@ public class GamePlay : MonoBehaviour
     /// </summary>
     public void BeginBuilding()
     {
-        if (maxPlayer == 0)
+        if (maxPlayer >= 0)
         {
             GameObject.Find("Player1DiceText").SetActive(false);
         }
-        if (maxPlayer == 1)
+        if (maxPlayer >= 1)
         {
             GameObject.Find("Player2DiceText").SetActive(false);
         }
-        if (maxPlayer == 2)
+        if (maxPlayer >= 2)
         {
             GameObject.Find("Player3DiceText").SetActive(false);
         }
@@ -376,7 +376,7 @@ public class GamePlay : MonoBehaviour
 
     public void IncreaseVictoryPointsToWin()
     {
-        if (victoryPoints <= 10)
+        if (victoryPoints <= 9)
         {
             victoryPoints++;
             GameObject.Find("TextManager").GetComponent<HostTextManager>().VictoryPointText.text = victoryPoints.ToString();
@@ -385,7 +385,7 @@ public class GamePlay : MonoBehaviour
     }
     public void DecreaseVictoryPointsToWin()
     {
-        if (victoryPoints >= 3)
+        if (victoryPoints >= 4)
         {
             victoryPoints--;
             GameObject.Find("TextManager").GetComponent<HostTextManager>().VictoryPointText.text = victoryPoints.ToString();
@@ -400,7 +400,10 @@ public class GamePlay : MonoBehaviour
     /// </summary>
     public void NextPlayer()
     {
-        Debug.Log("Called!");
+        if(GameObject.Find("Handcards").transform.Find(GetCurrentPlayer().color).localPosition.y != 0)
+        {
+            StartCoroutine(MoveCurrentHand(-1, GetCurrentPlayer().color));
+        }
         if (firstRoundFinished == false && secondRoundFinished == false)
         {
             if (currentPlayer == maxPlayer)
@@ -450,6 +453,15 @@ public class GamePlay : MonoBehaviour
             {
                 currentPlayer++;
             }
+        }
+        StartCoroutine(MoveCurrentHand(1, GetCurrentPlayer().color));
+    }
+    IEnumerator MoveCurrentHand(int direction, string color)
+    {
+        for (int i = 0; i < 30 * direction; i += direction)
+        {
+            GameObject.Find("Handcards").transform.Find(color).Translate(0, direction * 3, 0);
+            yield return new WaitForSeconds(0.02f);
         }
     }
     /// <summary>
@@ -835,8 +847,10 @@ public class GamePlay : MonoBehaviour
     public void GameWon(string color)
     {
         string pName = "";
-        for (int i = 0; i < players.Length; i++) {
-           if(players[i].color == color) {
+        for (int i = 0; i < players.Length; i++)
+        {
+           if(players[i].color == color)
+           {
                 pName = players[i].name;
            }
         }
