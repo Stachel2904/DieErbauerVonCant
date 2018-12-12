@@ -400,7 +400,7 @@ public class GamePlay : MonoBehaviour
     /// </summary>
     public void NextPlayer()
     {
-        if(GameObject.Find("Handcards").transform.Find(GetCurrentPlayer().color).gameObject.GetComponent<RectTransform>().localPosition.y != 0)
+        if(GameObject.Find("Handcards").transform.Find(GetCurrentPlayer().color).gameObject.GetComponent<RectTransform>().localPosition.y >= 0)
         {
             StartCoroutine(MoveCurrentHand(-1, GetCurrentPlayer().color));
         }
