@@ -12,6 +12,9 @@ public class HostSoundManager : MonoBehaviour
     public AudioClip diceRoll;
     public AudioClip popUp;
     public AudioClip victorySound;
+    public AudioClip fireworkScream;
+    public AudioClip fireworkExplosion;
+    public AudioClip fireworkCluster;
 
 
     public AudioSource audioSource;
@@ -52,6 +55,15 @@ public class HostSoundManager : MonoBehaviour
                 break;
             case "victory":
                 StartCoroutine(playSoundWithDelay(victorySound, delay));
+                break;
+            case "fireworkScream":
+                StartCoroutine(playSoundWithDelay(fireworkScream, delay));
+                break;
+            case "fireworkExplosion":
+                StartCoroutine(playSoundWithDelay(fireworkExplosion, delay));
+                break;
+            case "fireworkCluster":
+                StartCoroutine(playSoundWithDelay(fireworkCluster, delay));
                 break;
             default:
                 break;

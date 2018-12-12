@@ -7,16 +7,22 @@ public class ParticleSound : MonoBehaviour {
     private ParticleSystem parSystem;
     private int numberOfParticles = 0;
 
-    private void Start() {
+    private void Start()
+    {
         parSystem = this.gameObject.GetComponent<ParticleSystem>();
     }
 
-    private void Update () {
+    private void Update ()
+    {
         int count = parSystem.particleCount;
-        if(count < numberOfParticles) {
-            //play Sound if particle has died
-        }else if(count > numberOfParticles) {
-            //play Sound if particle is born
+        if(count < numberOfParticles)
+        {
+            GameObject.Find("SoundManager").GetComponent<HostSoundManager>().PlaySound("fireworkExplosion");
+            GameObject.Find("SoundManager").GetComponent<HostSoundManager>().PlaySound("fireworkCluster", 0.8f);
+        }
+        else if(count > numberOfParticles)
+        {
+            GameObject.Find("SoundManager").GetComponent<HostSoundManager>().PlaySound("fireworkScream");
         }
         numberOfParticles = count;
 	}
