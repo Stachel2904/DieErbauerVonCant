@@ -595,18 +595,18 @@ public class GamePlay : MonoBehaviour
         createdPawn.gameObject.GetComponent<MeshRenderer>().material = Resources.Load<Material>("Materials/" + buildedPawn.color);
         createdPawn.position = new Vector3(pos.x, createdPawn.position.y, pos.z);
 
-        if (buildedPawn.type == "Street")
-        {
-            GameObject.Find("SoundManager").GetComponent<HostSoundManager>().PlaySound("buildingStreet");
-        }
-        if (buildedPawn.type == "Village")
-        {
-            GameObject.Find("SoundManager").GetComponent<HostSoundManager>().PlaySound("buildingVillage");
-        }
-        if (buildedPawn.type == "Town")
-        {
-            GameObject.Find("SoundManager").GetComponent<HostSoundManager>().PlaySound("buildingCity");
-        }
+        //if (buildedPawn.type == "Street")
+        //{
+        //    GameObject.Find("SoundManager").GetComponent<HostSoundManager>().PlaySound("buildingStreet");
+        //}
+        //if (buildedPawn.type == "Village")
+        //{
+        //    GameObject.Find("SoundManager").GetComponent<HostSoundManager>().PlaySound("buildingVillage");
+        //}
+        //if (buildedPawn.type == "Town")
+        //{
+        //    GameObject.Find("SoundManager").GetComponent<HostSoundManager>().PlaySound("buildingCity");
+        //}
 
         //Variablen Updaten
         GameBoard.MainBoard.pawns[(int)ConvertColor(buildedPawn.color)].Add(buildedPawn);
@@ -649,6 +649,8 @@ public class GamePlay : MonoBehaviour
         {
             GetCurrentPlayer().inventory.RemoveItem(buildedPawn.type);
         }
+
+        GameObject.Find("AnimationCameraCenter").GetComponent<AnimationCameraManager>().Restart(createdPawn);
     }
 
     public PlayerColor ConvertColor(string color)
