@@ -19,6 +19,7 @@ public class HostSoundManager : MonoBehaviour
 
     public AudioSource audioSource;
     public AudioSource ambienteAudio;
+    public AudioSource ambienteAudioWater;
     
 
     void Awake()
@@ -83,11 +84,13 @@ public class HostSoundManager : MonoBehaviour
         {
             audioSource.mute = true;
             ambienteAudio.mute = true;
+            ambienteAudioWater.mute = true;
         }
         else
         {
             audioSource.mute = false;
             ambienteAudio.mute = false;
+            ambienteAudioWater.mute = false;
         }
     }
     // Use this for initialization
