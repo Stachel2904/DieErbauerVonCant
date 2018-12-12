@@ -54,6 +54,7 @@ public class GamePlay : MonoBehaviour
     bool secondSpecialStartingcase = false;
 
     public GameObject VictoryWindow;
+    public GameObject VictoryFireworks;
     public GameObject StartGameButton;
 
     float handcardsYPosition;
@@ -862,6 +863,7 @@ public class GamePlay : MonoBehaviour
         }
         GameObject.Find("SoundManager").GetComponent<HostSoundManager>().PlaySound("victory");
         VictoryWindow.SetActive(true);
+        VictoryFireworks.SetActive(true);
         GameObject.Find("TextManager").GetComponent<HostTextManager>().WinText.text = "Player " + pName + " Won!";
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("ServerFull");
         GameObject.Find("ServerManager").GetComponent<NetworkServerUI>().KillServer();
