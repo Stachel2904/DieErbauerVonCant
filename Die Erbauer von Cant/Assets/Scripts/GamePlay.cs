@@ -400,7 +400,7 @@ public class GamePlay : MonoBehaviour
     /// </summary>
     public void NextPlayer()
     {
-        if(GameObject.Find("Handcards").transform.Find(GetCurrentPlayer().color).localPosition.y != 0)
+        if(GameObject.Find("Handcards").transform.Find(GetCurrentPlayer().color).gameObject.GetComponent<RectTransform>().localPosition.y != 0)
         {
             StartCoroutine(MoveCurrentHand(-1, GetCurrentPlayer().color));
         }
@@ -458,7 +458,7 @@ public class GamePlay : MonoBehaviour
     }
     IEnumerator MoveCurrentHand(int direction, string color)
     {
-        for (int i = 0; i < 30 * direction; i += direction)
+        for (int i = 0; i < 30; i ++)
         {
             GameObject.Find("Handcards").transform.Find(color).Translate(0, direction * 3, 0);
             yield return new WaitForSeconds(0.02f);
