@@ -864,7 +864,7 @@ public class GamePlay : MonoBehaviour
         GameObject.Find("SoundManager").GetComponent<HostSoundManager>().PlaySound("victory");
         VictoryWindow.SetActive(true);
         VictoryFireworks.SetActive(true);
-        GameObject.Find("TextManager").GetComponent<HostTextManager>().WinText.text = "Player " + pName + " Won!";
+        GameObject.Find("TextManager").GetComponent<HostTextManager>().WinText.text = "Spieler " + pName + " hat gewonnen!";
         GameObject.Find("ServerManager").GetComponent<NetworkServerMessageHandler>().SendToAllClients("ServerFull");
         GameObject.Find("ServerManager").GetComponent<NetworkServerUI>().KillServer();
     }
