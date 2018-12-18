@@ -1578,7 +1578,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: cd62892474307f54489e526f48a44b36, type: 3}
-    m_FontSize: 38
+    m_FontSize: 36
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 1
@@ -1589,7 +1589,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "n\xE4chster Spieler"
+  m_Text: "N\xE4chster Spieler"
 --- !u!222 &90557460
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7738,7 +7738,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Akzeptieren sie den Handel?
+  m_Text: Akzeptieren Sie den Handel?
 --- !u!222 &556337499
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11312,7 +11312,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "M\xF6chten Sie hier Bauen?"
+  m_Text: "M\xF6chten Sie hier bauen?"
 --- !u!222 &877767475
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11528,7 +11528,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Wie m\xF6chten sie Handeln?"
+  m_Text: "Wie m\xF6chten Sie Handeln?"
 --- !u!222 &897993789
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18665,7 +18665,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1418005267
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19764,7 +19764,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "Mit welchem Spieler m\xF6chten sie Handeln?"
+  m_Text: "Mit welchem Spieler m\xF6chten Sie handeln?"
 --- !u!222 &1508699735
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -25129,7 +25129,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Dein Angebot wurde Abgelehnt
+  m_Text: Dein Angebot wurde abgelehnt
 --- !u!222 &1862026570
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -25717,7 +25717,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Erstellen sie ihr Angebot
+  m_Text: Erstellen Sie Ihr Angebot
 --- !u!222 &1917215634
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -26598,7 +26598,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Dein Angebot wurde Akzeptiert
+  m_Text: Dein Angebot wurde akzeptiert
 --- !u!222 &1984623169
 CanvasRenderer:
   m_ObjectHideFlags: 0
