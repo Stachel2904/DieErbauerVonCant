@@ -477,6 +477,17 @@ public class GameBoard
                                                 newPos3 = 4;
                                             }
                                         }
+                                        if (newPos1 == 2)
+                                        {
+                                            if (newPos2 == 10)
+                                            {
+                                                newPos3 = 6;
+                                            }
+                                            else if (newPos2 == 6)
+                                            {
+                                                newPos3 = 10;
+                                            }
+                                        }
                                         if (newPos1 == 4)
                                         {
                                             if (newPos2 == 0)
@@ -488,6 +499,17 @@ public class GameBoard
                                                 newPos3 = 0;
                                             }
                                         }
+                                        if (newPos1 == 6)
+                                        {
+                                            if (newPos2 == 10)
+                                            {
+                                                newPos3 = 2;
+                                            }
+                                            else if (newPos2 == 2)
+                                            {
+                                                newPos3 = 10;
+                                            }
+                                        }
                                         if (newPos1 == 8)
                                         {
                                             if (newPos2 == 4)
@@ -497,6 +519,17 @@ public class GameBoard
                                             else if (newPos2 == 0)
                                             {
                                                 newPos3 = 4;
+                                            }
+                                        }
+                                        if (newPos1 == 10)
+                                        {
+                                            if (newPos2 == 2)
+                                            {
+                                                newPos3 = 6;
+                                            }
+                                            else if (newPos2 == 6)
+                                            {
+                                                newPos3 = 2;
                                             }
                                         }
                                         newPlacePos.Add(newPos3);
@@ -592,6 +625,17 @@ public class GameBoard
                                                 newPos3 = 4;
                                             }
                                         }
+                                        if (newPos1 == 2)
+                                        {
+                                            if (newPos2 == 10)
+                                            {
+                                                newPos3 = 6;
+                                            }
+                                            else if (newPos2 == 6)
+                                            {
+                                                newPos3 = 10;
+                                            }
+                                        }
                                         if (newPos1 == 4)
                                         {
                                             if (newPos2 == 0)
@@ -603,6 +647,17 @@ public class GameBoard
                                                 newPos3 = 0;
                                             }
                                         }
+                                        if (newPos1 == 6)
+                                        {
+                                            if (newPos2 == 10)
+                                            {
+                                                newPos3 = 2;
+                                            }
+                                            else if (newPos2 == 2)
+                                            {
+                                                newPos3 = 10;
+                                            }
+                                        }
                                         if (newPos1 == 8)
                                         {
                                             if (newPos2 == 4)
@@ -612,6 +667,17 @@ public class GameBoard
                                             else if (newPos2 == 0)
                                             {
                                                 newPos3 = 4;
+                                            }
+                                        }
+                                        if (newPos1 == 10)
+                                        {
+                                            if (newPos2 == 2)
+                                            {
+                                                newPos3 = 6;
+                                            }
+                                            else if (newPos2 == 6)
+                                            {
+                                                newPos3 = 2;
                                             }
                                         }
                                         newPlacePos.Add(newPos3);
