@@ -1,0 +1,94 @@
+html{
+}
+@viewport {
+  width: device-width ;
+  zoom: 1.0 ;
+} 
+@font-face {
+    font-family: CustomFont;
+	src: url(BerryRotunda.ttf);
+}
+h1{
+	font-family: CustomFont;
+	color:#cc6600;
+	font-size:50px;
+}
+h2{
+	font-family: CustomFont;
+	color:#cc6600;
+	font-size:30px;
+}
+p{
+	font-family: CustomFont;
+	color:#cc6600;
+	margin-left:50px;
+	font-size:20px;
+}
+a{
+	text-decoration:none;
+	font-family: CustomFont;
+	color:#cc6600;
+}
+a:hover{
+	text-decoration:underline;
+}
+img{
+	border: 5px solid #cc6600;
+	max-height:450px;
+	max-width:800px;
+}
+iframe{
+	border: 5px solid #cc6600;
+	max-height:450px;
+	max-width:800px;
+}
+/*Hintergrund*/
+body{
+	margin:0px;
+}
+.bg{
+	background-color:#ffff99;
+	text-align:center;
+	width:100%;
+	position:absolute;
+	display:block;
+}
+/*////////////////////////////////////*/
+/*Navigator*/
+#Navigator{
+	text-align:center;
+	width:100%;
+	top:0px;
+	position:absolute;
+	display:block;
+}
+#Navigator_Wrapper{
+	height:50px;
+	background-color:#cc6600;
+}
+li.Navigator_Liste_Element {
+	display:inline;
+	padding:15px;
+	margin-left:15px;
+	margin-right:15px;
+}
+a.Navigator_Links{
+	color:#ffff99;
+	font-size:20px;
+	text-decoration:none;
+}
+a.Navigator_Links:hover{
+	color:#ffcc00;
+	text-decoration:underline;
+}
+
+/*////////////////////////////////////*/
+/*------------------------------------*/
+/*////////////////////////////////////*/
+/*Content*/
+#Headline_Wrapper{
+	padding-top:50px;
+}
+#Content_Wrapper{
+	padding-top:50px;
+}
