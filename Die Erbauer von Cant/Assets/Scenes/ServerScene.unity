@@ -3371,7 +3371,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Dice Number
+  m_Text: "W\xFCrfelzahl"
 --- !u!222 &224914509
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6853,7 +6853,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Player
+  m_Text: Spieler
 --- !u!222 &432304779
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14872,7 +14872,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Player
+  m_Text: Spieler
 --- !u!222 &671483133
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17183,7 +17183,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Dice Number
+  m_Text: "W\xFCrfelzahl"
 --- !u!222 &819235883
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -22876,7 +22876,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Dice Number
+  m_Text: "W\xFCrfelzahl"
 --- !u!222 &1202689860
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -23026,7 +23026,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Player
+  m_Text: Spieler
 --- !u!222 &1204495253
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -23803,7 +23803,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Dice Number
+  m_Text: "W\xFCrfelzahl"
 --- !u!222 &1250093029
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -25576,7 +25576,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1338613109
 RectTransform:
   m_ObjectHideFlags: 0
@@ -37746,7 +37746,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Player
+  m_Text: "W\xFCrfelzahl"
 --- !u!222 &1782083524
 CanvasRenderer:
   m_ObjectHideFlags: 0
