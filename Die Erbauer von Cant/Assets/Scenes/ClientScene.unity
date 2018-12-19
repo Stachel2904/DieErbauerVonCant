@@ -15060,7 +15060,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Verstecke handkarten
+  m_Text: Verstecke Hand
 --- !u!222 &1170823867
 CanvasRenderer:
   m_ObjectHideFlags: 0
