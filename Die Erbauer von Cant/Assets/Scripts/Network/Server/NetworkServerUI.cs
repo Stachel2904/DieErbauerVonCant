@@ -28,6 +28,7 @@ public class NetworkServerUI : MonoBehaviour {
         Debug.Log("Server successfully killed... :(");
         GetComponent<NetworkServerDiscovery>().StopServerDiscovery();
         serverOn = false;
+        GameObject.Destroy(this.gameObject);
     }
     //Init
     private int InitServer() {
