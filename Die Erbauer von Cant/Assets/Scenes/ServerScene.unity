@@ -2000,7 +2000,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Server Schlie\xDFen"
+  m_Text: "Server schlie\xDFen"
 --- !u!222 &155200419
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4151,7 +4151,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "<< Dr\xFCcken f\xFCr neustart >>"
+  m_Text: "<< Dr\xFCcken f\xFCr Neustart >>"
 --- !u!222 &248155043
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -21582,7 +21582,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ON
+  m_Text: An
 --- !u!222 &1144311361
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -21835,7 +21835,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Start Server
+  m_Text: Server starten
 --- !u!222 &1155216102
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -22480,7 +22480,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "zur\xFCck"
+  m_Text: "Zur\xFCck"
 --- !u!222 &1187557033
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -26393,7 +26393,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter name...
+  m_Text: Namen eingeben...
 --- !u!222 &1397824841
 CanvasRenderer:
   m_ObjectHideFlags: 0

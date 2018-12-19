@@ -973,12 +973,12 @@ public class GamePlay : MonoBehaviour
         if (soundStatus)
         {
             sound = true;
-            GameObject.Find("TextManager").GetComponent<HostTextManager>().SoundText.text = "ON";
+            GameObject.Find("TextManager").GetComponent<HostTextManager>().SoundText.text = "An";
         }
         else
         {
             sound = false;
-            GameObject.Find("TextManager").GetComponent<HostTextManager>().SoundText.text = "OFF";
+            GameObject.Find("TextManager").GetComponent<HostTextManager>().SoundText.text = "Aus";
         }
     }
 }
