@@ -266,6 +266,8 @@ public class GamePlayClient : MonoBehaviour {
             return;
         }
         GameBoard.MainBoard.deleteAllPlaces();
+
+        GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.SetActive(true);
     }
     #endregion
 

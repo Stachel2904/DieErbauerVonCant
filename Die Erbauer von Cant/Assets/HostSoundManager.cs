@@ -68,8 +68,7 @@ public class HostSoundManager : MonoBehaviour
                 break;
             default:
                 break;
-        }
-        
+        }        
     }
 
     IEnumerator playSoundWithDelay(AudioClip clip, float delay, float volume = 1)
