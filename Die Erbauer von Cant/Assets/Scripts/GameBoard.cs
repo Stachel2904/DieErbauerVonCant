@@ -22,13 +22,7 @@ public class GameBoard
     public Field[] tiles = new Field[16];
     public Field[][] tilesGrid = new Field[][] { new Field[9], new Field[9], new Field[9], new Field[9], new Field[9]};
 
-    public List<Pawn>[] pawns = new List<Pawn>[]
-    {
-        new List<Pawn>(),
-        new List<Pawn>(),
-        new List<Pawn>(),
-        new List<Pawn>()
-    };
+    public List<Pawn>[] pawns;
 
     public void Init()
     {
@@ -143,9 +137,16 @@ public class GameBoard
                     tilesGrid[i][j].resourceName = "Wool";
                 }
                 #endregion
-                
+
             }
         }
+        pawns = new List<Pawn>[]
+        {
+            new List<Pawn>(),
+            new List<Pawn>(),
+            new List<Pawn>(),
+            new List<Pawn>()
+        };
     }
 
     public Place[] GetAllPositions(Pawn buildedPawn, bool godmode = false)
