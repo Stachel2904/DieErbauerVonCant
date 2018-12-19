@@ -257,8 +257,14 @@ public class GamePlayClient : MonoBehaviour {
             createdPawn.Rotate(0.0f, 30.0f * posAtField[0], 0.0f);
         }
     }
+
+    public void StopBuild()
+    {
+        GameBoard.MainBoard.deleteAllPlaces();
+    }
     #endregion
 
+    //ToDo: testen
     public PlayerColor ConvertColor(string color)
     {
         PlayerColor result = PlayerColor.NONE;
