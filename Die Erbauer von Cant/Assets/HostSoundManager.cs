@@ -58,13 +58,13 @@ public class HostSoundManager : MonoBehaviour
                 StartCoroutine(playSoundWithDelay(victorySound, delay));
                 break;
             case "fireworkScream":
-                StartCoroutine(playSoundWithDelay(fireworkScream, delay));
+                StartCoroutine(playSoundWithDelay(fireworkScream, delay, 0.5f));
                 break;
             case "fireworkExplosion":
-                StartCoroutine(playSoundWithDelay(fireworkExplosion, delay));
+                StartCoroutine(playSoundWithDelay(fireworkExplosion, delay, 0.5f));
                 break;
             case "fireworkCluster":
-                StartCoroutine(playSoundWithDelay(fireworkCluster, delay));
+                StartCoroutine(playSoundWithDelay(fireworkCluster, delay, 0.5f));
                 break;
             default:
                 break;
@@ -72,10 +72,11 @@ public class HostSoundManager : MonoBehaviour
         
     }
 
-    IEnumerator playSoundWithDelay(AudioClip clip, float delay)
+    IEnumerator playSoundWithDelay(AudioClip clip, float delay, float volume = 1)
     {
         yield return new WaitForSeconds(delay);
         audioSource.PlayOneShot(clip);
+        audioSource.volume = volume;
     }
 
     public void MuteAudio(bool soundMuted)

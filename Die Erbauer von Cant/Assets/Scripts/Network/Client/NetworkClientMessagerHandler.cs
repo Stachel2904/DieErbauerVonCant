@@ -115,6 +115,7 @@ public class NetworkClientMessagerHandler : MonoBehaviour {
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().ClientDefault.transform.Find("Next Player").GetComponent<Button>().interactable = true;
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().DiceRoll.SetActive(true);
                 GameObject.Find("ClientSoundManager").GetComponent<ClientSoundManager>().PlaySound("popUp");
+                GameObject.Find("GamePlay").GetComponent<GamePlayClient>().inFirstRound = false;
                 break;
             case "FirstRoundGo":
                 GameObject.Find("ClientButtonManager").GetComponent<ClientButtonManager>().FirstRoundBuild.SetActive(true);

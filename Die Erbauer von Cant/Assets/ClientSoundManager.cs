@@ -34,10 +34,11 @@ public class ClientSoundManager : MonoBehaviour {
 
     }
 
-    IEnumerator playSoundWithDelay(AudioClip clip, float delay)
+    IEnumerator playSoundWithDelay(AudioClip clip, float delay, float volume = 1)
     {
         yield return new WaitForSeconds(delay);
         audioSource.PlayOneShot(clip);
+        audioSource.volume = volume;
     }
 
     //public void MuteAudio(bool soundMuted)

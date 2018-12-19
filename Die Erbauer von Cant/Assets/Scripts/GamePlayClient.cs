@@ -22,6 +22,7 @@ public class GamePlayClient : MonoBehaviour {
     public Player ownPlayer;
     Color ownColor;
     public int maxPlayer;
+    public bool inFirstRound = true;
 
     public void InitClient(string color)
     {
@@ -260,6 +261,10 @@ public class GamePlayClient : MonoBehaviour {
 
     public void StopBuild()
     {
+        if (inFirstRound)
+        {
+            return;
+        }
         GameBoard.MainBoard.deleteAllPlaces();
     }
     #endregion
